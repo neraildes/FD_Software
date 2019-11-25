@@ -1,0 +1,4 @@
+Clique em pacote->abrir arquivo de pacote.
+Localize o synapse e selecione-o.
+Clique em compilar,
+Clique em usar.

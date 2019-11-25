@@ -1,0 +1,124 @@
+object Form1: TForm1
+  Left = 432
+  Height = 458
+  Top = 176
+  Width = 610
+  Caption = 'Form1'
+  ClientHeight = 458
+  ClientWidth = 610
+  OnClick = FormClick
+  OnClose = FormClose
+  OnCreate = FormCreate
+  LCLVersion = '2.0.4.0'
+  object lbl_cnt: TLabel
+    Left = 176
+    Height = 15
+    Top = 419
+    Width = 6
+    Caption = '0'
+    ParentColor = False
+  end
+  object btn_suspend: TButton
+    Left = 224
+    Height = 31
+    Top = 408
+    Width = 93
+    Caption = 'SUSPEND'
+    OnClick = btn_suspendClick
+    TabOrder = 0
+  end
+  object btn_resume: TButton
+    Left = 40
+    Height = 36
+    Top = 408
+    Width = 93
+    Caption = 'RESUME'
+    OnClick = btn_resumeClick
+    TabOrder = 1
+  end
+  object Memo1: TMemo
+    Left = 202
+    Height = 322
+    Top = 21
+    Width = 222
+    Lines.Strings = (
+      'Memo1'
+    )
+    TabOrder = 2
+  end
+  object Button1: TButton
+    Left = 63
+    Height = 42
+    Top = 296
+    Width = 127
+    Caption = 'Button1'
+    OnClick = Button1Click
+    TabOrder = 3
+  end
+  object Edit1: TEdit
+    Left = 64
+    Height = 23
+    Top = 56
+    Width = 127
+    TabOrder = 4
+    Text = '$00'
+  end
+  object Edit2: TEdit
+    Left = 66
+    Height = 23
+    Top = 152
+    Width = 125
+    TabOrder = 5
+    Text = '$0123'
+  end
+  object Edit3: TEdit
+    Left = 66
+    Height = 23
+    Top = 240
+    Width = 127
+    TabOrder = 6
+    Text = '$45'
+  end
+  object Label1: TLabel
+    Left = 63
+    Height = 15
+    Top = 40
+    Width = 58
+    Caption = 'Dispositivo'
+    ParentColor = False
+  end
+  object Label2: TLabel
+    Left = 66
+    Height = 15
+    Top = 136
+    Width = 97
+    Caption = 'Endereço - 2 Bytes'
+    ParentColor = False
+  end
+  object Label3: TLabel
+    Left = 66
+    Height = 15
+    Top = 224
+    Width = 26
+    Caption = 'Valor'
+    ParentColor = False
+  end
+  object lbl_clk: TLabel
+    Left = 304
+    Height = 15
+    Top = 360
+    Width = 33
+    Caption = 'lbl_clk'
+    ParentColor = False
+  end
+  object Memo2: TMemo
+    Left = 440
+    Height = 322
+    Top = 21
+    Width = 160
+    Lines.Strings = (
+      'Memo2'
+    )
+    TabOrder = 7
+  end
+end
