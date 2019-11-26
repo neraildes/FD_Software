@@ -69,13 +69,21 @@ const
    COMMAND_PERGUNTA        = $2B;
 //-------------------------------------
 
+type
+  TFila = Record
+           comando : array[0..50]of Ansistring;
+           fim : integer;
+           end;
+
 
 type
 
   TSerial = class(TBlockSerial)
     public
-
+      fila : TFila;
       constructor Create(); overload;
+
+      procedure Buzzer(tempo : integer);
 
       function Gravar_EEPROM_Interna(destino: byte;
                                      add    : integer;
@@ -107,8 +115,18 @@ uses
 constructor Tserial.Create();
 begin
   inherited Create();
+  fila.fim:=0;
 end;
 
+
+procedure TSerial.Buzzer(tempo : integer);
+var
+   payload : array [0..TXBUFFERSIZE ] of QWord;
+begin
+   payload[0]:=(tempo div 256);
+   payload[1]:=(tempo mod 256);
+   KernelCommand(COMMAND_PROCULUS_Buzzer, $00, 2, payload, 3);
+end;
 
 //------------------------------------------------------------------------------
 function TSerial.Gravar_EEPROM_Interna(destino: byte;
@@ -144,6 +162,7 @@ var
   carga: AnsiString;
   texto: AnsiString;
   cnt  : byte;
+  i    : byte;
 begin
   carga:=
   HEADER+              //Cabeçalho da comunicação serial
@@ -156,7 +175,15 @@ begin
   for cnt:=0 to tamanho-1 do Texto:=Texto+inttohex(payload[cnt],2);
   carga:=carga+Texto;
   //showmessage(carga);
-  result:=kernelSerial(carga, TotalReturn);
+
+  for i:=0 to 50 do
+      Form1.Memo2.Lines.add(fila.comando[i]);
+
+
+  fila.comando[fila.fim]:=carga;
+  inc(fila.fim);
+
+  //result:=kernelSerial(carga, TotalReturn);
 end;
 
 
@@ -194,7 +221,7 @@ begin
                 Buffer_Out[i-1] := chr(HextoInt(copy(comando,trunc(i*2)-1,2)));
            pnt:=Buffer_Out;
 
-           //Form1.Memo1.Lines.Add('Pacote Env : '+comando);
+           Form1.Memo1.Lines.Add('Pacote Env : '+comando);
            SendBuffer(pnt,SizeBufferSend);
 
            pnt:=Buffer_In;
@@ -208,7 +235,7 @@ begin
                strtmp:=strtmp+IntToHex(Word(Buffer_In[i]),2);
            retorno:=(copy(strtmp,13,TotalReturn*2));
 
-           //Form1.Memo1.Lines.Add('Pacote Rec : '+strtmp);
+           Form1.Memo1.Lines.Add('Pacote Rec : '+strtmp);
 
          end;
 
@@ -226,7 +253,7 @@ end;
 function Tserial.HexToInt(Hexadecimal : AnsiString) : integer;
 begin
   //showmessage(Hexadecimal);
-  Result := StrToInt('$' + Hexadecimal);
+  Result := 0;//StrToInt('$' + Hexadecimal);
 end;
 
 

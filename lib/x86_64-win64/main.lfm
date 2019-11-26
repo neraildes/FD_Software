@@ -1,62 +1,59 @@
 object Form1: TForm1
-  Left = 432
-  Height = 458
-  Top = 176
-  Width = 610
+  Left = 175
+  Height = 549
+  Top = 106
+  Width = 1021
   Caption = 'Form1'
-  ClientHeight = 458
-  ClientWidth = 610
+  ClientHeight = 549
+  ClientWidth = 1021
   OnClick = FormClick
   OnClose = FormClose
   OnCreate = FormCreate
   LCLVersion = '2.0.4.0'
   object lbl_cnt: TLabel
-    Left = 176
+    Left = 272
     Height = 15
-    Top = 419
+    Top = 507
     Width = 6
     Caption = '0'
     ParentColor = False
   end
   object btn_suspend: TButton
-    Left = 224
+    Left = 292
     Height = 31
-    Top = 408
+    Top = 499
     Width = 93
     Caption = 'SUSPEND'
     OnClick = btn_suspendClick
     TabOrder = 0
   end
   object btn_resume: TButton
-    Left = 40
-    Height = 36
-    Top = 408
+    Left = 163
+    Height = 31
+    Top = 499
     Width = 93
     Caption = 'RESUME'
     OnClick = btn_resumeClick
     TabOrder = 1
   end
   object Memo1: TMemo
-    Left = 202
-    Height = 322
+    Left = 163
+    Height = 443
     Top = 21
     Width = 222
-    Lines.Strings = (
-      'Memo1'
-    )
     TabOrder = 2
   end
   object Button1: TButton
-    Left = 63
+    Left = 25
     Height = 42
-    Top = 296
+    Top = 328
     Width = 127
     Caption = 'Button1'
     OnClick = Button1Click
     TabOrder = 3
   end
   object Edit1: TEdit
-    Left = 64
+    Left = 25
     Height = 23
     Top = 56
     Width = 127
@@ -64,7 +61,7 @@ object Form1: TForm1
     Text = '$00'
   end
   object Edit2: TEdit
-    Left = 66
+    Left = 27
     Height = 23
     Top = 152
     Width = 125
@@ -72,7 +69,7 @@ object Form1: TForm1
     Text = '$0123'
   end
   object Edit3: TEdit
-    Left = 66
+    Left = 27
     Height = 23
     Top = 240
     Width = 127
@@ -80,7 +77,7 @@ object Form1: TForm1
     Text = '$45'
   end
   object Label1: TLabel
-    Left = 63
+    Left = 24
     Height = 15
     Top = 40
     Width = 58
@@ -88,7 +85,7 @@ object Form1: TForm1
     ParentColor = False
   end
   object Label2: TLabel
-    Left = 66
+    Left = 27
     Height = 15
     Top = 136
     Width = 97
@@ -96,7 +93,7 @@ object Form1: TForm1
     ParentColor = False
   end
   object Label3: TLabel
-    Left = 66
+    Left = 27
     Height = 15
     Top = 224
     Width = 26
@@ -104,21 +101,124 @@ object Form1: TForm1
     ParentColor = False
   end
   object lbl_clk: TLabel
-    Left = 304
+    Left = 257
     Height = 15
-    Top = 360
+    Top = 472
     Width = 33
     Caption = 'lbl_clk'
     ParentColor = False
   end
   object Memo2: TMemo
-    Left = 440
-    Height = 322
+    Left = 448
+    Height = 163
     Top = 21
-    Width = 160
-    Lines.Strings = (
-      'Memo2'
-    )
+    Width = 552
     TabOrder = 7
+  end
+  object GroupBox1: TGroupBox
+    Left = 449
+    Height = 95
+    Top = 264
+    Width = 552
+    Caption = 'Manipulação de Byte'
+    ClientHeight = 75
+    ClientWidth = 548
+    TabOrder = 8
+    object btn_LerMemo: TButton
+      Left = 8
+      Height = 40
+      Top = 13
+      Width = 80
+      Caption = 'Ler'
+      OnClick = btn_LerMemoClick
+      TabOrder = 0
+    end
+    object btn_EscreverMemo: TButton
+      Left = 96
+      Height = 40
+      Top = 13
+      Width = 82
+      Caption = 'Gravar'
+      OnClick = btn_EscreverMemoClick
+      TabOrder = 1
+    end
+    object mb_dispositivo: TEdit
+      Left = 288
+      Height = 23
+      Top = 20
+      Width = 56
+      TabOrder = 2
+      Text = '00'
+    end
+    object mb_Add: TEdit
+      Left = 376
+      Height = 23
+      Top = 20
+      Width = 50
+      TabOrder = 3
+      Text = '00'
+    end
+    object rb_EEPROM: TRadioButton
+      Left = 192
+      Height = 19
+      Top = 13
+      Width = 66
+      Caption = 'EEPROM'
+      Checked = True
+      TabOrder = 5
+      TabStop = True
+    end
+    object rb_24C1025: TRadioButton
+      Left = 192
+      Height = 19
+      Top = 32
+      Width = 64
+      Caption = '24C1025'
+      TabOrder = 4
+    end
+    object mb_value: TEdit
+      Left = 472
+      Height = 23
+      Top = 20
+      Width = 51
+      TabOrder = 6
+      Text = '00'
+    end
+  end
+  object GroupBox2: TGroupBox
+    Left = 449
+    Height = 56
+    Top = 200
+    Width = 553
+    Caption = 'Sinal Sonoro'
+    ClientHeight = 36
+    ClientWidth = 549
+    TabOrder = 9
+    object btn_Buzzer: TButton
+      Left = 8
+      Height = 28
+      Top = 8
+      Width = 176
+      Caption = 'Buzzer'
+      OnClick = btn_BuzzerClick
+      TabOrder = 0
+    end
+    object ss_tempo: TEdit
+      Left = 208
+      Height = 23
+      Top = 8
+      Width = 74
+      TabOrder = 1
+      Text = '0064'
+    end
+    object btn_Buzzer_Direto: TButton
+      Left = 336
+      Height = 25
+      Top = 8
+      Width = 190
+      Caption = 'Buzzer_Direto'
+      OnClick = btn_Buzzer_DiretoClick
+      TabOrder = 2
+    end
   end
 end
