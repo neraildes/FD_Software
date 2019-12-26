@@ -5,7 +5,7 @@ unit Laz_kernel_serial;
 interface
 
 uses
-  Classes, SysUtils, SynaSer, Dialogs;
+  Classes, SysUtils, SynaSer, Dialogs, StrUtils;
 
 const
 
@@ -93,11 +93,12 @@ type
       function KernelCommand(comando : byte;
                              destino : byte;
                              tamanho : byte;
-                             payload : array of QWord;
-                         TotalReturn : LongInt)
+                              buffer : array of QWord;
+                           totalsend : LongInt;
+                         totalreturn : integer)
                                      : Ansistring;
 
-      function kernelSerial(comando : Ansistring; TotalReturn :LongInt):Ansistring;
+      function kernelSerial(comando : Ansistring; TotalReturn:LongInt; RXpayload:integer):Ansistring;
       function HexToInt(Hexadecimal : AnsiString) : integer;
       function HexToText(Hexadecimal: AnsiString):AnsiString;
 
@@ -121,11 +122,14 @@ end;
 
 procedure TSerial.Buzzer(tempo : integer);
 var
-   payload : array [0..TXBUFFERSIZE ] of QWord;
+   buffer : array [0..TXBUFFERSIZE ] of QWord;
 begin
-   payload[0]:=(tempo div 256);
-   payload[1]:=(tempo mod 256);
-   KernelCommand(COMMAND_PROCULUS_Buzzer, $00, 2, payload, 3);
+   buffer[0]:=(tempo div 256);
+   buffer[1]:=(tempo mod 256);
+
+
+   KernelCommand(COMMAND_PROCULUS_Buzzer, $00, 2, buffer, 15,3);
+
 end;
 
 //------------------------------------------------------------------------------
@@ -146,7 +150,7 @@ begin
   payload[1]:=(add div 256);
   payload[2]:=(add mod 256);
   payload[3]:=value;
-  result    :=KernelCommand(COMMAND_IEE_W_BYTE, destino, 4, payload, 3);
+  result    :=KernelCommand(COMMAND_IEE_W_BYTE, destino, 4, payload, 15,3);
 end;
 
 
@@ -154,10 +158,20 @@ end;
 //------------------------------------------------------------------------------
 function TSerial.KernelCommand(comando : byte;
                                destino : byte;
+                               tamanho : byte;
+                                buffer : array of QWord;
+                             totalsend : LongInt;
+                           totalreturn : integer)
+                                       : Ansistring;
+{
+function TSerial.KernelCommand(comando : byte;
+                               destino : byte;
                                tamanho : byte; //tamanho da resposta esperado
                                payload : array of QWord;
-                           TotalReturn : LongInt)
+                           TotalReturn : LongInt;
+                             RXpayload : integer)
                                        : Ansistring;
+}
 var
   carga: AnsiString;
   texto: AnsiString;
@@ -172,37 +186,46 @@ begin
   IntToHex(tamanho,2); //tamanho do payload
 
   Texto:='';
-  for cnt:=0 to tamanho-1 do Texto:=Texto+inttohex(payload[cnt],2);
+  for cnt:=0 to tamanho-1 do texto:=texto+inttohex(buffer[cnt],2);
   carga:=carga+Texto;
-  //showmessage(carga);
 
-  for i:=0 to 50 do
-      Form1.Memo2.Lines.add(fila.comando[i]);
+  showmessage(carga);
 
 
+
+  Form1.Memo1.Lines.Clear;
+  for i:=0 to 50 do Form1.Memo2.Lines.add(fila.comando[i]);
   fila.comando[fila.fim]:=carga;
   inc(fila.fim);
 
-  //result:=kernelSerial(carga, TotalReturn);
+
+
+
+  result:= '';//kernelSerial(carga, TotalReturn);
 end;
 
 
 
 //------------------------------------------------------------------------------
-function TSerial.kernelSerial(comando : Ansistring; TotalReturn:LongInt):Ansistring;
+function TSerial.kernelSerial(comando : Ansistring; TotalReturn:LongInt; RXpayload:integer):Ansistring;
 var
-  Buffer_In  : array[0..TXBUFFERSIZE] of char;
-  Buffer_Out : array[0..TXBUFFERSIZE] of char;
+  Buffer_In  : array[0..TXBUFFERSIZE] of byte;
+  Buffer_Out : array[0..TXBUFFERSIZE] of byte;
+  pnt : ^byte;
+
   i:byte;
   SizeBufferSend:QWord;
-  pnt : ^char;
   recebido : AnsiString;
   NumRcv : LongInt;
   strtmp : string;
   retorno: AnsiString;
+  decimal: integer;
 begin
-  //Form1.Memo1.Lines.Add('----KERNEL----');
+  Form1.Memo4.Lines.Add('----KERNEL----');
 
+  //ShowMessage('chegou aqui');
+
+  Form1.Memo4.Lines.Add(comando);
 
   if HexToInt(Copy(comando,7,2))=0 then
      TotalReturn:=6+TotalReturn
@@ -212,30 +235,36 @@ begin
 
 
   try
-
       if(length(comando)>2) then
          begin
-
-           SizeBufferSend:=length(comando) div 2;
+           SizeBufferSend:=(length(comando) div 2);
            for i:=0 to  SizeBufferSend-1 do
-                Buffer_Out[i-1] := chr(HextoInt(copy(comando,trunc(i*2)-1,2)));
-           pnt:=Buffer_Out;
+               begin
+                 decimal := Hex2Dec('$'+copy(comando,(i*2)+1,2));
+                 Buffer_Out[i] := decimal;
+               end;
+           pnt:=@Buffer_Out;
 
+
+           Purge;
            Form1.Memo1.Lines.Add('Pacote Env : '+comando);
            SendBuffer(pnt,SizeBufferSend);
 
-           pnt:=Buffer_In;
-           Purge;
+           pnt:=@Buffer_In;
+
+           TotalReturn:=15;
            NumRcv:=RecvBuffer(pnt,TotalReturn);
            //ShowMessage('Aguardando = '+Inttostr(TotalReturn)+#13+
-           //            'Recebido   = '+IntToHex(Word(NumRcv),2));
+            //             'Recebido   = '+IntToHex(Word(NumRcv),2));
+
+           //Resposta = 5AA50380020AAABB00C021034F4B00
 
            strtmp:='';
            for i:=0 to TotalReturn-1 do
                strtmp:=strtmp+IntToHex(Word(Buffer_In[i]),2);
-           retorno:=(copy(strtmp,13,TotalReturn*2));
+           retorno:=(copy(strtmp,1,TotalReturn*2));
 
-           Form1.Memo1.Lines.Add('Pacote Rec : '+strtmp);
+           Form1.Memo4.Lines.Add('Pacote Rec : '+strtmp);
 
          end;
 

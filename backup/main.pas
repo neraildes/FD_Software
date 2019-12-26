@@ -29,9 +29,14 @@ type
     btn_LerMemo: TButton;
     btn_EscreverMemo: TButton;
     btn_Buzzer_Direto: TButton;
+    btn_SendBcmd: TButton;
     Edit1: TEdit;
     Edit2: TEdit;
     Edit3: TEdit;
+    edt_SendBCmd: TEdit;
+    GroupBox3: TGroupBox;
+    Memo3: TMemo;
+    Memo4: TMemo;
     ss_tempo: TEdit;
     mb_dispositivo: TEdit;
     mb_Add: TEdit;
@@ -50,6 +55,7 @@ type
     procedure btn_Buzzer_DiretoClick(Sender: TObject);
     procedure btn_EscreverMemoClick(Sender: TObject);
     procedure btn_resumeClick(Sender: TObject);
+    procedure btn_SendBcmdClick(Sender: TObject);
     procedure btn_suspendClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure btn_LerMemoClick(Sender: TObject);
@@ -79,15 +85,18 @@ implementation
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
+
   ouvinte := TThead_USART.Create(FALSE);
   ouvinte.FreeOnTerminate:=TRUE;
   ouvinte.Start;
   ouvinte.Priority:=tpTimeCritical;
 
+
+
   Aparelho:=TSerial.Create;
 
   try
-    Aparelho.Connect('COM3');
+    Aparelho.Connect('COM5');
     Aparelho.Config(115200,8,'N',0,false,false);
   finally
     //Aparelho.free;
@@ -150,6 +159,12 @@ begin
   ouvinte.Resume;
 end;
 
+procedure TForm1.btn_SendBcmdClick(Sender: TObject);
+begin
+  Aparelho.fila.comando[Aparelho.fila.fim]:=edt_SendBCmd.Text;
+  inc(Aparelho.fila.fim);
+end;
+
 procedure TForm1.btn_EscreverMemoClick(Sender: TObject);
 var
   temporario : string;
@@ -164,7 +179,8 @@ end;
 
 procedure TForm1.btn_Buzzer_DiretoClick(Sender: TObject);
 begin
-  Aparelho.Buzzer(100);
+
+  Aparelho.Buzzer(1000);
 end;
 
 
@@ -207,18 +223,16 @@ begin
              if(length(teste)>0) then
                 begin
                   Aparelho.kernelSerial(teste, 3);
-
-                  for i:=1 to 50 do
+                  Form1.Memo3.Lines.Add(teste);
+                  Form1.Memo2.Lines.Clear;
+                  for i:=1 to 10 do
                       begin
                         Aparelho.fila.comando[i-1]:=Aparelho.fila.comando[i];
+                        Form1.Memo2.Lines.Add(Aparelho.fila.comando[i]);
                       end;
 
                   Aparelho.fila.fim:=Aparelho.fila.fim-1;
                 end;
-
-
-
-
 
              Aparelho.Purge;
              {

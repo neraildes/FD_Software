@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 256
+  Left = 159
   Height = 549
-  Top = 138
+  Top = 147
   Width = 1021
   Caption = 'Form1'
   ClientHeight = 549
@@ -112,13 +112,13 @@ object Form1: TForm1
     Left = 448
     Height = 163
     Top = 21
-    Width = 552
+    Width = 177
     TabOrder = 7
   end
   object GroupBox1: TGroupBox
     Left = 449
     Height = 95
-    Top = 264
+    Top = 312
     Width = 552
     Caption = 'Manipulação de Byte'
     ClientHeight = 75
@@ -188,7 +188,7 @@ object Form1: TForm1
   object GroupBox2: TGroupBox
     Left = 449
     Height = 56
-    Top = 200
+    Top = 248
     Width = 553
     Caption = 'Sinal Sonoro'
     ClientHeight = 36
@@ -220,5 +220,46 @@ object Form1: TForm1
       OnClick = btn_Buzzer_DiretoClick
       TabOrder = 2
     end
+  end
+  object GroupBox3: TGroupBox
+    Left = 448
+    Height = 51
+    Top = 189
+    Width = 551
+    Caption = 'GroupBox3'
+    ClientHeight = 31
+    ClientWidth = 547
+    TabOrder = 10
+    object btn_SendBcmd: TButton
+      Left = 9
+      Height = 23
+      Top = 0
+      Width = 175
+      Caption = 'Enviar Comando'
+      OnClick = btn_SendBcmdClick
+      TabOrder = 0
+    end
+    object edt_SendBCmd: TEdit
+      Left = 212
+      Height = 23
+      Top = 0
+      Width = 326
+      TabOrder = 1
+      Text = 'AABBC00021020064'
+    end
+  end
+  object Memo3: TMemo
+    Left = 656
+    Height = 163
+    Top = 21
+    Width = 152
+    TabOrder = 11
+  end
+  object Memo4: TMemo
+    Left = 840
+    Height = 163
+    Top = 21
+    Width = 157
+    TabOrder = 12
   end
 end
