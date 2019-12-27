@@ -1,11 +1,11 @@
 object Form1: TForm1
-  Left = 159
+  Left = 371
   Height = 549
   Top = 147
-  Width = 1021
+  Width = 809
   Caption = 'Form1'
   ClientHeight = 549
-  ClientWidth = 1021
+  ClientWidth = 809
   OnClick = FormClick
   OnClose = FormClose
   OnCreate = FormCreate
@@ -116,9 +116,9 @@ object Form1: TForm1
     TabOrder = 7
   end
   object GroupBox1: TGroupBox
-    Left = 449
+    Left = 447
     Height = 95
-    Top = 312
+    Top = 256
     Width = 552
     Caption = 'Manipulação de Byte'
     ClientHeight = 75
@@ -139,7 +139,6 @@ object Form1: TForm1
       Top = 13
       Width = 82
       Caption = 'Gravar'
-      OnClick = btn_EscreverMemoClick
       TabOrder = 1
     end
     object mb_dispositivo: TEdit
@@ -186,66 +185,37 @@ object Form1: TForm1
     end
   end
   object GroupBox2: TGroupBox
-    Left = 449
+    Left = 448
     Height = 56
-    Top = 248
+    Top = 192
     Width = 553
     Caption = 'Sinal Sonoro'
     ClientHeight = 36
     ClientWidth = 549
     TabOrder = 9
-    object btn_Buzzer: TButton
-      Left = 8
-      Height = 28
-      Top = 8
-      Width = 176
-      Caption = 'Buzzer'
-      OnClick = btn_BuzzerClick
-      TabOrder = 0
-    end
     object ss_tempo: TEdit
-      Left = 208
+      Left = 215
       Height = 23
       Top = 8
-      Width = 74
-      TabOrder = 1
-      Text = '0064'
+      Width = 57
+      TabOrder = 0
+      Text = '100'
     end
     object btn_Buzzer_Direto: TButton
-      Left = 336
+      Left = 16
       Height = 25
       Top = 8
       Width = 190
       Caption = 'Buzzer_Direto'
       OnClick = btn_Buzzer_DiretoClick
-      TabOrder = 2
-    end
-  end
-  object GroupBox3: TGroupBox
-    Left = 448
-    Height = 51
-    Top = 189
-    Width = 551
-    Caption = 'GroupBox3'
-    ClientHeight = 31
-    ClientWidth = 547
-    TabOrder = 10
-    object btn_SendBcmd: TButton
-      Left = 9
-      Height = 23
-      Top = 0
-      Width = 175
-      Caption = 'Enviar Comando'
-      OnClick = btn_SendBcmdClick
-      TabOrder = 0
-    end
-    object edt_SendBCmd: TEdit
-      Left = 212
-      Height = 23
-      Top = 0
-      Width = 326
       TabOrder = 1
-      Text = 'AABBC00021020064'
+    end
+    object edt_res_buzzer: TEdit
+      Left = 282
+      Height = 23
+      Top = 8
+      Width = 51
+      TabOrder = 2
     end
   end
   object Memo3: TMemo
@@ -253,13 +223,13 @@ object Form1: TForm1
     Height = 163
     Top = 21
     Width = 152
-    TabOrder = 11
+    TabOrder = 10
   end
   object Memo4: TMemo
     Left = 840
     Height = 163
     Top = 21
     Width = 157
-    TabOrder = 12
+    TabOrder = 11
   end
 end

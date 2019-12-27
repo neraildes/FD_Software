@@ -80,6 +80,7 @@ type
 
   TSerial = class(TBlockSerial)
     public
+      resultCOM : string;
       fila : TFila;
       constructor Create(); overload;
 
@@ -127,9 +128,11 @@ begin
    buffer[0]:=(tempo div 256);
    buffer[1]:=(tempo mod 256);
 
-
+   resultCOM:='';
    KernelCommand(COMMAND_PROCULUS_Buzzer, $00, 2, buffer, 15,3);
-
+   while(resultCOM='') do continue;
+   //sleep(1000);
+   showmessage(resultCOM);
 end;
 
 //------------------------------------------------------------------------------
@@ -163,15 +166,6 @@ function TSerial.KernelCommand(comando : byte;
                              totalsend : LongInt;
                            totalreturn : integer)
                                        : Ansistring;
-{
-function TSerial.KernelCommand(comando : byte;
-                               destino : byte;
-                               tamanho : byte; //tamanho da resposta esperado
-                               payload : array of QWord;
-                           TotalReturn : LongInt;
-                             RXpayload : integer)
-                                       : Ansistring;
-}
 var
   carga: AnsiString;
   texto: AnsiString;
@@ -201,7 +195,7 @@ begin
 
 
 
-  result:= '';//kernelSerial(carga, TotalReturn);
+  result:= 'Foi Agendado, favor pegar o resultado na Thread';//kernelSerial(carga, TotalReturn);
 end;
 
 
@@ -223,16 +217,7 @@ var
 begin
   Form1.Memo4.Lines.Add('----KERNEL----');
 
-  //ShowMessage('chegou aqui');
-
   Form1.Memo4.Lines.Add(comando);
-
-  if HexToInt(Copy(comando,7,2))=0 then
-     TotalReturn:=6+TotalReturn
-  else
-     TotalReturn:=6+TotalReturn+1;
-
-
 
   try
       if(length(comando)>2) then
@@ -252,20 +237,15 @@ begin
 
            pnt:=@Buffer_In;
 
-           TotalReturn:=15;
            NumRcv:=RecvBuffer(pnt,TotalReturn);
-           //ShowMessage('Aguardando = '+Inttostr(TotalReturn)+#13+
-            //             'Recebido   = '+IntToHex(Word(NumRcv),2));
-
-           //Resposta = 5AA50380020AAABB00C021034F4B00
-
            strtmp:='';
            for i:=0 to TotalReturn-1 do
                strtmp:=strtmp+IntToHex(Word(Buffer_In[i]),2);
            retorno:=(copy(strtmp,1,TotalReturn*2));
 
-           Form1.Memo4.Lines.Add('Pacote Rec : '+strtmp);
+           resultCOM:=retorno;
 
+           Form1.Memo4.Lines.Add('Pacote Rec : '+strtmp);
          end;
 
 
