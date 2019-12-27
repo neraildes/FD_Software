@@ -181,7 +181,7 @@ begin
   for cnt:=0 to tamanho-1 do texto:=texto+inttohex(buffer[cnt],2);
   carga:=carga+Texto;
 
-  showmessage(carga);
+  //showmessage(carga);
 
 
 
@@ -213,9 +213,9 @@ var
   retorno: AnsiString;
   decimal: integer;
 begin
-  Form1.Memo4.Lines.Add('----KERNEL----');
+  //Form1.Memo4.Lines.Add('----KERNEL----');
 
-  Form1.Memo4.Lines.Add(comando);
+  //Form1.Memo4.Lines.Add(comando);
 
   try
       if(length(comando)>2) then
@@ -230,7 +230,7 @@ begin
 
 
            Purge;
-           Form1.Memo1.Lines.Add('Pacote Env : '+comando);
+           //Form1.Memo1.Lines.Add('Pacote Env : '+comando);
            SendBuffer(pnt,SizeBufferSend);
 
            pnt:=@Buffer_In;
@@ -243,7 +243,7 @@ begin
 
            resultCOM:=retorno;
 
-           Form1.Memo4.Lines.Add('Pacote Rec : '+strtmp);
+           //Form1.Memo4.Lines.Add('Pacote Rec : '+strtmp);
          end;
 
 

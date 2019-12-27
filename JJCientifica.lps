@@ -20,8 +20,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Main"/>
-        <TopLine Value="176"/>
-        <CursorPos X="21" Y="145"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="194"/>
+        <CursorPos X="11" Y="179"/>
         <UsageCount Value="228"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -39,10 +40,9 @@
       <Unit3>
         <Filename Value="laz_kernel_serial.pas"/>
         <UnitName Value="Laz_kernel_serial"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="123"/>
-        <CursorPos Y="131"/>
+        <TopLine Value="176"/>
+        <CursorPos X="16" Y="184"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit3>
@@ -50,123 +50,123 @@
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="main.pas"/>
-        <Caret Line="182" Column="3" TopLine="179"/>
+        <Caret Line="55" Column="55" TopLine="48"/>
       </Position1>
       <Position2>
-        <Filename Value="laz_kernel_serial.pas"/>
-        <Caret Line="192" Column="3" TopLine="162"/>
+        <Filename Value="main.pas"/>
+        <Caret Line="161" TopLine="157"/>
       </Position2>
       <Position3>
         <Filename Value="main.pas"/>
-        <Caret Line="212" TopLine="134"/>
+        <Caret Line="242" Column="17" TopLine="233"/>
       </Position3>
       <Position4>
         <Filename Value="main.pas"/>
-        <Caret Line="164" TopLine="150"/>
+        <Caret Line="241" Column="17" TopLine="232"/>
       </Position4>
       <Position5>
         <Filename Value="main.pas"/>
-        <Caret Line="55" Column="55" TopLine="48"/>
+        <Caret Line="134" TopLine="123"/>
       </Position5>
       <Position6>
         <Filename Value="main.pas"/>
-        <Caret Line="161" TopLine="157"/>
+        <Caret Line="233" Column="17" TopLine="224"/>
       </Position6>
       <Position7>
         <Filename Value="main.pas"/>
-        <Caret Line="242" Column="17" TopLine="233"/>
+        <Caret Line="232" Column="17" TopLine="223"/>
       </Position7>
       <Position8>
         <Filename Value="main.pas"/>
-        <Caret Line="241" Column="17" TopLine="232"/>
+        <Caret Line="231" Column="17" TopLine="222"/>
       </Position8>
       <Position9>
         <Filename Value="main.pas"/>
-        <Caret Line="134" TopLine="123"/>
+        <Caret Line="230" Column="17" TopLine="221"/>
       </Position9>
       <Position10>
         <Filename Value="main.pas"/>
-        <Caret Line="233" Column="17" TopLine="224"/>
+        <Caret Line="153" Column="23" TopLine="144"/>
       </Position10>
       <Position11>
         <Filename Value="main.pas"/>
-        <Caret Line="232" Column="17" TopLine="223"/>
+        <Caret Line="53" TopLine="45"/>
       </Position11>
       <Position12>
         <Filename Value="main.pas"/>
-        <Caret Line="231" Column="17" TopLine="222"/>
+        <Caret Line="56" TopLine="48"/>
       </Position12>
       <Position13>
         <Filename Value="main.pas"/>
-        <Caret Line="230" Column="17" TopLine="221"/>
+        <Caret Line="150" Column="3" TopLine="147"/>
       </Position13>
       <Position14>
         <Filename Value="main.pas"/>
-        <Caret Line="153" Column="23" TopLine="144"/>
+        <Caret Line="151" Column="41" TopLine="142"/>
       </Position14>
       <Position15>
         <Filename Value="main.pas"/>
-        <Caret Line="53" TopLine="45"/>
+        <Caret Line="150" Column="3" TopLine="142"/>
       </Position15>
       <Position16>
-        <Filename Value="main.pas"/>
-        <Caret Line="56" TopLine="48"/>
+        <Filename Value="laz_kernel_serial.pas"/>
+        <Caret Line="133" Column="25" TopLine="119"/>
       </Position16>
       <Position17>
         <Filename Value="main.pas"/>
-        <Caret Line="150" Column="3" TopLine="147"/>
+        <Caret Line="189" Column="66" TopLine="181"/>
       </Position17>
       <Position18>
-        <Filename Value="main.pas"/>
-        <Caret Line="151" Column="41" TopLine="142"/>
+        <Filename Value="laz_kernel_serial.pas"/>
+        <Caret Line="134" Column="27" TopLine="120"/>
       </Position18>
       <Position19>
-        <Filename Value="main.pas"/>
-        <Caret Line="150" Column="3" TopLine="142"/>
+        <Filename Value="laz_kernel_serial.pas"/>
+        <Caret Line="131" Column="18" TopLine="123"/>
       </Position19>
       <Position20>
         <Filename Value="laz_kernel_serial.pas"/>
-        <Caret Line="133" Column="25" TopLine="119"/>
+        <Caret Line="133" Column="33" TopLine="124"/>
       </Position20>
       <Position21>
         <Filename Value="main.pas"/>
-        <Caret Line="189" Column="66" TopLine="181"/>
+        <Caret Line="189" Column="64" TopLine="181"/>
       </Position21>
       <Position22>
-        <Filename Value="laz_kernel_serial.pas"/>
-        <Caret Line="134" Column="27" TopLine="120"/>
+        <Filename Value="main.pas"/>
+        <Caret Line="190" Column="24" TopLine="166"/>
       </Position22>
       <Position23>
-        <Filename Value="laz_kernel_serial.pas"/>
-        <Caret Line="131" Column="18" TopLine="123"/>
+        <Filename Value="main.pas"/>
+        <Caret Line="191" Column="24" TopLine="175"/>
       </Position23>
       <Position24>
-        <Filename Value="laz_kernel_serial.pas"/>
-        <Caret Line="133" Column="33" TopLine="124"/>
+        <Filename Value="main.pas"/>
+        <Caret Line="153" Column="5" TopLine="142"/>
       </Position24>
       <Position25>
         <Filename Value="main.pas"/>
-        <Caret Line="189" Column="64" TopLine="181"/>
+        <Caret Line="151" Column="14" TopLine="142"/>
       </Position25>
       <Position26>
         <Filename Value="main.pas"/>
-        <Caret Line="190" Column="24" TopLine="166"/>
+        <Caret Line="192" Column="45" TopLine="185"/>
       </Position26>
       <Position27>
-        <Filename Value="main.pas"/>
-        <Caret Line="191" Column="24" TopLine="175"/>
+        <Filename Value="laz_kernel_serial.pas"/>
+        <Caret Line="218" Column="5"/>
       </Position27>
       <Position28>
-        <Filename Value="main.pas"/>
-        <Caret Line="153" Column="5" TopLine="142"/>
+        <Filename Value="laz_kernel_serial.pas"/>
+        <Caret Line="262" Column="16" TopLine="247"/>
       </Position28>
       <Position29>
-        <Filename Value="main.pas"/>
-        <Caret Line="151" Column="14" TopLine="142"/>
+        <Filename Value="laz_kernel_serial.pas"/>
+        <Caret Line="184" Column="16" TopLine="176"/>
       </Position29>
       <Position30>
-        <Filename Value="main.pas"/>
-        <Caret Line="192" Column="45" TopLine="185"/>
+        <Filename Value="laz_kernel_serial.pas"/>
+        <Caret Line="262" Column="16" TopLine="247"/>
       </Position30>
     </JumpHistory>
     <RunParams>

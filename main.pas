@@ -176,18 +176,18 @@ begin
         for i:=0 to 4 do
             strtmp:=strtmp+IntToHex(Word(Buffer_IO[i]),2);
 
-        form1.Memo1.Lines.Add(strtmp);
+        //form1.Memo1.Lines.Add(strtmp);
 
         if (POS('CDCDCD', strtmp)>0) then
            begin
-             Form1.Memo1.Lines.Add('Pacote Rec : '+strtmp+' '+Form1.lbl_cnt.caption);
+             //Form1.Memo1.Lines.Add('Pacote Rec : '+strtmp+' '+Form1.lbl_cnt.caption);
 
              node:=Aparelho.fila.comando[0];
              if(length(node)>0) then
                 begin
                   Aparelho.resultCOM:=Aparelho.kernelSerial(node, 15,3);
-                  Form1.Memo3.Lines.Add(node);
-                  Form1.Memo2.Lines.Clear;
+                  //Form1.Memo3.Lines.Add(node);
+                  //Form1.Memo2.Lines.Clear;
                   for i:=1 to 10 do
                       begin
                         Aparelho.fila.comando[i-1]:=Aparelho.fila.comando[i];

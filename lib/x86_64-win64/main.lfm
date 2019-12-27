@@ -1,11 +1,11 @@
 object Form1: TForm1
-  Left = 371
+  Left = 66
   Height = 549
-  Top = 147
-  Width = 809
+  Top = 124
+  Width = 1009
   Caption = 'Form1'
   ClientHeight = 549
-  ClientWidth = 809
+  ClientWidth = 1009
   OnClick = FormClick
   OnClose = FormClose
   OnCreate = FormCreate
@@ -185,7 +185,7 @@ object Form1: TForm1
     end
   end
   object GroupBox2: TGroupBox
-    Left = 448
+    Left = 447
     Height = 56
     Top = 192
     Width = 553
@@ -194,10 +194,10 @@ object Form1: TForm1
     ClientWidth = 549
     TabOrder = 9
     object ss_tempo: TEdit
-      Left = 215
+      Left = 208
       Height = 23
       Top = 8
-      Width = 57
+      Width = 144
       TabOrder = 0
       Text = '100'
     end
@@ -205,16 +205,16 @@ object Form1: TForm1
       Left = 16
       Height = 25
       Top = 8
-      Width = 190
+      Width = 160
       Caption = 'Buzzer_Direto'
       OnClick = btn_Buzzer_DiretoClick
       TabOrder = 1
     end
     object edt_res_buzzer: TEdit
-      Left = 282
+      Left = 392
       Height = 23
       Top = 8
-      Width = 51
+      Width = 155
       TabOrder = 2
     end
   end

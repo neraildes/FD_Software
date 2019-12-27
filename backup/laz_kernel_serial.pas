@@ -128,11 +128,9 @@ begin
    buffer[0]:=(tempo div 256);
    buffer[1]:=(tempo mod 256);
 
-   resultCOM:='';
+
    KernelCommand(COMMAND_PROCULUS_Buzzer, $00, 2, buffer, 15,3);
-   while(resultCOM='') do continue;
-   //sleep(1000);
-   showmessage(resultCOM);
+
 end;
 
 //------------------------------------------------------------------------------
