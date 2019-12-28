@@ -185,7 +185,7 @@ begin
             strtmp:=strtmp+IntToHex(Word(Buffer_IO[i]),2);
 
         if (POS('CDCDCD', strtmp)>0) then
-           begin
+            begin
              node:=Aparelho.fila.comando[0];
              if (Aparelho.fila.ObjOrigem<>nil)  then
                   begin

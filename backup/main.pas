@@ -132,7 +132,7 @@ end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 begin
-  Showmessage(Aparelho.HexToText(Edt_buz_return.Text);
+  Showmessage(Aparelho.HexToText(Edt_buz_return.Text));
 end;
 
 
