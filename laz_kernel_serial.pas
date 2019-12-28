@@ -71,8 +71,11 @@ const
 
 type
   TFila = Record
-           comando : array[0..50]of Ansistring;
-           fim : integer;
+           comando   : array[0..50]of Ansistring;
+           fim       : integer;
+           result    : string;
+           ObjOrigem : TObject;
+           ObjDestino: TObject;
            end;
 
 
@@ -80,11 +83,11 @@ type
 
   TSerial = class(TBlockSerial)
     public
-      resultCOM : string;
       fila : TFila;
       constructor Create(); overload;
 
-      procedure Buzzer(tempo : integer);
+      procedure Buzzer(Sender: TObject;
+                       tempo : integer);
 
       function Gravar_EEPROM_Interna(destino: byte;
                                      add    : integer;
@@ -121,16 +124,17 @@ begin
 end;
 
 
-procedure TSerial.Buzzer(tempo : integer);
+procedure TSerial.Buzzer( Sender: TObject;
+                          tempo : integer);
 var
    buffer : array [0..TXBUFFERSIZE ] of QWord;
 begin
+   fila.ObjOrigem:=Sender;
+   fila.ObjDestino:=Form1.Edt_buz_return;
    buffer[0]:=(tempo div 256);
    buffer[1]:=(tempo mod 256);
 
-
    KernelCommand(COMMAND_PROCULUS_Buzzer, $00, 2, buffer, 15,3);
-
 end;
 
 //------------------------------------------------------------------------------
@@ -181,19 +185,14 @@ begin
   for cnt:=0 to tamanho-1 do texto:=texto+inttohex(buffer[cnt],2);
   carga:=carga+Texto;
 
-  //showmessage(carga);
-
-
-
   Form1.Memo1.Lines.Clear;
   for i:=0 to 50 do Form1.Memo2.Lines.add(fila.comando[i]);
   fila.comando[fila.fim]:=carga;
   inc(fila.fim);
 
+  showmessage(fila.comando[0]);
 
-
-
-  result:= 'Foi Agendado, favor pegar o resultado na Thread';//kernelSerial(carga, TotalReturn);
+  //result:= 'Foi Agendado, favor pegar o resultado na Thread';//kernelSerial(carga, TotalReturn);
 end;
 
 
@@ -213,9 +212,9 @@ var
   retorno: AnsiString;
   decimal: integer;
 begin
-  //Form1.Memo4.Lines.Add('----KERNEL----');
+  Form1.Memo1.Lines.Add('----KERNEL----');
 
-  //Form1.Memo4.Lines.Add(comando);
+  Form1.Memo1.Lines.Add(comando);
 
   try
       if(length(comando)>2) then
@@ -240,8 +239,7 @@ begin
            for i:=0 to TotalReturn-1 do
                strtmp:=strtmp+IntToHex(Word(Buffer_In[i]),2);
            retorno:=(copy(strtmp,1,TotalReturn*2));
-
-           resultCOM:=retorno;
+           Aparelho.fila.result:=retorno;
 
            //Form1.Memo4.Lines.Add('Pacote Rec : '+strtmp);
          end;

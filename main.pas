@@ -27,14 +27,14 @@ type
     Button1: TButton;
     btn_LerMemo: TButton;
     btn_EscreverMemo: TButton;
-    btn_Buzzer_Direto: TButton;
+    Btn_Buzzer: TButton;
     Edit1: TEdit;
     Edit2: TEdit;
     Edit3: TEdit;
-    edt_res_buzzer: TEdit;
+    Edt_buz_return: TEdit;
     Memo3: TMemo;
     Memo4: TMemo;
-    ss_tempo: TEdit;
+    Edt_ss_time: TEdit;
     mb_dispositivo: TEdit;
     mb_Add: TEdit;
     mb_value: TEdit;
@@ -49,7 +49,7 @@ type
     Memo2: TMemo;
     rb_EEPROM: TRadioButton;
     rb_24C1025: TRadioButton;
-    procedure btn_Buzzer_DiretoClick(Sender: TObject);
+    procedure Btn_BuzzerClick(Sender: TObject);
     procedure btn_resumeClick(Sender: TObject);
     procedure btn_suspendClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
@@ -70,6 +70,7 @@ var
   Aparelho : TSerial;
   ouvinte :  TThead_USART;
   contador: integer;
+  buzzercnt: integer;
 
 implementation
 
@@ -85,7 +86,7 @@ begin
   ouvinte.Start;
   ouvinte.Priority:=tpTimeCritical;
 
-
+  buzzercnt:=0;
 
   Aparelho:=TSerial.Create;
 
@@ -146,9 +147,9 @@ begin
 end;
 
 
-procedure TForm1.btn_Buzzer_DiretoClick(Sender: TObject);
+procedure TForm1.Btn_BuzzerClick(Sender: TObject);
 begin
-  Aparelho.Buzzer(strtoint(ss_tempo.Text));
+  Aparelho.Buzzer(Sender, strtoint(Edt_ss_time.text));
 end;
 
 
@@ -176,24 +177,31 @@ begin
         for i:=0 to 4 do
             strtmp:=strtmp+IntToHex(Word(Buffer_IO[i]),2);
 
-        //form1.Memo1.Lines.Add(strtmp);
-
         if (POS('CDCDCD', strtmp)>0) then
            begin
-             //Form1.Memo1.Lines.Add('Pacote Rec : '+strtmp+' '+Form1.lbl_cnt.caption);
-
              node:=Aparelho.fila.comando[0];
+             if (Aparelho.fila.ObjOrigem<>nil)  then
+                  begin
+                    if(Aparelho.fila.ObjOrigem.InheritsFrom(TButton)) then
+                       begin
+                         if (TButton(Aparelho.fila.ObjOrigem).Name='Btn_Buzzer') then
+                             TEdit(Aparelho.fila.ObjDestino).Text:=inttostr(buzzercnt);//'Aparelho.fila.result';
+
+                            //Form1.Edt_buz_return.Text:=Aparelho.fila.result;
+
+
+
+
+                       end;
+                    Aparelho.fila.ObjOrigem:=nil;
+
+                    inc(buzzercnt);
+                  end;
+
              if(length(node)>0) then
                 begin
-                  Aparelho.resultCOM:=Aparelho.kernelSerial(node, 15,3);
-                  //Form1.Memo3.Lines.Add(node);
-                  //Form1.Memo2.Lines.Clear;
-                  for i:=1 to 10 do
-                      begin
-                        Aparelho.fila.comando[i-1]:=Aparelho.fila.comando[i];
-                        Form1.Memo2.Lines.Add(Aparelho.fila.comando[i]);
-                      end;
-
+                  //Aparelho.resultCOM:=Aparelho.kernelSerial(node, 15,3);
+                  for i:=1 to 10 do Aparelho.fila.comando[i-1]:=Aparelho.fila.comando[i];
                   Aparelho.fila.fim:=Aparelho.fila.fim-1;
                 end;
 
