@@ -28,6 +28,7 @@ type
     btn_LerMemo: TButton;
     btn_EscreverMemo: TButton;
     Btn_Buzzer: TButton;
+    Button2: TButton;
     Edit1: TEdit;
     Edit2: TEdit;
     Edit3: TEdit;
@@ -54,6 +55,7 @@ type
     procedure btn_suspendClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure btn_LerMemoClick(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
     procedure FormClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -128,6 +130,11 @@ begin
   //inc(Lista.fim);
 end;
 
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+  Showmessage(Aparelho.HexToText(Edt_buz_return.Text));
+end;
+
 
 
 procedure TForm1.FormClick(Sender: TObject);
@@ -182,10 +189,11 @@ begin
              node:=Aparelho.fila.comando[0];
              if (Aparelho.fila.ObjOrigem<>nil)  then
                   begin
+                    Aparelho.kernelSerial(node, 15,3); //ENVIA EFETIVAMENTE OS COMANDOS
                     if(Aparelho.fila.ObjOrigem.InheritsFrom(TButton)) then
                        begin
                          if (TButton(Aparelho.fila.ObjOrigem).Name='Btn_Buzzer') then
-                             TEdit(Aparelho.fila.ObjDestino).Text:=inttostr(buzzercnt);//'Aparelho.fila.result';
+                             TEdit(Aparelho.fila.ObjDestino).Text:=Aparelho.fila.result;
 
                             //Form1.Edt_buz_return.Text:=Aparelho.fila.result;
 

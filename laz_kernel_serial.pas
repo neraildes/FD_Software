@@ -239,7 +239,7 @@ begin
            for i:=0 to TotalReturn-1 do
                strtmp:=strtmp+IntToHex(Word(Buffer_In[i]),2);
            retorno:=(copy(strtmp,1,TotalReturn*2));
-           Aparelho.fila.result:=retorno;
+           Aparelho.fila.result:=Copy(retorno,length(retorno)-(3*2)+1,3*2);
 
            //Form1.Memo4.Lines.Add('Pacote Rec : '+strtmp);
          end;

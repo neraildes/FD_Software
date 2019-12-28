@@ -197,7 +197,7 @@ object Form1: TForm1
       Left = 208
       Height = 23
       Top = 8
-      Width = 144
+      Width = 64
       TabOrder = 0
       Text = '100'
     end
@@ -216,6 +216,15 @@ object Form1: TForm1
       Top = 8
       Width = 155
       TabOrder = 2
+    end
+    object Button2: TButton
+      Left = 288
+      Height = 21
+      Top = 8
+      Width = 82
+      Caption = 'Button2'
+      OnClick = Button2Click
+      TabOrder = 3
     end
   end
   object Memo3: TMemo
