@@ -13,6 +13,7 @@ type
   {Thread}
   TThead_USART = class(TThread)
   public
+    procedure showstatus();
   protected
     procedure execute; override;
   end;
@@ -24,15 +25,12 @@ type
   TForm1 = class(TForm)
     btn_suspend: TButton;
     btn_resume: TButton;
-    Button1: TButton;
     btn_LerMemo: TButton;
     btn_EscreverMemo: TButton;
     Btn_Buzzer: TButton;
     Button2: TButton;
-    Edit1: TEdit;
-    Edit2: TEdit;
-    Edit3: TEdit;
     Edt_buz_return: TEdit;
+    Lbl_Count: TLabel;
     Memo3: TMemo;
     Memo4: TMemo;
     Edt_ss_time: TEdit;
@@ -41,11 +39,6 @@ type
     mb_value: TEdit;
     GroupBox1: TGroupBox;
     GroupBox2: TGroupBox;
-    Label1: TLabel;
-    Label2: TLabel;
-    Label3: TLabel;
-    lbl_clk: TLabel;
-    lbl_cnt: TLabel;
     Memo1: TMemo;
     Memo2: TMemo;
     rb_EEPROM: TRadioButton;
@@ -53,9 +46,11 @@ type
     procedure Btn_BuzzerClick(Sender: TObject);
     procedure btn_resumeClick(Sender: TObject);
     procedure btn_suspendClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
     procedure btn_LerMemoClick(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure Edit1Change(Sender: TObject);
+    procedure Edit2Change(Sender: TObject);
+    procedure Edit3Change(Sender: TObject);
     procedure FormClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -90,6 +85,7 @@ begin
 
   buzzercnt:=0;
 
+
   Aparelho:=TSerial.Create;
 
   try
@@ -98,7 +94,7 @@ begin
   finally
     //Aparelho.free;
   end;
-
+  Aparelho.FilaFim:=0;
 end;
 
 
@@ -108,15 +104,7 @@ begin
   ouvinte.Suspend;
 end;
 
-procedure TForm1.Button1Click(Sender: TObject);
-var
-  mensagem:AnsiString;
-begin
-  mensagem:=Aparelho.Gravar_EEPROM_Interna(strtoint(edit1.Text),
-                                           strtoint(edit2.Text),
-                                           strtoint(edit3.Text));
-  showmessage(Aparelho.HexToText(mensagem));
-end;
+
 
 procedure TForm1.btn_LerMemoClick(Sender: TObject);
 var
@@ -133,6 +121,21 @@ end;
 procedure TForm1.Button2Click(Sender: TObject);
 begin
   Showmessage(Aparelho.HexToText(Edt_buz_return.Text));
+end;
+
+procedure TForm1.Edit1Change(Sender: TObject);
+begin
+
+end;
+
+procedure TForm1.Edit2Change(Sender: TObject);
+begin
+
+end;
+
+procedure TForm1.Edit3Change(Sender: TObject);
+begin
+
 end;
 
 
@@ -160,6 +163,18 @@ begin
 end;
 
 
+procedure TThead_USART.showstatus;
+begin
+Form1.Memo1.Lines.Clear;
+form1.Memo3.Lines.add('0-'+Aparelho.fila[0].comando);
+form1.Memo3.Lines.add('1-'+Aparelho.fila[1].comando);
+form1.Memo3.Lines.add('2-'+Aparelho.fila[2].comando);
+form1.Memo3.Lines.add('3-'+Aparelho.fila[3].comando);
+form1.Memo3.Lines.add('4-'+Aparelho.fila[4].comando);
+Form1.lbl_count.Caption:=inttostr(Aparelho.FilaFim)
+//strtoint(Form1.lbl_count.Caption)
+end;
+
 procedure TThead_USART.execute;
 var
   pnt : ^char;
@@ -169,14 +184,15 @@ var
   texto : string;
   ListaDeComandos : array[0..20] of string;
   node : AnsiString;  //APagar apos ensaios
-
+  jjj : TObject;
 
 begin
   cnt:=0;
   sleep(10);
   while(TRUE) do
         begin
-
+        //synchronize(@showstatus);
+        Form1.lbl_count.Caption:=inttostr(Aparelho.FilaFim);
         pnt:=Buffer_IO;
         Aparelho.Purge;
         cnt:=Aparelho.RecvBuffer(pnt,5);
@@ -184,35 +200,33 @@ begin
         for i:=0 to 4 do
             strtmp:=strtmp+IntToHex(Word(Buffer_IO[i]),2);
 
-        if (POS('CDCDCD', strtmp)>0) then
+        if ((POS('CDCDCD', strtmp)>0) and (Aparelho.FilaFim>0)) then
             begin
-             node:=Aparelho.fila.comando[0];
-             if (Aparelho.fila.ObjOrigem<>nil)  then
+             node:=Aparelho.fila[Aparelho.FilaFim-1].comando;
+
+             if (Aparelho.fila[Aparelho.FilaFim-1].ObjOrigem<>nil)  then
                   begin
-                    Aparelho.kernelSerial(node, 15,3); //ENVIA EFETIVAMENTE OS COMANDOS
-                    if(Aparelho.fila.ObjOrigem.InheritsFrom(TButton)) then
-                       begin
-                         if (TButton(Aparelho.fila.ObjOrigem).Name='Btn_Buzzer') then
-                             TEdit(Aparelho.fila.ObjDestino).Text:=Aparelho.fila.result;
-
-                            //Form1.Edt_buz_return.Text:=Aparelho.fila.result;
-
-
-
-
-                       end;
-                    Aparelho.fila.ObjOrigem:=nil;
-
-                    inc(buzzercnt);
+                    Aparelho.kernelSerial(node); //ENVIA EFETIVAMENTE OS COMANDOS
+                    if (Aparelho.fila[Aparelho.FilaFim-1].ObjOrigem.InheritsFrom(TButton)) then
+                        begin
+                         if (TButton(Aparelho.fila[Aparelho.FilaFim-1].ObjOrigem).Name='Btn_Buzzer') then
+                             TEdit(Aparelho.fila[Aparelho.FilaFim-1].ObjDestino).Text:=Aparelho.HexToText(Aparelho.fila[Aparelho.FilaFim-1].result);
+                         end;
                   end;
 
-             if(length(node)>0) then
+             if(Aparelho.FilaFim>0) then
                 begin
-                  //Aparelho.resultCOM:=Aparelho.kernelSerial(node, 15,3);
-                  for i:=1 to 10 do Aparelho.fila.comando[i-1]:=Aparelho.fila.comando[i];
-                  Aparelho.fila.fim:=Aparelho.fila.fim-1;
+                  for i:=1 to Aparelho.FilaFim do
+                      begin
+                      Aparelho.fila[i-1].comando:=Aparelho.fila[i].comando;
+                      Aparelho.fila[i-1].result:=Aparelho.fila[i].result;
+                      Aparelho.fila[i-1].TotalReturn:=Aparelho.fila[i].TotalReturn;
+                      Aparelho.fila[i-1].RXpayload:=Aparelho.fila[i].RXpayload;
+                      Aparelho.fila[i-1].ObjOrigem:=Aparelho.fila[i].ObjOrigem;
+                      Aparelho.fila[i-1].ObjDestino:=Aparelho.fila[i].ObjDestino;
+                      end;
                 end;
-
+             if(Aparelho.FilaFim>0) then  dec(Aparelho.FilaFim);
              Aparelho.Purge;
 
            end;

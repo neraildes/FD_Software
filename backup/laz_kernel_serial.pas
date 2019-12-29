@@ -68,14 +68,16 @@ const
    COMMAND_GLOBAL_HOT      = $2A;
    COMMAND_PERGUNTA        = $2B;
 //-------------------------------------
+   BUFFER_PC               =  20;
 
 type
   TFila = Record
-           comando   : array[0..50]of Ansistring;
-           fim       : integer;
-           result    : string;
-           ObjOrigem : TObject;
-           ObjDestino: TObject;
+           comando    : Ansistring;
+           TotalReturn: LongInt;
+           RXpayload  : integer;
+           result     : string;
+           ObjOrigem  : TObject;
+           ObjDestino : TObject;
            end;
 
 
@@ -83,7 +85,8 @@ type
 
   TSerial = class(TBlockSerial)
     public
-      fila : TFila;
+      fila    : array[0..BUFFER_PC] of TFila;
+      FilaFim : integer;
       constructor Create(); overload;
 
       procedure Buzzer(Sender: TObject;
@@ -102,9 +105,9 @@ type
                          totalreturn : integer)
                                      : Ansistring;
 
-      function kernelSerial(comando : Ansistring; TotalReturn:LongInt; RXpayload:integer):Ansistring;
+      function kernelSerial(comando : Ansistring) : Ansistring;
       function HexToInt(Hexadecimal : AnsiString) : integer;
-      function HexToText(Hexadecimal: AnsiString):AnsiString;
+      function HexToText(Hexadecimal: AnsiString) : AnsiString;
 
     private
     protected
@@ -120,7 +123,7 @@ uses
 constructor Tserial.Create();
 begin
   inherited Create();
-  fila.fim:=0;
+  FilaFim:=0;
 end;
 
 
@@ -129,12 +132,19 @@ procedure TSerial.Buzzer( Sender: TObject;
 var
    buffer : array [0..TXBUFFERSIZE ] of QWord;
 begin
-   fila.ObjOrigem:=Sender;
-   fila.ObjDestino:=Form1.Edt_buz_return;
-   buffer[0]:=(tempo div 256);
-   buffer[1]:=(tempo mod 256);
+//fila[FilaFim].comando:=carga;
+//fila[FilaFim].result:='';
+  //showmessage(inttostr(filafim));
+  fila[FilaFim].RXpayload:=3;
+  fila[FilaFim].TotalReturn:=14;
+  fila[FilaFim].ObjOrigem:=Sender;
+  fila[FilaFim].ObjDestino:=Form1.Edt_buz_return;
 
-   KernelCommand(COMMAND_PROCULUS_Buzzer, $00, 2, buffer, 15,3);
+
+  buffer[0]:=(tempo div 256);
+  buffer[1]:=(tempo mod 256);
+
+  KernelCommand(COMMAND_PROCULUS_Buzzer, $00, 2, buffer, 15,3);
 end;
 
 //------------------------------------------------------------------------------
@@ -185,12 +195,16 @@ begin
   for cnt:=0 to tamanho-1 do texto:=texto+inttohex(buffer[cnt],2);
   carga:=carga+Texto;
 
-  Form1.Memo1.Lines.Clear;
-  for i:=0 to 50 do Form1.Memo2.Lines.add(fila.comando[i]);
-  fila.comando[fila.fim]:=carga;
-  inc(fila.fim);
 
-  showmessage(fila.comando[0]);
+  fila[FilaFim].comando:=carga;
+  fila[FilaFim].result:='';
+//fila[FilaFim].RXpayload:=0;
+//fila[FilaFim].TotalReturn:=0;
+//fila[FilaFim].ObjOrigem:=nil;
+//fila[FilaFim].ObjDestino:=nil;
+  inc(FilaFim);
+
+
 
   //result:= 'Foi Agendado, favor pegar o resultado na Thread';//kernelSerial(carga, TotalReturn);
 end;
@@ -198,7 +212,7 @@ end;
 
 
 //------------------------------------------------------------------------------
-function TSerial.kernelSerial(comando : Ansistring; TotalReturn:LongInt; RXpayload:integer):Ansistring;
+function TSerial.kernelSerial(comando : Ansistring):Ansistring;
 var
   Buffer_In  : array[0..TXBUFFERSIZE] of byte;
   Buffer_Out : array[0..TXBUFFERSIZE] of byte;
@@ -212,9 +226,8 @@ var
   retorno: AnsiString;
   decimal: integer;
 begin
-  Form1.Memo1.Lines.Add('----KERNEL----');
 
-  Form1.Memo1.Lines.Add(comando);
+  //Form1.Memo2.Lines.Add('E: '+comando);   //ENVIADO
 
   try
       if(length(comando)>2) then
@@ -229,19 +242,20 @@ begin
 
 
            Purge;
-           //Form1.Memo1.Lines.Add('Pacote Env : '+comando);
+
            SendBuffer(pnt,SizeBufferSend);
 
            pnt:=@Buffer_In;
 
-           NumRcv:=RecvBuffer(pnt,TotalReturn);
+           NumRcv:=RecvBuffer(pnt,Fila[FilaFim-1].TotalReturn);
            strtmp:='';
-           for i:=0 to TotalReturn-1 do
+           for i:=0 to Fila[FilaFim-1].TotalReturn do
                strtmp:=strtmp+IntToHex(Word(Buffer_In[i]),2);
-           retorno:=(copy(strtmp,1,TotalReturn*2));
-           Aparelho.fila.result:=Copy(retorno,length(retorno)-3*2,3*2);
+           Fila[FilaFim-1].result:=Copy(strtmp,length(strtmp)-(3*2)+1,3*2);
 
-           //Form1.Memo4.Lines.Add('Pacote Rec : '+strtmp);
+
+
+           //Form1.Memo2.Lines.Add('R: '+Fila[FilaFim-1].result);   //RECEBIDO
          end;
 
 
@@ -258,7 +272,7 @@ end;
 function Tserial.HexToInt(Hexadecimal : AnsiString) : integer;
 begin
   //showmessage(Hexadecimal);
-  Result := 0;//StrToInt('$' + Hexadecimal);
+  Result := StrToInt('$' + Hexadecimal);
 end;
 
 
@@ -277,9 +291,11 @@ begin
   while cnt<length(Hexadecimal) do
         begin
           tmp:=chr(HextoInt(copy(hexadecimal,cnt,2)));
+             {
           if (tmp=char(0)) then
              texto:=texto+chr(7)
           else
+             }
              texto:=texto+tmp;
           cnt:=cnt+2;
         end;
