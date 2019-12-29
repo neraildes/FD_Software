@@ -68,7 +68,7 @@ const
    COMMAND_GLOBAL_HOT      = $2A;
    COMMAND_PERGUNTA        = $2B;
 //-------------------------------------
-   BUFFER_PC               =  20;
+   BUFFER_PC               =  50;
 
 type
   TFila = Record
@@ -291,12 +291,7 @@ begin
   while cnt<length(Hexadecimal) do
         begin
           tmp:=chr(HextoInt(copy(hexadecimal,cnt,2)));
-             {
-          if (tmp=char(0)) then
-             texto:=texto+chr(7)
-          else
-             }
-             texto:=texto+tmp;
+          texto:=texto+tmp;
           cnt:=cnt+2;
         end;
   result := texto;

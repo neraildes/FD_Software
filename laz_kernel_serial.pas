@@ -68,7 +68,7 @@ const
    COMMAND_GLOBAL_HOT      = $2A;
    COMMAND_PERGUNTA        = $2B;
 //-------------------------------------
-   BUFFER_PC               =  20;
+   BUFFER_PC               =  50;
 
 type
   TFila = Record
@@ -227,7 +227,7 @@ var
   decimal: integer;
 begin
 
-  //Form1.Memo2.Lines.Add('E: '+comando);   //ENVIADO
+  Form1.Memo2.Lines.Add('E: '+comando);   //ENVIADO
 
   try
       if(length(comando)>2) then
@@ -255,7 +255,7 @@ begin
 
 
 
-           //Form1.Memo2.Lines.Add('R: '+Fila[FilaFim-1].result);   //RECEBIDO
+           Form1.Memo2.Lines.Add('R: '+Fila[FilaFim-1].result);   //RECEBIDO
          end;
 
 
