@@ -29,6 +29,7 @@ type
     btn_EscreverMemo: TButton;
     Btn_Buzzer: TButton;
     Button2: TButton;
+    chk_EEPROM_16Bits: TCheckBox;
     edt_eeprom_reply: TEdit;
     Edt_buz_return: TEdit;
     Label1: TLabel;
@@ -57,6 +58,7 @@ type
     procedure btn_LerMemoClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure chk_EEPROM_16BitsChange(Sender: TObject);
     procedure Edit1Change(Sender: TObject);
     procedure Edit2Change(Sender: TObject);
     procedure Edit3Change(Sender: TObject);
@@ -136,6 +138,14 @@ end;
 procedure TForm1.Button2Click(Sender: TObject);
 begin
   Showmessage(Aparelho.HexToText(Edt_buz_return.Text));
+end;
+
+procedure TForm1.chk_EEPROM_16BitsChange(Sender: TObject);
+begin
+   if(chk_EEPROM_16Bits.Checked) then
+      Form1.edt_eeprom_value.text:='$0000'
+   else
+      Form1.edt_eeprom_value.text:='$00';
 end;
 
 procedure TForm1.Edit1Change(Sender: TObject);

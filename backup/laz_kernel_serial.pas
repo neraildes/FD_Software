@@ -99,7 +99,7 @@ type
       function Gravar_EEPROM_Interna(Sender: TObject;
                                      destino: byte;
                                      add    : integer;
-                                     value  : byte)
+                                     data   : integer)
                                             : AnsiString;
 
       function     Ler_EEPROM_Interna(Sender: TObject;
@@ -161,35 +161,68 @@ end;
 function TSerial.Gravar_EEPROM_Interna(Sender: TObject;
                                        destino: byte;
                                        add    : integer;
-                                       value  : byte)
+                                       data   : integer)
                                               : AnsiString;
 var
    buffer : array [0..TXBUFFERSIZE ] of QWord;
 begin
-
-//fila[FilaFim].comando:=carga;   Carregado no KernelCommand
-//fila[FilaFim].result:='';       Zerado no KernelCommand
-  fila[FilaFim].RXpayload:=3;
-  fila[FilaFim].TotalReturn:=8;
-  fila[FilaFim].ObjOrigem:=Sender;
-  fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
-
-  if(destino=$00) then //EEPROM DA PLACA MAE (3ff)
+  if(destino=$00) then //GRAVAR EEPROM INTERNA DA PLACA MAE (3ff)
      begin
-       buffer[0]:= (add div 256); //______Endereco (0x3FF)
-       buffer[1]:= (add mod 256); //
-       buffer[2]:= value;         //valor
-       KernelCommand(COMMAND_IEE_W_BYTE, destino, 3, buffer);
+     //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+     //fila[FilaFim].result:='';       Zerado no KernelCommand
+       fila[FilaFim].RXpayload:=3;
+       fila[FilaFim].TotalReturn:=8;
+       fila[FilaFim].ObjOrigem:=Sender;
+       fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
+
+       if(Form1.chk_EEPROM_16Bits.Checked) then //16Bits de dados
+          begin
+            buffer[0]:= (add div 256); //______Endereco (0x3FF)
+            buffer[1]:= (add mod 256); //
+            buffer[2]:= (data div 256); //______Dados (0xFFFF)
+            buffer[3]:= (data mod 256); //
+            KernelCommand(COMMAND_IEE_W_INT, destino, 4, buffer);
+          end
+       else
+          begin
+            buffer[0]:= (add div 256); //______Endereco (0x3FF)
+            buffer[1]:= (add mod 256); //
+            buffer[2]:= (data mod 256); //valor
+            KernelCommand(COMMAND_IEE_W_BYTE, destino, 3, buffer);
+          end;
      end
-  else
+  else                //GRAVAR EEPROM INTERNA DA PLACA FILHA 0xFF
      begin
-       fila[FilaFim].RXpayload:=25;
+       if(Form1.chk_EEPROM_16Bits.Checked) then //16Bits de dados
+          begin
+            //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+            //fila[FilaFim].result:='';       Zerado no KernelCommand
+              fila[FilaFim].RXpayload:=3;
+              fila[FilaFim].TotalReturn:=17;
+              fila[FilaFim].ObjOrigem:=Sender;
+              fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
 
-       buffer[0]:=destino;       //Placa Destino
-       buffer[1]:=(add div 256); //______Endereco (0x3FF)
-       //buffer[2]:=(add mod 256); //
-       buffer[3]:=value;         //valor
-       KernelCommand(COMMAND_IEE_W_BYTE, destino, 3, buffer);
+
+              buffer[0]:=(add mod 256);
+              buffer[1]:=(data div 256);
+              buffer[2]:=(data mod 256);
+              KernelCommand(COMMAND_IEE_W_INT, destino, 3, buffer);
+          end
+       else
+          begin
+            //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+            //fila[FilaFim].result:='';       Zerado no KernelCommand
+              fila[FilaFim].RXpayload:=3;
+              fila[FilaFim].TotalReturn:=16;
+              fila[FilaFim].ObjOrigem:=Sender;
+              fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
+
+              //buffer[0]:= destino;      //Placa Destino
+              buffer[0]:=(add mod 256); //______Endereco (0x3FF)
+              buffer[1]:= data;         //valor
+              KernelCommand(COMMAND_IEE_W_BYTE, destino, 2, buffer);
+          end;
+
      end;
 
 
@@ -206,32 +239,56 @@ function TSerial.Ler_EEPROM_Interna(Sender: TObject;
 var
    buffer : array [0..TXBUFFERSIZE ] of QWord;
 begin
-
-//fila[FilaFim].comando:=carga;   Carregado no KernelCommand
-//fila[FilaFim].result:='';       Zerado no KernelCommand
-  fila[FilaFim].RXpayload:=3;
-  fila[FilaFim].TotalReturn:=8;
-  fila[FilaFim].ObjOrigem:=Sender;
-  fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
-
-  if(destino=$00) then //EEPROM DA PLACA MAE (3ff)
+  if(destino=$00) then //LER EEPROM INTERNA DA PLACA MAE (0x3FF)
      begin
-       fila[FilaFim].RXpayload:=1;
-       fila[FilaFim].TotalReturn:=6;
+       //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+       //fila[FilaFim].result:='';       Zerado no KernelCommand
+       fila[FilaFim].ObjOrigem:=Sender;
+       fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
 
-       buffer[0]:= (add div 256); //______Endereco (0x3FF)
-       buffer[1]:= (add mod 256); //
-       KernelCommand(COMMAND_IEE_R_BYTE, destino, 2, buffer);
+       if(Form1.chk_EEPROM_16Bits.Checked) then //Ler EEPROM Interna 16Bits de dados
+          begin
+            fila[FilaFim].RXpayload:=2;
+            fila[FilaFim].TotalReturn:=7;
+            buffer[0]:= (add div 256); //______Endereco (0x3FF)
+            buffer[1]:= (add mod 256); //
+            KernelCommand(COMMAND_IEE_R_INT, destino, 2, buffer);
+          end
+       else                                    //Ler EEPROM Interna 8Bits de dados
+          begin
+            fila[FilaFim].RXpayload:=1;
+            fila[FilaFim].TotalReturn:=6;
+            buffer[0]:= (add div 256); //______Endereco (0x3FF)
+            buffer[1]:= (add mod 256); //
+            KernelCommand(COMMAND_IEE_R_BYTE, destino, 2, buffer);
+          end;
+
      end
-  else
+  else                 //LER EEPROM INTERNA DA PLACA FILHA (0xFF)
      begin
-       fila[FilaFim].RXpayload:=25;
+       if(Form1.chk_EEPROM_16Bits.Checked) then
+          begin
+            //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+            //fila[FilaFim].result:='';       Zerado no KernelCommand
+            fila[FilaFim].RXpayload:=2;
+            fila[FilaFim].TotalReturn:=14;
+            fila[FilaFim].ObjOrigem:=Sender;
+            fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
+            buffer[0]:=(add mod 256);
+            KernelCommand(COMMAND_IEE_R_INT, destino, 1, buffer);
+          end
+       else
+          begin
+            //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+            //fila[FilaFim].result:='';       Zerado no KernelCommand
+            fila[FilaFim].RXpayload:=1;
+            fila[FilaFim].TotalReturn:=13;
+            fila[FilaFim].ObjOrigem:=Sender;
+            fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
+            buffer[0]:=(add mod 256);
+            KernelCommand(COMMAND_IEE_R_BYTE, destino, 1, buffer);
+          end;
 
-       buffer[0]:=destino;       //Placa Destino
-       buffer[1]:=(add div 256); //______Endereco (0x3FF)
-       //buffer[2]:=(add mod 256); //
-       //buffer[3]:=value;         //valor
-       KernelCommand(COMMAND_IEE_W_BYTE, destino, 3, buffer);
      end;
 
 
@@ -327,7 +384,7 @@ begin
            Fila[0].result:=Copy(strtmp,length(strtmp)-(Fila[0].RXpayload*2)+1,Fila[0].RXpayload*2+1);
 
 
-
+           Form1.Memo2.Lines.Add('F: '+strtmp);
            Form1.Memo2.Lines.Add('R: '+Fila[0].result);   //RECEBIDO
          end;
 
