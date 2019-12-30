@@ -70,6 +70,10 @@ const
 //-------------------------------------
    BUFFER_PC               =  50;
 
+//-----------OUTRAS CONSTANTES-------------
+   READ  = 0;
+   WRITE = 1;
+
 type
   TFila = Record
            comando    : Ansistring;
@@ -92,17 +96,23 @@ type
       procedure Buzzer(Sender: TObject;
                        tempo : integer);
 
-      function Gravar_EEPROM_Interna(destino: byte;
+      function Gravar_EEPROM_Interna(Sender: TObject;
+                                     destino: byte;
                                      add    : integer;
                                      value  : byte)
                                             : AnsiString;
 
+      function     Ler_EEPROM_Interna(Sender: TObject;
+                                     destino: byte;
+                                     add    : integer)
+                                            : AnsiString;
+
+
+
       function KernelCommand(comando : byte;
                              destino : byte;
                              tamanho : byte;
-                              buffer : array of QWord;
-                           totalsend : LongInt;
-                         totalreturn : integer)
+                              buffer : array of QWord)
                                      : Ansistring;
 
       function kernelSerial(comando : Ansistring) : Ansistring;
@@ -144,29 +154,94 @@ begin
   buffer[0]:=(tempo div 256);
   buffer[1]:=(tempo mod 256);
 
-  KernelCommand(COMMAND_PROCULUS_Buzzer, $00, 2, buffer, 15,3);
+  KernelCommand(COMMAND_PROCULUS_Buzzer, $00, 2, buffer);
 end;
 
 //------------------------------------------------------------------------------
-function TSerial.Gravar_EEPROM_Interna(destino: byte;
+function TSerial.Gravar_EEPROM_Interna(Sender: TObject;
+                                       destino: byte;
                                        add    : integer;
                                        value  : byte)
                                               : AnsiString;
 var
-   payload : array [0..TXBUFFERSIZE ] of QWord;
+   buffer : array [0..TXBUFFERSIZE ] of QWord;
 begin
-  {
-  payload[0]:=destino;
-  payload[1]:=chip;
-  payload[2]:=(add div 256);
-  payload[3]:=(add mod 256);
-  }
-  payload[0]:=destino;
-  payload[1]:=(add div 256);
-  payload[2]:=(add mod 256);
-  payload[3]:=value;
-  result    :=KernelCommand(COMMAND_IEE_W_BYTE, destino, 4, payload, 15,3);
+
+//fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+//fila[FilaFim].result:='';       Zerado no KernelCommand
+  fila[FilaFim].RXpayload:=3;
+  fila[FilaFim].TotalReturn:=8;
+  fila[FilaFim].ObjOrigem:=Sender;
+  fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
+
+  if(destino=$00) then //EEPROM DA PLACA MAE (3ff)
+     begin
+       buffer[0]:= (add div 256); //______Endereco (0x3FF)
+       buffer[1]:= (add mod 256); //
+       buffer[2]:= value;         //valor
+       KernelCommand(COMMAND_IEE_W_BYTE, destino, 3, buffer);
+     end
+  else
+     begin
+       fila[FilaFim].RXpayload:=25;
+
+       buffer[0]:=destino;       //Placa Destino
+       buffer[1]:=(add div 256); //______Endereco (0x3FF)
+       //buffer[2]:=(add mod 256); //
+       buffer[3]:=value;         //valor
+       KernelCommand(COMMAND_IEE_W_BYTE, destino, 3, buffer);
+     end;
+
+
 end;
+
+
+
+
+//------------------------------------------------------------------------------
+function TSerial.Ler_EEPROM_Interna(Sender: TObject;
+                                   destino: byte;
+                                   add    : integer)
+                                          : AnsiString;
+var
+   buffer : array [0..TXBUFFERSIZE ] of QWord;
+begin
+
+//fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+//fila[FilaFim].result:='';       Zerado no KernelCommand
+  fila[FilaFim].RXpayload:=3;
+  fila[FilaFim].TotalReturn:=8;
+  fila[FilaFim].ObjOrigem:=Sender;
+  fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
+
+  if(destino=$00) then //EEPROM DA PLACA MAE (3ff)
+     begin
+       fila[FilaFim].RXpayload:=1;
+       fila[FilaFim].TotalReturn:=6;
+
+       buffer[0]:= (add div 256); //______Endereco (0x3FF)
+       buffer[1]:= (add mod 256); //
+       KernelCommand(COMMAND_IEE_R_BYTE, destino, 2, buffer);
+     end
+  else
+     begin
+       fila[FilaFim].RXpayload:=25;
+
+       buffer[0]:=destino;       //Placa Destino
+       buffer[1]:=(add div 256); //______Endereco (0x3FF)
+       //buffer[2]:=(add mod 256); //
+       //buffer[3]:=value;         //valor
+       KernelCommand(COMMAND_IEE_W_BYTE, destino, 3, buffer);
+     end;
+
+
+end;
+
+
+
+
+
+
 
 
 
@@ -174,9 +249,7 @@ end;
 function TSerial.KernelCommand(comando : byte;
                                destino : byte;
                                tamanho : byte;
-                                buffer : array of QWord;
-                             totalsend : LongInt;
-                           totalreturn : integer)
+                                buffer : array of QWord)
                                        : Ansistring;
 var
   carga: AnsiString;
@@ -227,7 +300,7 @@ var
   decimal: integer;
 begin
 
-  //Form1.Memo2.Lines.Add('E: '+comando);   //ENVIADO
+  Form1.Memo2.Lines.Add('E: '+comando);   //ENVIADO
 
   try
       if(length(comando)>2) then
@@ -247,15 +320,15 @@ begin
 
            pnt:=@Buffer_In;
 
-           NumRcv:=RecvBuffer(pnt,Fila[FilaFim-1].TotalReturn);
+           NumRcv:=RecvBuffer(pnt,Fila[0].TotalReturn+1);
            strtmp:='';
-           for i:=0 to Fila[FilaFim-1].TotalReturn do
+           for i:=0 to Fila[0].TotalReturn do
                strtmp:=strtmp+IntToHex(Word(Buffer_In[i]),2);
-           Fila[FilaFim-1].result:=Copy(strtmp,length(strtmp)-(3*2)+1,3*2);
+           Fila[0].result:=Copy(strtmp,length(strtmp)-(Fila[0].RXpayload*2)+1,Fila[0].RXpayload*2+1);
 
 
 
-           //Form1.Memo2.Lines.Add('R: '+Fila[FilaFim-1].result);   //RECEBIDO
+           Form1.Memo2.Lines.Add('R: '+Fila[0].result);   //RECEBIDO
          end;
 
 
