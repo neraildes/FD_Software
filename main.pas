@@ -28,14 +28,22 @@ type
     btn_LerMemo: TButton;
     btn_EscreverMemo: TButton;
     Btn_Buzzer: TButton;
+    Button1: TButton;
     Button2: TButton;
     chk_EEPROM_16Bits: TCheckBox;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Edit3: TEdit;
+    Edit4: TEdit;
+    Edit5: TEdit;
+    edt_eeprom_chip: TEdit;
     edt_eeprom_reply: TEdit;
     Edt_buz_return: TEdit;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
+    Label5: TLabel;
     Lbl_Count: TLabel;
     Memo3: TMemo;
     Memo4: TMemo;
@@ -67,6 +75,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure ListaAdd(cmd:string);
     function  ListaUse():string;
+    procedure rb_24C1025Change(Sender: TObject);
+    procedure rb_EEPROMChange(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
   private
 
@@ -125,13 +135,76 @@ var
 begin
   edt_eeprom_reply.text:='';
   if(rb_EEPROM.Checked) then
-     Aparelho.Ler_EEPROM_Interna(Sender,
-                                 strtoint(edt_eeprom_placa.Text),
-                                 strtoint(edt_eeprom_add.Text));
+     begin
+     if(chk_EEPROM_16Bits.Checked) then
+         begin
+          if(StrToInt(edt_eeprom_placa.text)=0)  then
+             Aparelho.Ler_EEPROM_16bits_Interna_Mae(Sender,
+                                              strtoint(edt_eeprom_add.Text))
+
+          else
+             Aparelho.Ler_EEPROM_16bits_Interna_Filha(Sender,
+                                                strtoint(edt_eeprom_placa.text),
+                                                strtoint(edt_eeprom_add.Text));
+
+
+         end
+     else
+         begin
+           if(StrToInt(edt_eeprom_placa.text)=0)  then
+              Aparelho.Ler_EEPROM_8bits_Interna_Mae(Sender,
+                                              strtoint(edt_eeprom_add.Text))
+
+           else
+              Aparelho.Ler_EEPROM_8bits_Interna_Filha(Sender,
+                                                strtoint(edt_eeprom_placa.text),
+                                                strtoint(edt_eeprom_add.Text));
+
+         end
+     end
+  else
+  begin
+  if(chk_EEPROM_16Bits.Checked) then
+      begin
+       if(StrToInt(edt_eeprom_placa.text)=0)  then
+          Aparelho.Ler_EEPROM_16bits_24C1025_Mae(Sender,
+                                           strtoint(edt_eeprom_chip.Text),
+                                           strtoint(edt_eeprom_add.Text))
+
+       else
+          Aparelho.Ler_EEPROM_16bits_24C1025_Filha(Sender,
+                                             strtoint(edt_eeprom_placa.text),
+                                             strtoint(edt_eeprom_chip.Text),
+                                             strtoint(edt_eeprom_add.Text));
+
+
+      end
+  else
+      begin
+        if(StrToInt(edt_eeprom_placa.text)=0)  then
+           Aparelho.Ler_EEPROM_8bits_24C1025_Mae(Sender,
+                                           strtoint(edt_eeprom_chip.Text),
+                                           strtoint(edt_eeprom_add.Text))
+
+        else
+           Aparelho.Ler_EEPROM_8bits_24C1025_Filha(Sender,
+                                             strtoint(edt_eeprom_placa.text),
+                                             strtoint(edt_eeprom_chip.Text),
+                                             strtoint(edt_eeprom_add.Text));
+
+      end
+  end
+
+
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
+  Edit2.text:=inttohex(strtoint(Edit1.Text)>>24 and $ff,2);
+  Edit3.text:=inttohex(strtoint(Edit1.Text)>>16 and $ff,2);
+  Edit4.text:=inttohex(strtoint(Edit1.Text)>>8 and $ff,2);
+  Edit5.text:=inttohex(strtoint(Edit1.Text)>>0 and $FF ,2);
+
 
 end;
 
@@ -196,12 +269,66 @@ end;
 procedure TForm1.btn_EscreverMemoClick(Sender: TObject);
 begin
   edt_eeprom_reply.text:='';
-  if(rb_EEPROM.Checked) then
-     Aparelho.Gravar_EEPROM_Interna(Sender,
-                                    strtoint(edt_eeprom_placa.Text),
-                                    strtoint(edt_eeprom_add.Text),
-                                    strtoint(edt_eeprom_value.Text));
+  if(rb_EEPROM.Checked) then  //Memória interna do Microcontrolador
+     begin
+     if(chk_EEPROM_16Bits.Checked) then  //Dados com 16 bits
+         begin
+          if(StrToInt(edt_eeprom_placa.text)=0)  then   //Atuacao na placa mãe
+             Aparelho.Gravar_EEPROM_16bits_Interna_Mae(Sender,
+                                              strtoint(edt_eeprom_add.Text),
+                                              strtoint(edt_eeprom_value.Text))
+          else                                         //Atuação na placa filha
+             Aparelho.Gravar_EEPROM_16bits_Interna_Filha(Sender,
+                                                strtoint(edt_eeprom_placa.text),
+                                                strtoint(edt_eeprom_add.Text),
+                                                strtoint(edt_eeprom_value.Text));
 
+         end
+     else     //Dados com 8 bits de tamanho
+         begin
+           if(StrToInt(edt_eeprom_placa.text)=0)  then   //Atuacao na placa mãe
+              Aparelho.Gravar_EEPROM_8bits_Interna_Mae(Sender,
+                                              strtoint(edt_eeprom_add.Text),
+                                              strtoint(edt_eeprom_value.Text))
+           else                                          //Atuacao na placa filha
+              Aparelho.Gravar_EEPROM_8bits_Interna_Filha(Sender,
+                                                strtoint(edt_eeprom_placa.text),
+                                                strtoint(edt_eeprom_add.Text),
+                                                strtoint(edt_eeprom_value.Text));
+         end
+     end
+  else      //Memoria Externa do Microcontrolador (24C1025)
+     begin
+       if(chk_EEPROM_16Bits.Checked) then  //Dados com 16 bits
+           begin
+            if(StrToInt(edt_eeprom_placa.text)=0)  then   //Atuacao na placa mãe
+               Aparelho.Gravar_EEPROM_16bits_24C1025_Mae(Sender,
+                                                strtoint(edt_eeprom_chip.Text),
+                                                strtoint(edt_eeprom_add.Text),
+                                                strtoint(edt_eeprom_value.Text))
+            else
+              Aparelho.Gravar_EEPROM_16bits_24C1025_Filha(Sender,
+                                                 strtoint(edt_eeprom_placa.text),
+                                                 strtoint(edt_eeprom_chip.Text),
+                                                 strtoint(edt_eeprom_add.Text),
+                                                 strtoint(edt_eeprom_value.Text))
+            end
+       else
+          begin
+            if(StrToInt(edt_eeprom_placa.text)=0)  then   //Atuacao na placa mãe
+               Aparelho.Gravar_EEPROM_8bits_24C1025_Mae(Sender,
+                                               strtoint(edt_eeprom_chip.Text),
+                                               strtoint(edt_eeprom_add.Text),
+                                               strtoint(edt_eeprom_value.Text))
+            else
+               Aparelho.Gravar_EEPROM_8bits_24C1025_Filha(Sender,
+                                                 strtoint(edt_eeprom_placa.text),
+                                                 strtoint(edt_eeprom_chip.Text),
+                                                 strtoint(edt_eeprom_add.Text),
+                                                 strtoint(edt_eeprom_value.Text))
+
+          end;
+     end;
 end;
 
 
@@ -305,6 +432,16 @@ begin
       end;
   }
   result := saida;
+end;
+
+procedure TForm1.rb_24C1025Change(Sender: TObject);
+begin
+  edt_eeprom_add.text:='$00000000';
+end;
+
+procedure TForm1.rb_EEPROMChange(Sender: TObject);
+begin
+  edt_eeprom_add.text:='$0000';
 end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
