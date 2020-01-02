@@ -28,14 +28,8 @@ type
     btn_LerMemo: TButton;
     btn_EscreverMemo: TButton;
     Btn_Buzzer: TButton;
-    Button1: TButton;
     Button2: TButton;
     chk_EEPROM_16Bits: TCheckBox;
-    Edit1: TEdit;
-    Edit2: TEdit;
-    Edit3: TEdit;
-    Edit4: TEdit;
-    Edit5: TEdit;
     edt_eeprom_chip: TEdit;
     edt_eeprom_reply: TEdit;
     Edt_buz_return: TEdit;
@@ -75,6 +69,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure ListaAdd(cmd:string);
     function  ListaUse():string;
+    procedure RadioButton1Change(Sender: TObject);
     procedure rb_24C1025Change(Sender: TObject);
     procedure rb_EEPROMChange(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
@@ -196,30 +191,11 @@ begin
   end
 
 
-
-
-
-
-
-
-  //----------------------------------------------------------------
-     begin
-       showmessage('Rotina de memória LIMITADA');
-       Aparelho.Ler_EEPROM_8bits_24C1025_Mae(Sender,
-                                    strtoint(edt_eeprom_chip.Text),
-                                    strtoint(edt_eeprom_add.Text));
-
-     end;
-  //------------------------------------------------------------
-
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
-  Edit2.text:=inttohex(strtoint(Edit1.Text)>>24 and $ff,2);
-  Edit3.text:=inttohex(strtoint(Edit1.Text)>>16 and $ff,2);
-  Edit4.text:=inttohex(strtoint(Edit1.Text)>>8 and $ff,2);
-  Edit5.text:=inttohex(strtoint(Edit1.Text)>>0 and $FF ,2);
+
 
 
 end;
@@ -370,6 +346,7 @@ var
   ListaDeComandos : array[0..20] of string;
   node : AnsiString;  //APagar apos ensaios
   jjj : TObject;
+  HardReply:string;
 
 begin
   cnt:=0;
@@ -402,7 +379,16 @@ begin
                                  TEdit(Aparelho.fila[0].ObjDestino).Text:=Aparelho.HexToText(Aparelho.fila[0].result);
 
                              if (TButton(Aparelho.fila[0].ObjOrigem).Name='btn_EscreverMemo') then
-                                 TEdit(Aparelho.fila[0].ObjDestino).Text:=Aparelho.HexToText(Aparelho.fila[0].result);
+                                 begin
+                                 HardReply:=copy((Aparelho.HexToText(Aparelho.fila[0].result)),1,2);
+                                 TEdit(Aparelho.fila[0].ObjDestino).Text:=HardReply;
+                                 if(HardReply='NR') then
+                                    begin
+                                      Form1.Timer1.Enabled:=FALSE;
+                                      showmessage('A T E N Ç Ã O'+#13+'O Hardware Destino (Placa) não respondeu!');
+                                      Form1.Timer1.Enabled:=TRUE;
+                                    end;
+                                 end;
 
                              if (TButton(Aparelho.fila[0].ObjOrigem).Name='btn_LerMemo') then
                                  TEdit(Aparelho.fila[0].ObjDestino).Text:=Aparelho.fila[0].result;
@@ -448,6 +434,11 @@ begin
       end;
   }
   result := saida;
+end;
+
+procedure TForm1.RadioButton1Change(Sender: TObject);
+begin
+
 end;
 
 procedure TForm1.rb_24C1025Change(Sender: TObject);

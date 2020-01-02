@@ -179,8 +179,8 @@ type
       {
       L208M
       L216M
-      L208F *
-      L216F *
+      L208F
+      L216F
       }
 
       procedure Ler_EEPROM_8bits_24C1025_Mae(Sender : TObject;
@@ -532,7 +532,7 @@ begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   fila[FilaFim].RXpayload:=3;
-  fila[FilaFim].TotalReturn:=23;
+  fila[FilaFim].TotalReturn:=20;
   fila[FilaFim].ObjOrigem:=Sender;
   fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
 
@@ -560,7 +560,7 @@ begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   fila[FilaFim].RXpayload:=3;
-  fila[FilaFim].TotalReturn:=24;
+  fila[FilaFim].TotalReturn:=21;
   fila[FilaFim].ObjOrigem:=Sender;
   fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
 
@@ -667,7 +667,7 @@ begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   fila[FilaFim].RXpayload:=2;
-  fila[FilaFim].TotalReturn:=6;
+  fila[FilaFim].TotalReturn:=18;
   fila[FilaFim].ObjOrigem:=Sender;
   fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
 
@@ -676,7 +676,7 @@ begin
   buffer[2]:= (add>>16) and $FF;
   buffer[3]:= (add>>8 ) and $FF;
   buffer[4]:= (add>>0 ) and $FF;
-  KernelCommand(COMMAND_EEE_R_BYTE,destino , 5, buffer);
+  KernelCommand(COMMAND_EEE_R_INT,destino , 5, buffer);
 end;
 
 

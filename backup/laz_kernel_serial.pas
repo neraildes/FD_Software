@@ -105,22 +105,22 @@ type
       GE16F
       }
       procedure Gravar_EEPROM_8bits_Interna_Mae(Sender: TObject;
-                                              add    : integer;
-                                              data   : integer);
-
-      procedure Gravar_EEPROM_16bits_Interna_Mae(Sender: TObject;
                                                add    : integer;
                                                data   : integer);
 
-      procedure Gravar_EEPROM_8bits_Interna_Filha(Sender: TObject;
-                                               destino : integer;
+      procedure Gravar_EEPROM_16bits_Interna_Mae(Sender: TObject;
                                                 add    : integer;
                                                 data   : integer);
 
-      procedure Gravar_EEPROM_16bits_Interna_Filha(Sender: TObject;
+      procedure Gravar_EEPROM_8bits_Interna_Filha(Sender: TObject;
                                                 destino : integer;
                                                  add    : integer;
                                                  data   : integer);
+
+      procedure Gravar_EEPROM_16bits_Interna_Filha(Sender: TObject;
+                                                 destino : integer;
+                                                  add    : integer;
+                                                  data   : integer);
       //------------------------------------------------------------------------
       {
       LE08M
@@ -129,21 +129,21 @@ type
       LE16F
       }
       procedure Ler_EEPROM_8bits_Interna_Mae(Sender: TObject;
-                                           add    : integer);
-
-
-      procedure Ler_EEPROM_16bits_Interna_Mae(Sender: TObject;
                                             add    : integer);
 
 
-      procedure Ler_EEPROM_8bits_Interna_Filha(Sender: TObject;
-                                            destino : integer;
+      procedure Ler_EEPROM_16bits_Interna_Mae(Sender: TObject;
                                              add    : integer);
 
 
-      procedure Ler_EEPROM_16bits_Interna_Filha(Sender: TObject;
+      procedure Ler_EEPROM_8bits_Interna_Filha(Sender: TObject;
                                              destino : integer;
                                               add    : integer);
+
+
+      procedure Ler_EEPROM_16bits_Interna_Filha(Sender: TObject;
+                                              destino : integer;
+                                               add    : integer);
 
 
       //------------------------------------------------------------------------
@@ -154,56 +154,56 @@ type
       G216F
       }
       procedure Gravar_EEPROM_8bits_24C1025_Mae(Sender : TObject;
-                                                 chip : integer;
-                                                 add  : longint;
-                                                 data : integer);
-
-      procedure Gravar_EEPROM_16bits_24C1025_Mae(Sender : TObject;
                                                   chip : integer;
                                                   add  : longint;
                                                   data : integer);
 
-      procedure Gravar_EEPROM_8bits_24C1025_Filha(Sender : TObject;
-                                                destino : integer;
+      procedure Gravar_EEPROM_16bits_24C1025_Mae(Sender : TObject;
                                                    chip : integer;
                                                    add  : longint;
                                                    data : integer);
 
-      procedure Gravar_EEPROM_16bits_24C1025_Filha(Sender : TObject;
+      procedure Gravar_EEPROM_8bits_24C1025_Filha(Sender : TObject;
                                                  destino : integer;
                                                     chip : integer;
                                                     add  : longint;
                                                     data : integer);
 
+      procedure Gravar_EEPROM_16bits_24C1025_Filha(Sender : TObject;
+                                                  destino : integer;
+                                                     chip : integer;
+                                                     add  : longint;
+                                                     data : integer);
+
       //------------------------------------------------------------------------
       {
       L208M
       L216M
-      L208F *
-      L216F *
+      L208F
+      L216F
       }
 
       procedure Ler_EEPROM_8bits_24C1025_Mae(Sender : TObject;
-                                              chip : integer;
-                                              add  : longint);
-
-
-
-      procedure Ler_EEPROM_16bits_24C1025_Mae(Sender : TObject;
                                                chip : integer;
                                                add  : longint);
 
 
-      procedure Ler_EEPROM_8bits_24C1025_Filha(Sender : TObject;
-                                             destino : integer;
+
+      procedure Ler_EEPROM_16bits_24C1025_Mae(Sender : TObject;
                                                 chip : integer;
                                                 add  : longint);
 
 
-      procedure Ler_EEPROM_16bits_24C1025_Filha(Sender : TObject;
+      procedure Ler_EEPROM_8bits_24C1025_Filha(Sender : TObject;
                                               destino : integer;
                                                  chip : integer;
                                                  add  : longint);
+
+
+      procedure Ler_EEPROM_16bits_24C1025_Filha(Sender : TObject;
+                                               destino : integer;
+                                                  chip : integer;
+                                                  add  : longint);
 
 
 
@@ -265,6 +265,10 @@ end;
 
 
 
+{-------------------------------------------------------------------------------
+             M A N I P U L A D O R E S    D E    M E M O R I A
+-------------------------------------------------------------------------------}
+
 
 //------------------------------------------------------------------------
 {
@@ -276,8 +280,8 @@ GE16F
 
 
 procedure TSerial.Gravar_EEPROM_8bits_Interna_Mae(Sender: TObject;
-                                                add    : integer;
-                                                data   : integer);
+                                                 add    : integer;
+                                                 data   : integer);
 var
    buffer : array [0..TXBUFFERSIZE ] of QWord;
 begin
@@ -296,8 +300,8 @@ end;
 
 
 procedure TSerial.Gravar_EEPROM_16bits_Interna_Mae(Sender: TObject;
-                                                 add    : integer;
-                                                 data   : integer);
+                                                  add    : integer;
+                                                  data   : integer);
 var
    buffer : array [0..TXBUFFERSIZE ] of QWord;
 begin
@@ -318,9 +322,9 @@ end;
 
 
 procedure TSerial.Gravar_EEPROM_8bits_Interna_Filha(Sender: TObject;
-                                                 destino : integer;
-                                                  add    : integer;
-                                                  data   : integer);
+                                                  destino : integer;
+                                                   add    : integer;
+                                                   data   : integer);
 var
    buffer : array [0..TXBUFFERSIZE ] of QWord;
 begin
@@ -339,9 +343,9 @@ end;
 
 
 procedure TSerial.Gravar_EEPROM_16bits_Interna_Filha(Sender: TObject;
-                                                  destino : integer;
-                                                   add    : integer;
-                                                   data   : integer);
+                                                   destino : integer;
+                                                    add    : integer;
+                                                    data   : integer);
 var
    buffer : array [0..TXBUFFERSIZE ] of QWord;
 begin
@@ -375,7 +379,7 @@ LE08F
 LE16F
 }
 procedure TSerial.Ler_EEPROM_8bits_Interna_Mae(Sender: TObject;
-                                             add    : integer);
+                                              add    : integer);
 var
    buffer : array [0..TXBUFFERSIZE ] of QWord;
 begin
@@ -393,7 +397,7 @@ end;
 
 
 procedure TSerial.Ler_EEPROM_16bits_Interna_Mae(Sender: TObject;
-                                              add    : integer);
+                                               add    : integer);
 var
    buffer : array [0..TXBUFFERSIZE ] of QWord;
 begin
@@ -413,8 +417,8 @@ end;
 
 
 procedure TSerial.Ler_EEPROM_8bits_Interna_Filha(Sender: TObject;
-                                              destino : integer;
-                                               add    : integer);
+                                               destino : integer;
+                                                add    : integer);
 var
    buffer : array [0..TXBUFFERSIZE ] of QWord;
 begin
@@ -432,8 +436,8 @@ end;
 
 
 procedure TSerial.Ler_EEPROM_16bits_Interna_Filha(Sender: TObject;
-                                               destino : integer;
-                                                add    : integer);
+                                                destino : integer;
+                                                 add    : integer);
 var
    buffer : array [0..TXBUFFERSIZE ] of QWord;
 begin
@@ -462,9 +466,9 @@ G216F
 }
 
 procedure TSerial.Gravar_EEPROM_8bits_24C1025_Mae(Sender : TObject;
-                                                   chip : integer;
-                                                   add  : longint;
-                                                   data : integer);
+                                                    chip : integer;
+                                                    add  : longint;
+                                                    data : integer);
 var
    buffer : array [0..TXBUFFERSIZE ] of QWord;
 begin
@@ -488,9 +492,9 @@ end;
 
 
 procedure TSerial.Gravar_EEPROM_16bits_24C1025_Mae(Sender : TObject;
-                                                    chip : integer;
-                                                    add  : longint;
-                                                    data : integer);
+                                                     chip : integer;
+                                                     add  : longint;
+                                                     data : integer);
 var
    buffer : array [0..TXBUFFERSIZE ] of QWord;
 begin
@@ -518,17 +522,17 @@ end;
 
 
 procedure TSerial.Gravar_EEPROM_8bits_24C1025_Filha(Sender : TObject;
-                                                  destino : integer;
-                                                     chip : integer;
-                                                     add  : longint;
-                                                     data : integer);
+                                                   destino : integer;
+                                                      chip : integer;
+                                                      add  : longint;
+                                                      data : integer);
 var
    buffer : array [0..TXBUFFERSIZE ] of QWord;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   fila[FilaFim].RXpayload:=3;
-  fila[FilaFim].TotalReturn:=23;
+  fila[FilaFim].TotalReturn:=20;
   fila[FilaFim].ObjOrigem:=Sender;
   fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
 
@@ -546,17 +550,17 @@ end;
 
 
 procedure TSerial.Gravar_EEPROM_16bits_24C1025_Filha(Sender : TObject;
-                                                   destino : integer;
-                                                      chip : integer;
-                                                      add  : longint;
-                                                      data : integer);
+                                                    destino : integer;
+                                                       chip : integer;
+                                                       add  : longint;
+                                                       data : integer);
 var
    buffer : array [0..TXBUFFERSIZE ] of QWord;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   fila[FilaFim].RXpayload:=3;
-  fila[FilaFim].TotalReturn:=24;
+  fila[FilaFim].TotalReturn:=20;
   fila[FilaFim].ObjOrigem:=Sender;
   fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
 
@@ -583,8 +587,8 @@ L216F *
 
 
 procedure TSerial.Ler_EEPROM_8bits_24C1025_Mae(Sender : TObject;
-                                                chip : integer;
-                                                add  : longint);
+                                                 chip : integer;
+                                                 add  : longint);
 var
    buffer : array [0..TXBUFFERSIZE ] of QWord;
 begin
@@ -607,8 +611,8 @@ end;
 
 
 procedure TSerial.Ler_EEPROM_16bits_24C1025_Mae(Sender : TObject;
-                                                 chip : integer;
-                                                 add  : longint);
+                                                  chip : integer;
+                                                  add  : longint);
 var
    buffer : array [0..TXBUFFERSIZE ] of QWord;
 begin
@@ -629,9 +633,9 @@ end;
 
 
 procedure TSerial.Ler_EEPROM_8bits_24C1025_Filha(Sender : TObject;
-                                               destino : integer;
-                                                  chip : integer;
-                                                  add  : longint);
+                                                destino : integer;
+                                                   chip : integer;
+                                                   add  : longint);
 var
    buffer : array [0..TXBUFFERSIZE ] of QWord;
 begin
@@ -654,16 +658,16 @@ end;
 
 
 procedure TSerial.Ler_EEPROM_16bits_24C1025_Filha(Sender : TObject;
-                                                destino : integer;
-                                                   chip : integer;
-                                                   add  : longint);
+                                                 destino : integer;
+                                                    chip : integer;
+                                                    add  : longint);
 var
    buffer : array [0..TXBUFFERSIZE ] of QWord;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   fila[FilaFim].RXpayload:=2;
-  fila[FilaFim].TotalReturn:=6;
+  fila[FilaFim].TotalReturn:=18;
   fila[FilaFim].ObjOrigem:=Sender;
   fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
 
@@ -672,7 +676,7 @@ begin
   buffer[2]:= (add>>16) and $FF;
   buffer[3]:= (add>>8 ) and $FF;
   buffer[4]:= (add>>0 ) and $FF;
-  KernelCommand(COMMAND_EEE_R_BYTE,destino , 5, buffer);
+  KernelCommand(COMMAND_EEE_R_INT,destino , 5, buffer);
 end;
 
 
@@ -688,44 +692,9 @@ end;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+{-------------------------------------------------------------------------------
+                   N Ú C L E O    D E    C O M U N I C A Ç Ã O
+-------------------------------------------------------------------------------}
 
 //------------------------------------------------------------------------------
 function TSerial.KernelCommand(comando : byte;
