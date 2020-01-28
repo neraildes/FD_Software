@@ -49,26 +49,30 @@ const
    COMMAND_SCHD_ANALOG= $1B;
    COMMAND_SCHD_START = $1C;
    COMMAND_SCHD_STOP  = $1D;
-   //----------- OUTROS ---------------
-   COMMAND_CLK_PIC_W  = $1E;
-   COMMAND_CLK_PIC_R  = $1F;
-   COMMAND_LDC_PAGE   = $20;
-   COMMAND_PROCULUS_Buzzer = $21;
-   COMMAND_LCD_W_VP_INT    = $22;
-   COMMAND_LCD_R_VP_INT    = $23;
-   COMMAND_LCD_W_VP_STR    = $24;
-   COMMAND_LCD_R_VP_STR    = $25;
+   //----------- PROCULUS -------------
+   COMMAND_LCD_W_VP_INT    = $20;
+   COMMAND_LCD_R_VP_INT    = $21;
+   COMMAND_LCD_W_VP_STR    = $22;
+   COMMAND_LCD_R_VP_STR    = $23;
+   COMMAND_PROCULUS_Buzzer = $24;
+   COMMAND_LDC_PAGE        = $25;
+   COMMAND_CONTROL_ACTIVE  = $26;
+   //...
+   COMMAND_CLK_PIC_W       = $2E;
+   COMMAND_CLK_PIC_R       = $2F;
    //---------------SLAVE--------------
-   COMMAND_RELAY           = $26;
-   COMMAND_INPUT_LED       = $27;
+   COMMAND_RELAY           = $30;
+   COMMAND_INPUT_LED       = $31;
+   //...
    //----------------------------------
-   COMMAND_READ_GRAUS      = $28;
-   COMMAND_READ_GRAUS_REAL = $29;
+   COMMAND_GLOBAL_HOT      = $40;
+   COMMAND_VERSION         = $41;
+   //...
    //----------------------------------
-   COMMAND_GLOBAL_HOT      = $2A;
-   COMMAND_PERGUNTA        = $2B;
+
+
 //-------------------------------------
-   BUFFER_PC               =  50;
+   BUFFER_PC               =  $1FFFF;
 
 //-----------OUTRAS CONSTANTES-------------
    READ  = 0;
@@ -205,13 +209,28 @@ type
                                                   chip : integer;
                                                   add  : longint);
 
+      //------------------------------------------------------------------------
+      procedure EEPROM_24C1025_Fill_All(Sender : TObject;
+                                       destino : integer;
+                                          chip : integer;
+                                        value  : integer);
 
 
+      //------------------------------------------------------------------------
+      procedure PROCULUS_Write_VP_Int(Sender: TObject;
+                                          vp: integer;
+                                       value: integer);
 
 
+      procedure PROCULUS_Read_VP_Int(Sender: TObject;
+                                         vp: integer);
 
 
+      procedure PROCULUS_Set_Page(Sender: TObject;
+                                   page : integer);
 
+      procedure PROCULUS_Control_Active(Sender: TObject;
+                         Software_Control_Code: byte);
 
 
 
@@ -679,11 +698,115 @@ begin
   KernelCommand(COMMAND_EEE_R_INT,destino , 5, buffer);
 end;
 
+{-------------------------------------------------------------------------------
+           C O M A N D O S     D O     L C D     P R O C U L U S
+-------------------------------------------------------------------------------}
+procedure TSerial.PROCULUS_Write_VP_Int(Sender: TObject;
+                                            vp: integer;
+                                         value: integer);
+var
+   buffer : array [0..TXBUFFERSIZE ] of QWord;
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  fila[FilaFim].RXpayload:=3;
+  fila[FilaFim].TotalReturn:=17;
+  fila[FilaFim].ObjOrigem:=Sender;
+  fila[FilaFim].ObjDestino:=Form1.edt_vp_value_int_reply;
+
+  buffer[0]:= (vp>>8) and $FF;
+  buffer[1]:= (vp>>0) and $FF;
+  buffer[2]:= (value>>8) and $FF;
+  buffer[3]:= (value>>0) and $FF;
+  KernelCommand(COMMAND_LCD_W_VP_INT, 0, 4, buffer);
+end;
+
+
+
+procedure TSerial.PROCULUS_Read_VP_Int(Sender: TObject;
+                                           vp: integer);
+var
+   buffer : array [0..TXBUFFERSIZE ] of QWord;
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  fila[FilaFim].RXpayload:=2;
+  fila[FilaFim].TotalReturn:=14;
+  fila[FilaFim].ObjOrigem:=Sender;
+  fila[FilaFim].ObjDestino:=Form1.edt_vp_value_int_reply;
+
+  buffer[0]:= (vp>>8) and $FF;
+  buffer[1]:= (vp>>0) and $FF;
+  KernelCommand(COMMAND_LCD_R_VP_INT, 0, 2, buffer);
+end;
+
+
+
+
+procedure TSerial.PROCULUS_Set_Page(Sender: TObject;
+                                      page: integer);
+var
+   buffer : array [0..TXBUFFERSIZE ] of QWord;
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  fila[FilaFim].RXpayload:=3;
+  fila[FilaFim].TotalReturn:=15;
+  fila[FilaFim].ObjOrigem:=Sender;
+  fila[FilaFim].ObjDestino:=Form1.edt_page_reply;
+
+  buffer[0]:= (page>>8) and $FF;
+  buffer[1]:= (page>>0) and $FF;
+  KernelCommand(COMMAND_LDC_PAGE, 0, 2, buffer);
+end;
+
+
+
+procedure TSerial.PROCULUS_Control_Active(Sender: TObject;
+                           Software_Control_Code: byte);
+var
+   buffer : array [0..TXBUFFERSIZE ] of QWord;
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  fila[FilaFim].RXpayload:=3;
+  fila[FilaFim].TotalReturn:=14;
+  fila[FilaFim].ObjOrigem:=Sender;
+  fila[FilaFim].ObjDestino:=Form1.edt_control_active_reply;
+
+  buffer[0]:= Software_Control_Code;
+  KernelCommand(COMMAND_CONTROL_ACTIVE, 0, 1, buffer);
+end;
 
 
 
 
 
+
+
+
+{------------------------------------------------------------------------------
+                        C O M A N D O S   A V U L S O S
+-------------------------------------------------------------------------------}
+procedure TSerial.EEPROM_24C1025_Fill_All(Sender : TObject;
+                                         destino : integer;
+                                            chip : integer;
+                                          value  : integer);
+var
+   buffer : array [0..TXBUFFERSIZE ] of QWord;
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  fila[FilaFim].RXpayload:=3;
+  fila[FilaFim].TotalReturn:=8;
+  fila[FilaFim].ObjOrigem:=Sender;
+  fila[FilaFim].ObjDestino:=Form1.edt_fill_reply;
+
+  buffer[0]:= chip ;
+  buffer[1]:= (value>>8) and $FF;
+  buffer[2]:= (value>>0) and $FF;
+  KernelCommand(COMMAND_EEE_FILL_ALL,destino , 3, buffer);
+end;
 
 
 

@@ -28,16 +28,42 @@ type
     btn_LerMemo: TButton;
     btn_EscreverMemo: TButton;
     Btn_Buzzer: TButton;
+    btn_fill: TButton;
+    btn_fill_confere: TButton;
+    Button1: TButton;
     Button2: TButton;
+    btn_ler_vp_int: TButton;
+    btn_gravar_vp_int: TButton;
+    btn_page_write: TButton;
+    btn_Control_Active_write: TButton;
     chk_EEPROM_16Bits: TCheckBox;
+    edt_control_active: TEdit;
+    edt_control_active_reply: TEdit;
+    edt_page: TEdit;
+    edt_page_reply: TEdit;
+    edt_vp_add_int: TEdit;
+    edt_vp_value_int: TEdit;
+    edt_vp_value_int_reply: TEdit;
+    edt_fill_destino: TEdit;
+    edt_fill_chip: TEdit;
+    edt_fill_reply: TEdit;
+    edt_fill: TEdit;
     edt_eeprom_chip: TEdit;
     edt_eeprom_reply: TEdit;
     Edt_buz_return: TEdit;
+    GroupBox3: TGroupBox;
+    gpb_proculus: TGroupBox;
+    GroupBox4: TGroupBox;
+    GroupBox5: TGroupBox;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
     Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
     Lbl_Count: TLabel;
     Memo3: TMemo;
     Memo4: TMemo;
@@ -54,7 +80,13 @@ type
     rb_24C1025: TRadioButton;
     Timer1: TTimer;
     procedure Btn_BuzzerClick(Sender: TObject);
+    procedure btn_Control_Active_writeClick(Sender: TObject);
     procedure btn_EscreverMemoClick(Sender: TObject);
+    procedure btn_fillClick(Sender: TObject);
+    procedure btn_fill_confereClick(Sender: TObject);
+    procedure btn_gravar_vp_intClick(Sender: TObject);
+    procedure btn_ler_vp_intClick(Sender: TObject);
+    procedure btn_page_writeClick(Sender: TObject);
     procedure btn_resumeClick(Sender: TObject);
     procedure btn_suspendClick(Sender: TObject);
     procedure btn_LerMemoClick(Sender: TObject);
@@ -67,6 +99,7 @@ type
     procedure FormClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
+    procedure gpb_proculusClick(Sender: TObject);
     procedure ListaAdd(cmd:string);
     function  ListaUse():string;
     procedure RadioButton1Change(Sender: TObject);
@@ -86,6 +119,7 @@ var
   contador: integer;
   buzzercnt: integer;
   CountCOM : integer;
+  AddConfere : longint;
 
 implementation
 
@@ -113,6 +147,11 @@ begin
     //Aparelho.free;
   end;
   Aparelho.FilaFim:=0;
+end;
+
+procedure TForm1.gpb_proculusClick(Sender: TObject);
+begin
+
 end;
 
 
@@ -194,15 +233,40 @@ begin
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
+var
+  valor:longint;
 begin
-
+  valor:=strtoint(edt_eeprom_add.Text);
+  if(chk_EEPROM_16Bits.Checked) then
+     valor:=valor+2
+  else
+     inc(valor);
+  if(rb_EEPROM.Checked) then
+     Form1.edt_eeprom_add.text:='$'+inttohex(valor,4)
+  else
+     Form1.edt_eeprom_add.text:='$'+inttohex(valor,8);
+  btn_LerMemo.Click;
 
 
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
+var
+  valor:longint;
 begin
-  Showmessage(Aparelho.HexToText(Edt_buz_return.Text));
+  valor:=strtoint(edt_eeprom_add.Text);
+  if(valor>2) then
+     begin
+        if(chk_EEPROM_16Bits.Checked) then
+           valor:=valor-2
+        else
+           dec(valor);
+        if(rb_EEPROM.Checked) then
+           Form1.edt_eeprom_add.text:='$'+inttohex(valor,4)
+        else
+           Form1.edt_eeprom_add.text:='$'+inttohex(valor,8);
+        btn_LerMemo.Click;
+     end;
 end;
 
 procedure TForm1.chk_EEPROM_16BitsChange(Sender: TObject);
@@ -256,6 +320,11 @@ begin
   inc(valor);
   Edt_ss_time.text:=inttostr(valor);
   Aparelho.Buzzer(Sender, strtoint(Edt_ss_time.text));
+end;
+
+procedure TForm1.btn_Control_Active_writeClick(Sender: TObject);
+begin
+  Aparelho.PROCULUS_Control_Active(Sender,strtoint(edt_control_active.Text));
 end;
 
 procedure TForm1.btn_EscreverMemoClick(Sender: TObject);
@@ -323,6 +392,43 @@ begin
      end;
 end;
 
+procedure TForm1.btn_fillClick(Sender: TObject);
+begin
+  Aparelho.EEPROM_24C1025_Fill_All(Sender,
+                                   strtoint(edt_fill_destino.Text),
+                                   strtoint(edt_fill_chip.text),
+                                   strtoint(edt_fill.text)
+                                   );
+end;
+
+procedure TForm1.btn_fill_confereClick(Sender: TObject);
+begin
+  AddConfere:=0;
+  while (AddConfere<=128) do
+      begin
+        Aparelho.Ler_EEPROM_16bits_24C1025_Mae(Sender,0, AddConfere);
+        AddConfere:=AddConfere+2;
+      end;
+end;
+
+procedure TForm1.btn_gravar_vp_intClick(Sender: TObject);
+begin
+  Aparelho.PROCULUS_Write_VP_Int(Sender,
+                                 strtoint(edt_vp_add_int.Text),
+                                 strtoint(edt_vp_value_int.Text)
+                                 );
+end;
+
+procedure TForm1.btn_ler_vp_intClick(Sender: TObject);
+begin
+  Aparelho.PROCULUS_Read_VP_Int(Sender,strtoint(edt_vp_add_int.Text));
+end;
+
+procedure TForm1.btn_page_writeClick(Sender: TObject);
+begin
+  Aparelho.PROCULUS_Set_Page(Sender,strtoint(edt_page.Text));
+end;
+
 
 procedure TThead_USART.showstatus;
 begin
@@ -347,6 +453,7 @@ var
   node : AnsiString;  //APagar apos ensaios
   jjj : TObject;
   HardReply:string;
+
 
 begin
   cnt:=0;
@@ -393,7 +500,29 @@ begin
                              if (TButton(Aparelho.fila[0].ObjOrigem).Name='btn_LerMemo') then
                                  TEdit(Aparelho.fila[0].ObjDestino).Text:=Aparelho.fila[0].result;
 
-                             end;
+                             if (TButton(Aparelho.fila[0].ObjOrigem).Name='btn_fill') then
+                                 TEdit(Aparelho.fila[0].ObjDestino).Text:=Aparelho.HexToText(Aparelho.fila[0].result);
+
+                             if (TButton(Aparelho.fila[0].ObjOrigem).Name='btn_fill_confere') then
+                                 begin
+                                   Form1.Memo3.Lines.Add(Copy(Aparelho.fila[0].comando,15,8)+' - '+
+                                                              Aparelho.fila[0].result);
+                                 end;
+
+                             if (TButton(Aparelho.fila[0].ObjOrigem).Name='btn_gravar_vp_int') then
+                                 TEdit(Aparelho.fila[0].ObjDestino).Text:=Aparelho.HexToText(Aparelho.fila[0].result);
+
+                             if (TButton(Aparelho.fila[0].ObjOrigem).Name='btn_ler_vp_int') then
+                                 TEdit(Aparelho.fila[0].ObjDestino).Text:=Inttostr(Aparelho.HexToInt(Aparelho.fila[0].result));////StrtoInt('$23');
+
+                             if (TButton(Aparelho.fila[0].ObjOrigem).Name='btn_page_write') then
+                                 TEdit(Aparelho.fila[0].ObjDestino).Text:=Aparelho.HexToText(Aparelho.fila[0].result);
+
+                             if (TButton(Aparelho.fila[0].ObjOrigem).Name='btn_Control_Active_write') then
+                                 TEdit(Aparelho.fila[0].ObjDestino).Text:=Aparelho.HexToText(Aparelho.fila[0].result);
+
+
+                            end;
                       end;
 
                  if(Aparelho.FilaFim>0) then
