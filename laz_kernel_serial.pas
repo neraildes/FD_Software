@@ -78,13 +78,22 @@ const
    READ  = 0;
    WRITE = 1;
 
+//---------------RESULTTYPE----------------
+UINT8       = 0;
+SINT8       = 1;
+UINT16      = 2;
+SINT16      = 3;
+HEXADECIMAL = 4;
+FLUTUANTE   = 5;
+TEXTO       = 6;
+
 type
   TFila = Record
            comando    : Ansistring;
            TotalReturn: LongInt;
            RXpayload  : integer;
            result     : string;
-           ObjOrigem  : TObject;
+           resTypeData: integer;
            ObjDestino : TObject;
            end;
 
@@ -97,8 +106,9 @@ type
       FilaFim : integer;
       constructor Create(); overload;
 
-      procedure Buzzer(Sender: TObject;
-                       tempo : integer);
+      procedure Buzzer(tempo : integer;
+                  resultType : integer;
+                  ObjDestino : TObject);
 
 
       //------------------------------------------------------------------------
@@ -108,23 +118,30 @@ type
       GE08F
       GE16F
       }
-      procedure Gravar_EEPROM_8bits_Interna_Mae(Sender: TObject;
-                                               add    : integer;
-                                               data   : integer);
+      procedure Gravar_EEPROM_8bits_Interna_Mae(add    : integer;
+                                                data   : integer;
+                                            resultType : integer;
+                                            ObjDestino : TObject);
 
-      procedure Gravar_EEPROM_16bits_Interna_Mae(Sender: TObject;
-                                                add    : integer;
-                                                data   : integer);
+      procedure Gravar_EEPROM_16bits_Interna_Mae(add    : integer;
+                                                 data   : integer;
+                                             resultType : integer;
+                                             ObjDestino : TObject);
 
-      procedure Gravar_EEPROM_8bits_Interna_Filha(Sender: TObject;
-                                                destino : integer;
-                                                 add    : integer;
-                                                 data   : integer);
+      procedure Gravar_EEPROM_8bits_Interna_Filha(destino : integer;
+                                                   add    : integer;
+                                                   data   : integer;
+                                               resultType : integer;
+                                               ObjDestino : TObject);
 
-      procedure Gravar_EEPROM_16bits_Interna_Filha(Sender: TObject;
-                                                 destino : integer;
-                                                  add    : integer;
-                                                  data   : integer);
+
+      procedure Gravar_EEPROM_16bits_Interna_Filha(destino : integer;
+                                                    add    : integer;
+                                                    data   : integer;
+                                                resultType : integer;
+                                                ObjDestino : TObject);
+
+
       //------------------------------------------------------------------------
       {
       LE08M
@@ -132,22 +149,24 @@ type
       LE08F
       LE16F
       }
-      procedure Ler_EEPROM_8bits_Interna_Mae(Sender: TObject;
-                                            add    : integer);
+      procedure Ler_EEPROM_8bits_Interna_Mae(add    : integer;
+                                         resultType : integer;
+                                         ObjDestino : TObject);
 
+      procedure Ler_EEPROM_16bits_Interna_Mae(add    : integer;
+                                          resultType : integer;
+                                          ObjDestino : TObject);
 
-      procedure Ler_EEPROM_16bits_Interna_Mae(Sender: TObject;
-                                             add    : integer);
+      procedure Ler_EEPROM_8bits_Interna_Filha(destino : integer;
+                                                add    : integer;
+                                            resultType : integer;
+                                            ObjDestino : TObject);
 
+      procedure Ler_EEPROM_16bits_Interna_Filha(destino : integer;
+                                                 add    : integer;
+                                             resultType : integer;
+                                             ObjDestino : TObject);
 
-      procedure Ler_EEPROM_8bits_Interna_Filha(Sender: TObject;
-                                             destino : integer;
-                                              add    : integer);
-
-
-      procedure Ler_EEPROM_16bits_Interna_Filha(Sender: TObject;
-                                              destino : integer;
-                                               add    : integer);
 
 
       //------------------------------------------------------------------------
@@ -157,27 +176,34 @@ type
       G208F
       G216F
       }
-      procedure Gravar_EEPROM_8bits_24C1025_Mae(Sender : TObject;
-                                                  chip : integer;
-                                                  add  : longint;
-                                                  data : integer);
+      procedure Gravar_EEPROM_8bits_24C1025_Mae(chip : integer;
+                                                add  : longint;
+                                                data : integer;
+                                          resultType : integer;
+                                          ObjDestino : TObject);
 
-      procedure Gravar_EEPROM_16bits_24C1025_Mae(Sender : TObject;
-                                                   chip : integer;
-                                                   add  : longint;
-                                                   data : integer);
 
-      procedure Gravar_EEPROM_8bits_24C1025_Filha(Sender : TObject;
-                                                 destino : integer;
-                                                    chip : integer;
-                                                    add  : longint;
-                                                    data : integer);
+      procedure Gravar_EEPROM_16bits_24C1025_Mae(chip : integer;
+                                                 add  : longint;
+                                                 data : integer;
+                                           resultType : integer;
+                                           ObjDestino : TObject);
 
-      procedure Gravar_EEPROM_16bits_24C1025_Filha(Sender : TObject;
-                                                  destino : integer;
+      procedure Gravar_EEPROM_8bits_24C1025_Filha(destino : integer;
                                                      chip : integer;
                                                      add  : longint;
-                                                     data : integer);
+                                                     data : integer;
+                                               resultType : integer;
+                                               ObjDestino : TObject);
+
+
+
+      procedure Gravar_EEPROM_16bits_24C1025_Filha(destino : integer;
+                                                     chip : integer;
+                                                     add  : longint;
+                                                     data : integer;
+                                               resultType : integer;
+                                               ObjDestino : TObject);
 
       //------------------------------------------------------------------------
       {
@@ -187,59 +213,74 @@ type
       L216F
       }
 
-      procedure Ler_EEPROM_8bits_24C1025_Mae(Sender : TObject;
-                                               chip : integer;
-                                               add  : longint);
+      procedure Ler_EEPROM_8bits_24C1025_Mae(chip : integer;
+                                             add  : longint;
+                                       resultType : integer;
+                                       ObjDestino : TObject);
 
 
 
-      procedure Ler_EEPROM_16bits_24C1025_Mae(Sender : TObject;
-                                                chip : integer;
-                                                add  : longint);
+
+      procedure Ler_EEPROM_16bits_24C1025_Mae(chip : integer;
+                                              add  : longint;
+                                        resultType : integer;
+                                        ObjDestino : TObject);
 
 
-      procedure Ler_EEPROM_8bits_24C1025_Filha(Sender : TObject;
-                                              destino : integer;
-                                                 chip : integer;
-                                                 add  : longint);
 
 
-      procedure Ler_EEPROM_16bits_24C1025_Filha(Sender : TObject;
-                                               destino : integer;
+      procedure Ler_EEPROM_8bits_24C1025_Filha(destino : integer;
                                                   chip : integer;
-                                                  add  : longint);
+                                                  add  : longint;
+                                            resultType : integer;
+                                            ObjDestino : TObject);
+
+
+      procedure Ler_EEPROM_16bits_24C1025_Filha(destino : integer;
+                                                   chip : integer;
+                                                   add  : longint;
+                                             resultType : integer;
+                                             ObjDestino : TObject);
 
       //------------------------------------------------------------------------
-      procedure EEPROM_24C1025_Fill_All(Sender : TObject;
+      procedure EEPROM_24C1025_Fill_All(resultType : integer;
                                        destino : integer;
                                           chip : integer;
                                         value  : integer);
 
 
       //------------------------------------------------------------------------
-      procedure PROCULUS_Write_VP_Int(Sender: TObject;
-                                          vp: integer;
-                                       value: integer);
+      procedure PROCULUS_Write_VP_Int(vp: integer;
+                                   value: integer;
+                             resultType : integer;
+                             ObjDestino : TObject);
+
+      procedure PROCULUS_Read_VP_Int(vp: integer;
+                            resultType : integer;
+                            ObjDestino : TObject);
 
 
-      procedure PROCULUS_Read_VP_Int(Sender: TObject;
-                                         vp: integer);
 
-      procedure PROCULUS_Write_VP_String(Sender : TObject;
-                                             vp : integer;
-                                          value : string);
+      procedure PROCULUS_Write_VP_String(vp : integer;
+                                      value : string;
+                                 resultType : integer;
+                                 ObjDestino : TObject);
 
+      //*AQUI*
+      procedure PROCULUS_Read_VP_String(vp : integer;
+                                resultType : integer;
+                                ObjDestino : TObject);
 
-      procedure PROCULUS_Read_VP_String(Sender : TObject;
-                                            vp : integer);
       //------------------------------------------------------------------------
 
 
-      procedure PROCULUS_Set_Page(Sender: TObject;
-                                   page : integer);
+      procedure PROCULUS_Goto_Page(page : integer;
+                            resultType : integer;
+                            ObjDestino : TObject);
 
-      procedure PROCULUS_Control_Active(Sender: TObject;
-                         Software_Control_Code: byte);
+      procedure PROCULUS_Control_Active(Software_Control_Code: byte;
+                                                  resultType : integer;
+                                                  ObjDestino : TObject);
 
 
 
@@ -272,8 +313,9 @@ begin
 end;
 
 
-procedure TSerial.Buzzer( Sender: TObject;
-                          tempo : integer);
+procedure TSerial.Buzzer(tempo : integer;
+                    resultType : integer;
+                    ObjDestino : TObject);
 var
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
@@ -282,8 +324,10 @@ begin
   //showmessage(inttostr(filafim));
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=14;
-  fila[FilaFim].ObjOrigem:=Sender;
-  fila[FilaFim].ObjDestino:=Form1.Edt_buz_return;
+  //fila[FilaFim].ObjOrigem:=Sender;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
+
 
 
   buffer[0]:=(tempo div 256);
@@ -308,9 +352,11 @@ GE16F
 }
 
 
-procedure TSerial.Gravar_EEPROM_8bits_Interna_Mae(Sender: TObject;
-                                                 add    : integer;
-                                                 data   : integer);
+
+procedure TSerial.Gravar_EEPROM_8bits_Interna_Mae(add    : integer;
+                                                  data   : integer;
+                                              resultType : integer;
+                                              ObjDestino : TObject);
 var
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
@@ -318,8 +364,8 @@ begin
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=8;
-  fila[FilaFim].ObjOrigem:=Sender;
-  fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
+  fila[FilaFim].resTypeData:=TEXTO;
+  fila[FilaFim].ObjDestino:=ObjDestino;
 
   buffer[0]:= (add div 256); //______Endereco (0x3FF)
   buffer[1]:= (add mod 256); //
@@ -328,9 +374,10 @@ begin
 end;
 
 
-procedure TSerial.Gravar_EEPROM_16bits_Interna_Mae(Sender: TObject;
-                                                  add    : integer;
-                                                  data   : integer);
+procedure TSerial.Gravar_EEPROM_16bits_Interna_Mae(add  : integer;
+                                                 data   : integer;
+                                             resultType : integer;
+                                             ObjDestino : TObject);
 var
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
@@ -338,8 +385,8 @@ begin
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=8;
-  fila[FilaFim].ObjOrigem:=Sender;
-  fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
+  fila[FilaFim].resTypeData:=resultType;
+  fila[FilaFim].ObjDestino:=ObjDestino;
 
   buffer[0]:= (add div 256); //______Endereco (0x3FF)
   buffer[1]:= (add mod 256); //
@@ -350,10 +397,12 @@ end;
 
 
 
-procedure TSerial.Gravar_EEPROM_8bits_Interna_Filha(Sender: TObject;
-                                                  destino : integer;
-                                                   add    : integer;
-                                                   data   : integer);
+procedure TSerial.Gravar_EEPROM_8bits_Interna_Filha(destino : integer;
+                                                     add    : integer;
+                                                     data   : integer;
+                                                 resultType : integer;
+                                                 ObjDestino : TObject);
+
 var
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
@@ -361,8 +410,8 @@ begin
   //fila[FilaFim].result:='';       Zerado no KernelCommand
     fila[FilaFim].RXpayload:=3;
     fila[FilaFim].TotalReturn:=16;
-    fila[FilaFim].ObjOrigem:=Sender;
-    fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
+    fila[FilaFim].resTypeData:=resultType;
+    fila[FilaFim].ObjDestino:=ObjDestino;
 
     buffer[0]:=(add mod 256); //endereco 8 bits
     buffer[1]:= data;         //dados 8 bits
@@ -371,10 +420,11 @@ end;
 
 
 
-procedure TSerial.Gravar_EEPROM_16bits_Interna_Filha(Sender: TObject;
-                                                   destino : integer;
-                                                    add    : integer;
-                                                    data   : integer);
+procedure TSerial.Gravar_EEPROM_16bits_Interna_Filha(destino : integer;
+                                                      add    : integer;
+                                                      data   : integer;
+                                                  resultType : integer;
+                                                  ObjDestino : TObject);
 var
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
@@ -382,8 +432,8 @@ begin
     //fila[FilaFim].result:='';       Zerado no KernelCommand
       fila[FilaFim].RXpayload:=3;
       fila[FilaFim].TotalReturn:=20;
-      fila[FilaFim].ObjOrigem:=Sender;
-      fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
+      fila[FilaFim].resTypeData:=resultType;
+      fila[FilaFim].ObjDestino:=ObjDestino;
 
 
       buffer[0]:=(add  mod 256);
@@ -407,17 +457,20 @@ LE16M
 LE08F
 LE16F
 }
-procedure TSerial.Ler_EEPROM_8bits_Interna_Mae(Sender: TObject;
-                                              add    : integer);
+procedure TSerial.Ler_EEPROM_8bits_Interna_Mae(add    : integer;
+                                           resultType : integer;
+                                           ObjDestino : TObject);
 var
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
-  fila[FilaFim].ObjOrigem:=Sender;
-  fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
+  //fila[FilaFim].ObjOrigem:=Sender;
   fila[FilaFim].RXpayload:=1;
   fila[FilaFim].TotalReturn:=6;
+  fila[FilaFim].resTypeData:=resultType;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+
   buffer[0]:= (add div 256); //______Endereco (0x3FF)
   buffer[1]:= (add mod 256); //
   KernelCommand(COMMAND_IEE_R_BYTE, 0, 2, buffer);
@@ -425,17 +478,21 @@ end;
 
 
 
-procedure TSerial.Ler_EEPROM_16bits_Interna_Mae(Sender: TObject;
-                                               add    : integer);
+procedure TSerial.Ler_EEPROM_16bits_Interna_Mae(add    : integer;
+                                            resultType : integer;
+                                            ObjDestino : TObject);
 var
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
-  fila[FilaFim].ObjOrigem:=Sender;
-  fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
+  //fila[FilaFim].ObjOrigem:=Sender;
   fila[FilaFim].RXpayload:=2;
   fila[FilaFim].TotalReturn:=7;
+  fila[FilaFim].resTypeData:=resultType;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+
+
   buffer[0]:= (add div 256); //______Endereco (0x3FF)
   buffer[1]:= (add mod 256); //
   KernelCommand(COMMAND_IEE_R_INT,0, 2, buffer);
@@ -445,9 +502,10 @@ end;
 
 
 
-procedure TSerial.Ler_EEPROM_8bits_Interna_Filha(Sender: TObject;
-                                               destino : integer;
-                                                add    : integer);
+procedure TSerial.Ler_EEPROM_8bits_Interna_Filha(destino : integer;
+                                                  add    : integer;
+                                              resultType : integer;
+                                              ObjDestino : TObject);
 var
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
@@ -455,18 +513,18 @@ begin
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   fila[FilaFim].RXpayload:=1;
   fila[FilaFim].TotalReturn:=13;
-  fila[FilaFim].ObjOrigem:=Sender;
-  fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
+  fila[FilaFim].resTypeData:=resultType;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+
   buffer[0]:=(add mod 256);
   KernelCommand(COMMAND_IEE_R_BYTE, destino, 1, buffer);
 end;
 
 
-
-
-procedure TSerial.Ler_EEPROM_16bits_Interna_Filha(Sender: TObject;
-                                                destino : integer;
-                                                 add    : integer);
+procedure TSerial.Ler_EEPROM_16bits_Interna_Filha(destino : integer;
+                                                   add    : integer;
+                                               resultType : integer;
+                                               ObjDestino : TObject);
 var
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
@@ -474,8 +532,9 @@ begin
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   fila[FilaFim].RXpayload:=2;
   fila[FilaFim].TotalReturn:=14;
-  fila[FilaFim].ObjOrigem:=Sender;
-  fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
+  fila[FilaFim].resTypeData:=resultType;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+
   buffer[0]:=(add mod 256);
   KernelCommand(COMMAND_IEE_R_INT, destino, 1, buffer);
 end;
@@ -494,10 +553,12 @@ G208F
 G216F
 }
 
-procedure TSerial.Gravar_EEPROM_8bits_24C1025_Mae(Sender : TObject;
-                                                    chip : integer;
-                                                    add  : longint;
-                                                    data : integer);
+
+procedure TSerial.Gravar_EEPROM_8bits_24C1025_Mae(chip : integer;
+                                                  add  : longint;
+                                                  data : integer;
+                                            resultType : integer;
+                                            ObjDestino : TObject);
 var
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
@@ -505,8 +566,8 @@ begin
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=8;
-  fila[FilaFim].ObjOrigem:=Sender;
-  fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
+  fila[FilaFim].resTypeData:=resultType;
+  fila[FilaFim].ObjDestino:=ObjDestino;
 
   buffer[0]:= chip ;
   buffer[1]:= (add>>24) and $FF;
@@ -520,10 +581,11 @@ end;
 
 
 
-procedure TSerial.Gravar_EEPROM_16bits_24C1025_Mae(Sender : TObject;
-                                                     chip : integer;
-                                                     add  : longint;
-                                                     data : integer);
+procedure TSerial.Gravar_EEPROM_16bits_24C1025_Mae(chip : integer;
+                                                   add  : longint;
+                                                   data : integer;
+                                             resultType : integer;
+                                             ObjDestino : TObject);
 var
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
@@ -531,8 +593,8 @@ begin
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=8;
-  fila[FilaFim].ObjOrigem:=Sender;
-  fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
+  fila[FilaFim].resTypeData:=resultType;
+  fila[FilaFim].ObjDestino:=ObjDestino;
 
   buffer[0]:= chip ;
   buffer[1]:= (add>>24) and $FF;
@@ -550,11 +612,12 @@ end;
 
 
 
-procedure TSerial.Gravar_EEPROM_8bits_24C1025_Filha(Sender : TObject;
-                                                   destino : integer;
-                                                      chip : integer;
-                                                      add  : longint;
-                                                      data : integer);
+procedure TSerial.Gravar_EEPROM_8bits_24C1025_Filha(destino : integer;
+                                                       chip : integer;
+                                                       add  : longint;
+                                                       data : integer;
+                                                 resultType : integer;
+                                                 ObjDestino : TObject);
 var
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
@@ -562,8 +625,8 @@ begin
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=20;
-  fila[FilaFim].ObjOrigem:=Sender;
-  fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
+  fila[FilaFim].resTypeData:=resultType;
+  fila[FilaFim].ObjDestino:=ObjDestino;
 
   buffer[0]:= chip ;
   buffer[1]:= (add>>24) and $FF;
@@ -578,11 +641,12 @@ end;
 
 
 
-procedure TSerial.Gravar_EEPROM_16bits_24C1025_Filha(Sender : TObject;
-                                                    destino : integer;
-                                                       chip : integer;
-                                                       add  : longint;
-                                                       data : integer);
+procedure TSerial.Gravar_EEPROM_16bits_24C1025_Filha(destino : integer;
+                                                        chip : integer;
+                                                        add  : longint;
+                                                        data : integer;
+                                                  resultType : integer;
+                                                  ObjDestino : TObject);
 var
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
@@ -590,8 +654,8 @@ begin
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=21;
-  fila[FilaFim].ObjOrigem:=Sender;
-  fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
+  fila[FilaFim].resTypeData:=resultType;
+  fila[FilaFim].ObjDestino:=ObjDestino;
 
   buffer[0]:= chip ;
   buffer[1]:= (add>>24) and $FF;
@@ -615,9 +679,11 @@ L216F *
 
 
 
-procedure TSerial.Ler_EEPROM_8bits_24C1025_Mae(Sender : TObject;
-                                                 chip : integer;
-                                                 add  : longint);
+
+procedure TSerial.Ler_EEPROM_8bits_24C1025_Mae(chip : integer;
+                                               add  : longint;
+                                         resultType : integer;
+                                         ObjDestino : TObject);
 var
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
@@ -625,8 +691,8 @@ begin
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   fila[FilaFim].RXpayload:=1;
   fila[FilaFim].TotalReturn:=6;
-  fila[FilaFim].ObjOrigem:=Sender;
-  fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
+  fila[FilaFim].resTypeData:=resultType;
+  fila[FilaFim].ObjDestino:=ObjDestino;
 
   buffer[0]:= chip ;
   buffer[1]:= (add>>24) and $FF;
@@ -639,9 +705,10 @@ end;
 
 
 
-procedure TSerial.Ler_EEPROM_16bits_24C1025_Mae(Sender : TObject;
-                                                  chip : integer;
-                                                  add  : longint);
+procedure TSerial.Ler_EEPROM_16bits_24C1025_Mae(chip : integer;
+                                                add  : longint;
+                                          resultType : integer;
+                                          ObjDestino : TObject);
 var
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
@@ -649,8 +716,8 @@ begin
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   fila[FilaFim].RXpayload:=2;
   fila[FilaFim].TotalReturn:=7;
-  fila[FilaFim].ObjOrigem:=Sender;
-  fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
+  fila[FilaFim].resTypeData:=resultType;
+  fila[FilaFim].ObjDestino:=ObjDestino;
 
   buffer[0]:= chip ;
   buffer[1]:= (add>>24) and $FF;
@@ -661,10 +728,13 @@ begin
 end;
 
 
-procedure TSerial.Ler_EEPROM_8bits_24C1025_Filha(Sender : TObject;
-                                                destino : integer;
-                                                   chip : integer;
-                                                   add  : longint);
+
+
+procedure TSerial.Ler_EEPROM_8bits_24C1025_Filha(destino : integer;
+                                                    chip : integer;
+                                                    add  : longint;
+                                              resultType : integer;
+                                              ObjDestino : TObject);
 var
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
@@ -672,8 +742,8 @@ begin
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   fila[FilaFim].RXpayload:=1;
   fila[FilaFim].TotalReturn:=17;
-  fila[FilaFim].ObjOrigem:=Sender;
-  fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
+  fila[FilaFim].resTypeData:=resultType;
+  fila[FilaFim].ObjDestino:=ObjDestino;
 
   buffer[0]:= chip ;
   buffer[1]:= (add>>24) and $FF;
@@ -686,10 +756,11 @@ end;
 
 
 
-procedure TSerial.Ler_EEPROM_16bits_24C1025_Filha(Sender : TObject;
-                                                 destino : integer;
-                                                    chip : integer;
-                                                    add  : longint);
+procedure TSerial.Ler_EEPROM_16bits_24C1025_Filha(destino : integer;
+                                                     chip : integer;
+                                                     add  : longint;
+                                               resultType : integer;
+                                               ObjDestino : TObject);
 var
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
@@ -697,8 +768,8 @@ begin
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   fila[FilaFim].RXpayload:=2;
   fila[FilaFim].TotalReturn:=18;
-  fila[FilaFim].ObjOrigem:=Sender;
-  fila[FilaFim].ObjDestino:=Form1.edt_eeprom_reply;
+  fila[FilaFim].resTypeData:=resultType;
+  fila[FilaFim].ObjDestino:=ObjDestino;
 
   buffer[0]:= chip ;
   buffer[1]:= (add>>24) and $FF;
@@ -708,12 +779,15 @@ begin
   KernelCommand(COMMAND_EEE_R_INT,destino , 5, buffer);
 end;
 
+
+
 {-------------------------------------------------------------------------------
            C O M A N D O S     D O     L C D     P R O C U L U S
 -------------------------------------------------------------------------------}
-procedure TSerial.PROCULUS_Write_VP_Int(Sender: TObject;
-                                            vp: integer;
-                                         value: integer);
+procedure TSerial.PROCULUS_Write_VP_Int(vp: integer;
+                                     value: integer;
+                               resultType : integer;
+                               ObjDestino : TObject);
 var
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
@@ -721,8 +795,8 @@ begin
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=17;
-  fila[FilaFim].ObjOrigem:=Sender;
-  fila[FilaFim].ObjDestino:=Form1.edt_vp_value_int_reply;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
 
   buffer[0]:= (vp>>8) and $FF;
   buffer[1]:= (vp>>0) and $FF;
@@ -733,8 +807,9 @@ end;
 
 
 
-procedure TSerial.PROCULUS_Read_VP_Int(Sender: TObject;
-                                           vp: integer);
+procedure TSerial.PROCULUS_Read_VP_Int(vp: integer;
+                              resultType : integer;
+                              ObjDestino : TObject);
 var
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
@@ -742,8 +817,8 @@ begin
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   fila[FilaFim].RXpayload:=2;
   fila[FilaFim].TotalReturn:=14;
-  fila[FilaFim].ObjOrigem:=Sender;
   fila[FilaFim].ObjDestino:=Form1.edt_vp_value_int_reply;
+  fila[FilaFim].resTypeData:=resultType;
 
   buffer[0]:= (vp>>8) and $FF;
   buffer[1]:= (vp>>0) and $FF;
@@ -752,50 +827,20 @@ end;
 
 
 
-
-
-procedure TSerial.PROCULUS_Read_VP_String(Sender : TObject;
-                                              vp : integer);
+procedure TSerial.PROCULUS_Write_VP_String(vp : integer;
+                                        value : string;
+                                   resultType : integer;
+                                   ObjDestino : TObject);
 var
    i : integer;
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
-  fila[FilaFim].RXpayload:=28;
-  fila[FilaFim].TotalReturn:=40;
-  fila[FilaFim].ObjOrigem:=Sender;
-  fila[FilaFim].ObjDestino:=Form1.edt_vp_string_value;
-
-  buffer[0]:= (vp>>8) and $FF;
-  buffer[1]:= (vp>>0) and $FF;
-  KernelCommand(COMMAND_LCD_R_VP_STR, 0, 2, buffer);
-end;
-
-
-
-
-
-
-
-
-
-
-
-
-procedure TSerial.PROCULUS_Write_VP_String(Sender : TObject;
-                                               vp : integer;
-                                            value : string);
-var
-   i : integer;
-   buffer : array [0..TXBUFFERSIZE ] of byte;
-begin
-  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
-  //fila[FilaFim].result:='';       Zerado no KernelCommand
-  fila[FilaFim].RXpayload:=2;
-  fila[FilaFim].TotalReturn:=14;
-  fila[FilaFim].ObjOrigem:=Sender;
-  fila[FilaFim].ObjDestino:=Form1.edt_vp_value_int_reply;
+  fila[FilaFim].RXpayload:=3;
+  fila[FilaFim].TotalReturn:=24;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
 
   buffer[0]:= (vp>>8) and $FF;
   buffer[1]:= (vp>>0) and $FF;
@@ -809,31 +854,34 @@ end;
 
 
 
+//*AQUI*
+procedure TSerial.PROCULUS_Read_VP_String(vp : integer;
+                                  resultType : integer;
+                                  ObjDestino : TObject);
+var
+   i : integer;
+   buffer : array [0..TXBUFFERSIZE ] of byte;
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  fila[FilaFim].RXpayload:=28;
+  fila[FilaFim].TotalReturn:=40;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
+
+  buffer[0]:= (vp>>8) and $FF;
+  buffer[1]:= (vp>>0) and $FF;
+  KernelCommand(COMMAND_LCD_R_VP_STR, 0, 2, buffer);
+end;
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-procedure TSerial.PROCULUS_Set_Page(Sender: TObject;
-                                      page: integer);
+procedure TSerial.PROCULUS_Goto_Page(page : integer;
+                              resultType : integer;
+                              ObjDestino : TObject);
 var
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
@@ -841,8 +889,8 @@ begin
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=15;
-  fila[FilaFim].ObjOrigem:=Sender;
-  fila[FilaFim].ObjDestino:=Form1.edt_page_reply;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
 
   buffer[0]:= (page>>8) and $FF;
   buffer[1]:= (page>>0) and $FF;
@@ -851,8 +899,9 @@ end;
 
 
 
-procedure TSerial.PROCULUS_Control_Active(Sender: TObject;
-                           Software_Control_Code: byte);
+procedure TSerial.PROCULUS_Control_Active(Software_Control_Code: byte;
+                                                    resultType : integer;
+                                                    ObjDestino : TObject);
 var
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
@@ -860,8 +909,8 @@ begin
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=14;
-  fila[FilaFim].ObjOrigem:=Sender;
-  fila[FilaFim].ObjDestino:=Form1.edt_control_active_reply;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
 
   buffer[0]:= Software_Control_Code;
   KernelCommand(COMMAND_CONTROL_ACTIVE, 0, 1, buffer);
@@ -877,7 +926,7 @@ end;
 {------------------------------------------------------------------------------
                         C O M A N D O S   A V U L S O S
 -------------------------------------------------------------------------------}
-procedure TSerial.EEPROM_24C1025_Fill_All(Sender : TObject;
+procedure TSerial.EEPROM_24C1025_Fill_All(resultType : integer;
                                          destino : integer;
                                             chip : integer;
                                           value  : integer);
@@ -888,7 +937,7 @@ begin
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=8;
-  fila[FilaFim].ObjOrigem:=Sender;
+  //fila[FilaFim].ObjOrigem:=Sender;
   fila[FilaFim].ObjDestino:=Form1.edt_fill_reply;
 
   buffer[0]:= chip ;
