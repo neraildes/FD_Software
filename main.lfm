@@ -1,10 +1,10 @@
 object Form1: TForm1
-  Left = 222
-  Height = 735
-  Top = 300
+  Left = 323
+  Height = 737
+  Top = 126
   Width = 1362
   Caption = 'JJ Cientifica Ind. e Com. de Equipamentos Científicos'
-  ClientHeight = 735
+  ClientHeight = 737
   ClientWidth = 1362
   OnClick = FormClick
   OnClose = FormClose
@@ -29,7 +29,7 @@ object Form1: TForm1
     AnchorSideBottom.Side = asrCenter
     Left = -1
     Height = 742
-    Top = -4
+    Top = -3
     Width = 1364
     ActivePage = ManutencaoCalibracao
     Anchors = [akTop, akLeft, akRight, akBottom]
@@ -570,6 +570,7 @@ object Form1: TForm1
       Caption = 'Página Principal'
       ClientHeight = 714
       ClientWidth = 1356
+      OnContextPopup = PaginaPrincipalContextPopup
       object Panel11: TPanel
         Left = 296
         Height = 34
@@ -1567,11 +1568,27 @@ object Form1: TForm1
         ParentFont = False
         TabOrder = 88
       end
+      object Button3: TButton
+        Left = 80
+        Height = 25
+        Top = 236
+        Width = 75
+        Caption = 'Button3'
+        OnClick = Button3Click
+        TabOrder = 91
+      end
     end
   end
-  object Timer1: TTimer
-    OnTimer = Timer1Timer
+  object OnLineSystem: TTimer
+    OnTimer = OnLineSystemTimer
     left = 8
+    top = 24
+  end
+  object LeitorDeTemperatura: TTimer
+    Enabled = False
+    Interval = 5000
+    OnTimer = LeitorDeTemperaturaTimer
+    left = 120
     top = 24
   end
 end

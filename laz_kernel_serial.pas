@@ -817,7 +817,7 @@ begin
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   fila[FilaFim].RXpayload:=2;
   fila[FilaFim].TotalReturn:=14;
-  fila[FilaFim].ObjDestino:=Form1.edt_vp_value_int_reply;
+  fila[FilaFim].ObjDestino:=ObjDestino;
   fila[FilaFim].resTypeData:=resultType;
 
   buffer[0]:= (vp>>8) and $FF;

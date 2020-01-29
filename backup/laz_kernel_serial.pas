@@ -278,8 +278,9 @@ type
                             resultType : integer;
                             ObjDestino : TObject);
 
-      procedure PROCULUS_Control_Active(resultType : integer;
-                         Software_Control_Code: byte);
+      procedure PROCULUS_Control_Active(Software_Control_Code: byte;
+                                                  resultType : integer;
+                                                  ObjDestino : TObject);
 
 
 
@@ -815,8 +816,8 @@ begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   fila[FilaFim].RXpayload:=2;
-  fila[FilaFim].TotalReturn:=14;
-  fila[FilaFim].ObjDestino:=Form1.edt_vp_value_int_reply;
+  fila[FilaFim].TotalReturn:=24;
+  fila[FilaFim].ObjDestino:=ObjDestino;
   fila[FilaFim].resTypeData:=resultType;
 
   buffer[0]:= (vp>>8) and $FF;
@@ -898,8 +899,9 @@ end;
 
 
 
-procedure TSerial.PROCULUS_Control_Active(resultType : integer;
-                           Software_Control_Code: byte);
+procedure TSerial.PROCULUS_Control_Active(Software_Control_Code: byte;
+                                                    resultType : integer;
+                                                    ObjDestino : TObject);
 var
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
@@ -907,8 +909,8 @@ begin
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=14;
-  //fila[FilaFim].ObjOrigem:=Sender;
-  fila[FilaFim].ObjDestino:=Form1.edt_control_active_reply;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
 
   buffer[0]:= Software_Control_Code;
   KernelCommand(COMMAND_CONTROL_ACTIVE, 0, 1, buffer);

@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
-  ComCtrls, Laz_Kernel_Serial;
+  ComCtrls, Grids, Laz_Kernel_Serial, Types;
 
 type
 
@@ -38,6 +38,7 @@ type
     Button2: TButton;
     btn_vp_string_read: TButton;
     btn_vp_strinng_write: TButton;
+    Button3: TButton;
     chk_EEPROM_16Bits: TCheckBox;
     ControledePaginas: TPageControl;
     Edit1: TEdit;
@@ -176,7 +177,8 @@ type
     Pn_COM: TPanel;
     rb_24C1025: TRadioButton;
     rb_EEPROM: TRadioButton;
-    Timer1: TTimer;
+    OnLineSystem: TTimer;
+    LeitorDeTemperatura: TTimer;
     ToggleBox1: TToggleBox;
     ToggleBox10: TToggleBox;
     ToggleBox2: TToggleBox;
@@ -202,6 +204,7 @@ type
     procedure btn_vp_strinng_writeClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
     procedure chk_EEPROM_16BitsChange(Sender: TObject);
     procedure Edit1Change(Sender: TObject);
     procedure Edit2Change(Sender: TObject);
@@ -213,14 +216,17 @@ type
     procedure gpb_proculusClick(Sender: TObject);
     procedure GroupBox1Click(Sender: TObject);
     procedure Label10Click(Sender: TObject);
+    procedure LeitorDeTemperaturaTimer(Sender: TObject);
     procedure ListaAdd(cmd:string);
     function  ListaUse():string;
     procedure ControledePaginasChange(Sender: TObject);
+    procedure PaginaPrincipalContextPopup(Sender: TObject; MousePos: TPoint;
+      var Handled: Boolean);
     procedure Panel1Click(Sender: TObject);
     procedure RadioButton1Change(Sender: TObject);
     procedure rb_24C1025Change(Sender: TObject);
     procedure rb_EEPROMChange(Sender: TObject);
-    procedure Timer1Timer(Sender: TObject);
+    procedure OnLineSystemTimer(Sender: TObject);
     procedure ToggleBox1Change(Sender: TObject);
   private
 
@@ -278,6 +284,11 @@ end;
 procedure TForm1.Label10Click(Sender: TObject);
 begin
 
+end;
+
+procedure TForm1.LeitorDeTemperaturaTimer(Sender: TObject);
+begin
+  Aparelho.PROCULUS_Read_VP_Int(231,FLUTUANTE,Form1.Edit2);
 end;
 
 
@@ -428,6 +439,11 @@ begin
      end;
 end;
 
+procedure TForm1.Button3Click(Sender: TObject);
+begin
+  Aparelho.PROCULUS_Read_VP_Int(231,FLUTUANTE,Form1.Edit2);
+end;
+
 procedure TForm1.chk_EEPROM_16BitsChange(Sender: TObject);
 begin
    if(chk_EEPROM_16Bits.Checked) then
@@ -488,12 +504,15 @@ end;
 
 procedure TForm1.btn_Control_Active_writeClick(Sender: TObject);
 begin
-  Aparelho.PROCULUS_Control_Active(TEXTO,strtoint(edt_control_active.Text));
+  Aparelho.PROCULUS_Control_Active(strtoint(edt_control_active.Text),
+                                   TEXTO,
+                                   Form1.edt_control_active_reply
+                                   );
 end;
 
 procedure TForm1.btn_EscreverMemoClick(Sender: TObject);
 begin
-  edt_eeprom_reply.text:='';
+  //edt_eeprom_reply.text:='';
   if(rb_EEPROM.Checked) then  //Memória interna do Microcontrolador
      begin
      if(chk_EEPROM_16Bits.Checked) then  //Dados com 16 bits
@@ -604,7 +623,7 @@ end;
 
 procedure TForm1.btn_ler_vp_intClick(Sender: TObject);
 begin
-  Aparelho.PROCULUS_Read_VP_Int(strtoint(edt_vp_add_int.Text),FLUTUANTE,Form1.edt_vp_string_value);
+  Aparelho.PROCULUS_Read_VP_Int(strtoint(edt_vp_add_int.Text),FLUTUANTE,Form1.edt_vp_value_int_reply);
 end;
 
 procedure TForm1.btn_page_writeClick(Sender: TObject);
@@ -658,95 +677,31 @@ begin
              CountCOM:=5;
              if(Aparelho.FilaFim>0) then
                 begin
-                 Form1.Memo1.Lines.Add('<<<<<<<<<<<<ENTROU');
+
                  node:=Aparelho.fila[0].comando;
 
                  if (Aparelho.fila[0].ObjDestino<>nil)  then
                       begin
+                        //TEdit(Aparelho.fila[0].ObjDestino).Text:='';
                         Aparelho.kernelSerial(node); //ENVIA EFETIVAMENTE OS COMANDOS
+                        case Aparelho.fila[0].resTypeData of
+                              FLUTUANTE :
+                                  begin
+                                  numreal:=Aparelho.HexToInt(Aparelho.fila[0].result);
+                                  if(numreal>32768) then
+                                  numreal:=numreal-65536;
+                                  TEdit(Aparelho.fila[0].ObjDestino).Text:=formatfloat('00.0',numreal/10.0);
+                                  end;
+                              TEXTO :
+                                  begin
+                                  TEdit(Aparelho.fila[0].ObjDestino).Text:=Aparelho.HexToText(Aparelho.fila[0].result);
+                                  end;
+                              HEXADECIMAL:
+                                  begin
+                                  TEdit(Aparelho.fila[0].ObjDestino).Text:='$'+Aparelho.fila[0].result;
+                                  end;
 
-                        {
-                        if (Aparelho.fila[0].ObjOrigem.InheritsFrom(TButton)) then
-                            begin
-                             if (TButton(Aparelho.fila[0].ObjOrigem).Name='Btn_Buzzer') then
-                                 TEdit(Aparelho.fila[0].ObjDestino).Text:=Aparelho.HexToText(Aparelho.fila[0].result);
-
-                             if (TButton(Aparelho.fila[0].ObjOrigem).Name='btn_EscreverMemo') then
-                                 begin
-                                 HardReply:=copy((Aparelho.HexToText(Aparelho.fila[0].result)),1,2);
-                                 TEdit(Aparelho.fila[0].ObjDestino).Text:=HardReply;
-                                 if(HardReply='NR') then
-                                    begin
-                                      Form1.Timer1.Enabled:=FALSE;
-                                      showmessage('A T E N Ç Ã O'+#13+'O Hardware Destino (Placa) não respondeu!');
-                                      Form1.Timer1.Enabled:=TRUE;
-                                    end;
-                                 end;
-
-                             if (TButton(Aparelho.fila[0].ObjOrigem).Name='btn_LerMemo') then
-                                 TEdit(Aparelho.fila[0].ObjDestino).Text:=Aparelho.fila[0].result;
-
-                             if (TButton(Aparelho.fila[0].ObjOrigem).Name='btn_fill') then
-                                 TEdit(Aparelho.fila[0].ObjDestino).Text:=Aparelho.HexToText(Aparelho.fila[0].result);
-
-                             if (TButton(Aparelho.fila[0].ObjOrigem).Name='btn_fill_confere') then
-                                 begin
-                                   Form1.Memo3.Lines.Add(Copy(Aparelho.fila[0].comando,15,8)+' - '+
-                                                              Aparelho.fila[0].result);
-                                 end;
-
-                             if (TButton(Aparelho.fila[0].ObjOrigem).Name='btn_gravar_vp_int') then
-                                 TEdit(Aparelho.fila[0].ObjDestino).Text:=Aparelho.HexToText(Aparelho.fila[0].result);
-
-                             if (TButton(Aparelho.fila[0].ObjOrigem).Name='btn_ler_vp_int') then
-                                 TEdit(Aparelho.fila[0].ObjDestino).Text:=Inttostr(Aparelho.HexToInt(Aparelho.fila[0].result));////StrtoInt('$23');
-
-                             if (TButton(Aparelho.fila[0].ObjOrigem).Name='btn_page_write') then
-                                 TEdit(Aparelho.fila[0].ObjDestino).Text:=Aparelho.HexToText(Aparelho.fila[0].result);
-
-                             if (TButton(Aparelho.fila[0].ObjOrigem).Name='btn_Control_Active_write') then
-                                 TEdit(Aparelho.fila[0].ObjDestino).Text:=Aparelho.HexToText(Aparelho.fila[0].result);
-
-                             if (TButton(Aparelho.fila[0].ObjOrigem).Name='btn_vp_string_read') then
-                                 TEdit(Aparelho.fila[0].ObjDestino).Text:=Aparelho.HexToText(Aparelho.fila[0].result);
-
-
-                            end;
-                            }
-
-                            case Aparelho.fila[0].resTypeData of
-                                  FLUTUANTE :
-                                      begin
-                                      numreal:=Aparelho.HexToInt(Aparelho.fila[0].result);
-                                      if(numreal>32768) then
-                                      numreal:=numreal-65536;
-                                      TEdit(Aparelho.fila[0].ObjDestino).Text:=formatfloat('00.0',numreal/10.0);
-                                      end;
-                                  TEXTO :
-                                      begin
-                                      TEdit(Aparelho.fila[0].ObjDestino).Text:=Aparelho.HexToText(Aparelho.fila[0].result);
-                                      end;
-                                  HEXADECIMAL:
-                                      begin
-                                      TEdit(Aparelho.fila[0].ObjDestino).Text:='$'+Aparelho.fila[0].result;
-                                      end;
-
-                             end
-
-                            {
-                            if(Aparelho.fila[0].resTypeData=FLUTUANTE1) then
-                               begin
-                                 numreal:=Aparelho.HexToInt(Aparelho.fila[0].result);
-                                 if(numreal>32768) then numreal:=numreal-65536;
-                                 TEdit(Aparelho.fila[0].ObjDestino).Text:=formatfloat('00.0',numreal/10.0);
-                               end;
-
-                            if(Aparelho.fila[0].resTypeData=TEXTO) then
-                               begin
-                                TEdit(Aparelho.fila[0].ObjDestino).Text:=Aparelho.HexToText(Aparelho.fila[0].result);
-                               end;
-                             }
-
+                         end
                       end;
 
                  if(Aparelho.FilaFim>0) then
@@ -757,7 +712,6 @@ begin
                           Aparelho.fila[i-1].result:=Aparelho.fila[i].result;
                           Aparelho.fila[i-1].TotalReturn:=Aparelho.fila[i].TotalReturn;
                           Aparelho.fila[i-1].RXpayload:=Aparelho.fila[i].RXpayload;
-                          //Aparelho.fila[i-1].ObjOrigem:=Aparelho.fila[i].ObjOrigem;
                           Aparelho.fila[i-1].ObjDestino:=Aparelho.fila[i].ObjDestino;
                           Aparelho.fila[i-1].resTypeData:=Aparelho.fila[i].resTypeData;
                           end;
@@ -795,6 +749,12 @@ begin
 
 end;
 
+procedure TForm1.PaginaPrincipalContextPopup(Sender: TObject; MousePos: TPoint;
+  var Handled: Boolean);
+begin
+
+end;
+
 procedure TForm1.Panel1Click(Sender: TObject);
 begin
 
@@ -815,7 +775,7 @@ begin
   edt_eeprom_add.text:='$0000';
 end;
 
-procedure TForm1.Timer1Timer(Sender: TObject);
+procedure TForm1.OnLineSystemTimer(Sender: TObject);
 begin
 
   if(CountCOM>0) then
