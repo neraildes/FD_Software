@@ -94,6 +94,7 @@ type
            RXpayload  : integer;
            result     : string;
            resTypeData: integer;
+           resUnidade : string;
            ObjDestino : TObject;
            end;
 
@@ -243,6 +244,24 @@ type
                                              ObjDestino : TObject);
 
       //------------------------------------------------------------------------
+      procedure Gravar_EEPROM_String_Mae(  add: integer;
+                                        value : string;
+                                   resultType : integer;
+                                   ObjDestino : TObject);
+
+
+
+
+
+      //------------------------------------------------------------------------
+      procedure Read_Analogic_Channel(destino : integer;
+                                      channel : integer;
+                                   resultType : integer;
+                                   resUnidade : string;
+                                   ObjDestino : TObject);
+
+
+
       procedure EEPROM_24C1025_Fill_All(resultType : integer;
                                        destino : integer;
                                           chip : integer;
@@ -266,7 +285,7 @@ type
                                  resultType : integer;
                                  ObjDestino : TObject);
 
-      //*AQUI*
+
       procedure PROCULUS_Read_VP_String(vp : integer;
                                 resultType : integer;
                                 ObjDestino : TObject);
@@ -431,7 +450,7 @@ begin
     //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
     //fila[FilaFim].result:='';       Zerado no KernelCommand
       fila[FilaFim].RXpayload:=3;
-      fila[FilaFim].TotalReturn:=20;
+      fila[FilaFim].TotalReturn:=19;
       fila[FilaFim].resTypeData:=resultType;
       fila[FilaFim].ObjDestino:=ObjDestino;
 
@@ -486,15 +505,14 @@ var
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
-  //fila[FilaFim].ObjOrigem:=Sender;
   fila[FilaFim].RXpayload:=2;
   fila[FilaFim].TotalReturn:=7;
   fila[FilaFim].resTypeData:=resultType;
   fila[FilaFim].ObjDestino:=ObjDestino;
 
 
-  buffer[0]:= (add div 256); //______Endereco (0x3FF)
-  buffer[1]:= (add mod 256); //
+  buffer[0]:= (add>>8 ) and $FF;  //______Endereco (0x3FF)
+  buffer[1]:= (add>>0 ) and $FF;  //
   KernelCommand(COMMAND_IEE_R_INT,0, 2, buffer);
 end;
 
@@ -780,6 +798,40 @@ begin
 end;
 
 
+procedure TSerial.Gravar_EEPROM_String_Mae(   add: integer;
+                                           value : string;
+                                      resultType : integer;
+                                      ObjDestino : TObject);
+var
+   i : integer;
+   buffer : array [0..TXBUFFERSIZE ] of byte;
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  fila[FilaFim].RXpayload:=3;
+  fila[FilaFim].TotalReturn:=8;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
+
+  buffer[0]:= (add>>8) and $FF;
+  buffer[1]:= (add>>0) and $FF;
+  if(value='')then value:=' ';
+  for i:=0 to length(value) do
+      begin
+        buffer[i+2]:= byte(value[i+1]);
+      end;
+  KernelCommand(COMMAND_IEE_W_STR, 0, length(value)+3, buffer);
+end;
+
+
+
+
+
+
+
+
+
+
 
 {-------------------------------------------------------------------------------
            C O M A N D O S     D O     L C D     P R O C U L U S
@@ -817,7 +869,7 @@ begin
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   fila[FilaFim].RXpayload:=2;
   fila[FilaFim].TotalReturn:=14;
-  fila[FilaFim].ObjDestino:=Form1.edt_vp_value_int_reply;
+  fila[FilaFim].ObjDestino:=ObjDestino;
   fila[FilaFim].resTypeData:=resultType;
 
   buffer[0]:= (vp>>8) and $FF;
@@ -844,7 +896,7 @@ begin
 
   buffer[0]:= (vp>>8) and $FF;
   buffer[1]:= (vp>>0) and $FF;
-
+  if(value='')then value:=' ';
   for i:=0 to length(value) do
       begin
         buffer[i+2]:= byte(value[i+1]);
@@ -854,7 +906,7 @@ end;
 
 
 
-//*AQUI*
+
 procedure TSerial.PROCULUS_Read_VP_String(vp : integer;
                                   resultType : integer;
                                   ObjDestino : TObject);
@@ -921,11 +973,43 @@ end;
 
 
 
-
-
 {------------------------------------------------------------------------------
                         C O M A N D O S   A V U L S O S
 -------------------------------------------------------------------------------}
+procedure TSerial.Read_Analogic_Channel(destino : integer;
+                                        channel : integer;
+                                     resultType : integer;
+                                     resUnidade : string;
+                                     ObjDestino : TObject);
+var
+   buffer : array [0..TXBUFFERSIZE ] of byte;
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  fila[FilaFim].RXpayload:=2;
+  fila[FilaFim].TotalReturn:=14;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
+  fila[FilaFim].resUnidade:=resUnidade;
+
+  buffer[0]:= channel;
+  KernelCommand(COMMAND_READ_ANALOG, destino, 1, buffer);
+end;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 procedure TSerial.EEPROM_24C1025_Fill_All(resultType : integer;
                                          destino : integer;
                                             chip : integer;

@@ -7,8 +7,7 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, Main, laz_synapse, unit1, unit2
-  { you can add units after this };
+  Forms, Main, laz_synapse;
 
 {$R *.res}
 
@@ -18,5 +17,6 @@ begin
   Application.Initialize;
   Application.CreateForm(TForm1, Form1);
   Application.Run;
+end;
 end.
 
