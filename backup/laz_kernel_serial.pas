@@ -67,6 +67,9 @@ const
    //----------------------------------
    COMMAND_GLOBAL_HOT      = $40;
    COMMAND_VERSION         = $41;
+   COMMAND_SHOW_PROGRAM    = $42;
+   COMMAND_FORMAT          = $43;
+   COMMAND_UPLOAD_PRG      = $44;
    //...
    //----------------------------------
 
@@ -244,17 +247,21 @@ type
                                              ObjDestino : TObject);
 
       //------------------------------------------------------------------------
-      procedure IEE_Write_Mae_String(board: integer;
-                                       add: integer;
-                                    value : string;
-                               resultType : integer;
-                               ObjDestino : TObject);
+      {STRING}
+      procedure Gravar_EEPROM_String_Mae(  add: integer;
+                                        value : string;
+                                   resultType : integer;
+                                   ObjDestino : TObject);
 
 
+      procedure Ler_EEPROM_String_Mae(     add: integer;
+                                   resultType : integer;
+                                   ObjDestino : TObject);
 
 
 
       //------------------------------------------------------------------------
+      {GERAL}
       procedure Read_Analogic_Channel(destino : integer;
                                       channel : integer;
                                    resultType : integer;
@@ -290,6 +297,17 @@ type
       procedure PROCULUS_Read_VP_String(vp : integer;
                                 resultType : integer;
                                 ObjDestino : TObject);
+
+      //------------------------------------------------------------------------
+      procedure Show_Programacao(index      : integer;
+                                 resultType : integer;
+                                 ObjDestino : TObject);
+
+      procedure Format_Program(resultType : integer;
+                               ObjDestino : TObject);
+
+      procedure Upload_Program(resultType : integer;
+                               ObjDestino : TObject);
 
       //------------------------------------------------------------------------
 
@@ -799,11 +817,10 @@ begin
 end;
 
 
-procedure TSerial.IEE_Write_Mae_String(board : integer;
-                                          add: integer;
-                                       value : string;
-                                  resultType : integer;
-                                  ObjDestino : TObject);
+procedure TSerial.Gravar_EEPROM_String_Mae(   add: integer;
+                                           value : string;
+                                      resultType : integer;
+                                      ObjDestino : TObject);
 var
    i : integer;
    buffer : array [0..TXBUFFERSIZE ] of byte;
@@ -822,7 +839,7 @@ begin
       begin
         buffer[i+2]:= byte(value[i+1]);
       end;
-  KernelCommand(COMMAND_IEE_W_STR, board, length(value)+3, buffer);
+  KernelCommand(COMMAND_IEE_W_STR, 0, length(value)+3, buffer);
 end;
 
 
@@ -929,6 +946,29 @@ begin
 end;
 
 
+procedure TSerial.Ler_EEPROM_String_Mae( add: integer;
+                                 resultType : integer;
+                                 ObjDestino : TObject);
+var
+   i : integer;
+   buffer : array [0..TXBUFFERSIZE ] of byte;
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  fila[FilaFim].RXpayload:=15;
+  fila[FilaFim].TotalReturn:=20;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
+
+  buffer[0]:= (add>>8) and $FF;
+  buffer[1]:= (add>>0) and $FF;
+  KernelCommand(COMMAND_IEE_R_STR, 0, 2, buffer);
+end;
+
+
+
+
+
 
 
 
@@ -999,6 +1039,55 @@ begin
 end;
 
 
+
+procedure TSerial.Show_Programacao(index      : integer;
+                                   resultType : integer;
+                                   ObjDestino : TObject);
+var
+   buffer : array [0..TXBUFFERSIZE ] of byte;
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  fila[FilaFim].RXpayload:=3;
+  fila[FilaFim].TotalReturn:=17;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
+  buffer[0]:=index;
+  KernelCommand(COMMAND_SHOW_PROGRAM, 0, 1, buffer);
+end;
+
+
+procedure TSerial.Format_Program(resultType : integer;
+                                 ObjDestino : TObject);
+var
+   buffer : array [0..TXBUFFERSIZE ] of byte;
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  fila[FilaFim].RXpayload:=3;
+  fila[FilaFim].TotalReturn:=17;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
+  buffer[0]:=0;
+  KernelCommand(COMMAND_FORMAT, 0, 1, buffer);
+end;
+
+
+
+procedure TSerial.Upload_Program(resultType : integer;
+                                 ObjDestino : TObject);
+var
+   buffer : array [0..TXBUFFERSIZE ] of byte;
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  fila[FilaFim].RXpayload:=3;
+  fila[FilaFim].TotalReturn:=17;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
+  buffer[0]:=0;
+  KernelCommand(COMMAND_UPLOAD_PRG, 0, 1, buffer);
+end;
 
 
 

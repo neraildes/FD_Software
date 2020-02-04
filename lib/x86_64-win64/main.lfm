@@ -1,14 +1,22 @@
 object Form1: TForm1
-  Left = 198
-  Height = 707
-  Top = 49
-  Width = 963
+  Left = 134
+  Height = 600
+  Top = 121
+  Width = 1196
   Caption = 'JJ Cientifica Ind. e Com. de Equipamentos Científicos'
-  ClientHeight = 707
-  ClientWidth = 963
+  ClientHeight = 580
+  ClientWidth = 1196
+  Font.CharSet = ANSI_CHARSET
+  Font.Color = clBlack
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Pitch = fpVariable
+  Font.Quality = fqDraft
+  Menu = MainMenu1
   OnClick = FormClick
   OnClose = FormClose
   OnCreate = FormCreate
+  OnShow = FormShow
   LCLVersion = '2.0.4.0'
   object Edit6: TEdit
     Left = 96
@@ -26,18 +34,25 @@ object Form1: TForm1
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrCenter
     Left = 0
-    Height = 706
+    Height = 579
     Top = 0
-    Width = 962
-    ActivePage = TabSheet1
+    Width = 1196
+    ActivePage = PaginaPrincipal
     Anchors = [akTop, akLeft, akRight, akBottom]
-    TabIndex = 2
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentFont = False
+    TabIndex = 1
     TabOrder = 1
     OnChange = ControledePaginasChange
     object ManutencaoCalibracao: TTabSheet
       Caption = 'Manutencao e Calibracao'
-      ClientHeight = 678
-      ClientWidth = 954
+      ClientHeight = 551
+      ClientWidth = 1188
       OnContextPopup = ManutencaoCalibracaoContextPopup
       object Memo1: TMemo
         Left = 560
@@ -101,23 +116,6 @@ object Form1: TForm1
         ParentColor = False
         ParentFont = False
       end
-      object Pn_COM: TPanel
-        Left = 0
-        Height = 21
-        Top = 0
-        Width = 960
-        Caption = 'OFFLINE'
-        Color = clBlack
-        Font.CharSet = ANSI_CHARSET
-        Font.Color = clYellow
-        Font.Height = -12
-        Font.Name = 'Segoe UI'
-        Font.Pitch = fpVariable
-        Font.Quality = fqDraft
-        ParentColor = False
-        ParentFont = False
-        TabOrder = 6
-      end
       object GroupBox2: TGroupBox
         Left = 4
         Height = 56
@@ -126,7 +124,7 @@ object Form1: TForm1
         Caption = 'Sinal Sonoro'
         ClientHeight = 36
         ClientWidth = 549
-        TabOrder = 7
+        TabOrder = 6
         object Edt_ss_time: TEdit
           Left = 208
           Height = 23
@@ -160,7 +158,7 @@ object Form1: TForm1
         Caption = 'Manipulação de Byte'
         ClientHeight = 76
         ClientWidth = 548
-        TabOrder = 8
+        TabOrder = 7
         OnClick = GroupBox1Click
         object btn_LerMemo: TButton
           Left = 8
@@ -315,7 +313,7 @@ object Form1: TForm1
         Caption = 'PROCULUS VP INTEGER'
         ClientHeight = 46
         ClientWidth = 341
-        TabOrder = 9
+        TabOrder = 8
         OnClick = gpb_proculusClick
         object btn_ler_vp_int: TButton
           Left = 12
@@ -370,7 +368,7 @@ object Form1: TForm1
         Caption = 'PROCULUS POP-UP'
         ClientHeight = 36
         ClientWidth = 230
-        TabOrder = 10
+        TabOrder = 9
         object btn_Control_Active_write: TButton
           Left = 9
           Height = 24
@@ -404,7 +402,7 @@ object Form1: TForm1
         Caption = 'PROCULUS GOTO PAGE'
         ClientHeight = 46
         ClientWidth = 194
-        TabOrder = 11
+        TabOrder = 10
         object btn_page_write: TButton
           Left = 6
           Height = 26
@@ -457,7 +455,7 @@ object Form1: TForm1
         DoubleBuffered = False
         Enabled = False
         ParentDoubleBuffered = False
-        TabOrder = 12
+        TabOrder = 11
         object btn_fill: TButton
           Left = 14
           Height = 27
@@ -548,7 +546,7 @@ object Form1: TForm1
         Caption = 'PROCULUS VP STRING'
         ClientHeight = 44
         ClientWidth = 295
-        TabOrder = 13
+        TabOrder = 12
         object btn_vp_string_read: TButton
           Left = 11
           Height = 23
@@ -591,7 +589,7 @@ object Form1: TForm1
         Caption = 'READ ANALOGIC CHANNEL'
         ClientHeight = 44
         ClientWidth = 293
-        TabOrder = 14
+        TabOrder = 13
         object Button3: TButton
           Left = 8
           Height = 25
@@ -656,14 +654,14 @@ object Form1: TForm1
         Width = 75
         Caption = 'Button4'
         OnClick = Button4Click
-        TabOrder = 15
+        TabOrder = 14
       end
       object edt_nump: TEdit
         Left = 480
         Height = 23
         Top = 618
         Width = 72
-        TabOrder = 16
+        TabOrder = 15
         Text = '123'
       end
       object GroupBox8: TGroupBox
@@ -674,7 +672,7 @@ object Form1: TForm1
         Caption = 'INTERNAL EEPROM STRING'
         ClientHeight = 46
         ClientWidth = 339
-        TabOrder = 17
+        TabOrder = 16
         OnClick = GroupBox8Click
         object IEE_Read: TButton
           Left = 6
@@ -682,12 +680,13 @@ object Form1: TForm1
           Top = 14
           Width = 50
           Caption = 'Ler'
+          OnClick = IEE_ReadClick
           TabOrder = 0
         end
         object IEE_Write: TButton
           Left = 64
           Height = 24
-          Top = 14
+          Top = 12
           Width = 52
           Caption = 'Gravar'
           OnClick = IEE_WriteClick
@@ -725,29 +724,62 @@ object Form1: TForm1
           ParentColor = False
         end
       end
+      object Button6: TButton
+        Left = 368
+        Height = 26
+        Top = 304
+        Width = 110
+        Caption = 'Show Program'
+        OnClick = Button6Click
+        TabOrder = 17
+      end
+      object edt_saidaprg: TEdit
+        Left = 368
+        Height = 23
+        Top = 280
+        Width = 111
+        TabOrder = 18
+      end
+      object Button7: TButton
+        Left = 368
+        Height = 25
+        Top = 336
+        Width = 107
+        Caption = 'Format Dba'
+        OnClick = Button7Click
+        TabOrder = 19
+      end
     end
     object PaginaPrincipal: TTabSheet
       Caption = 'Página Principal'
-      ClientHeight = 678
-      ClientWidth = 954
+      ClientHeight = 551
+      ClientWidth = 1188
       OnContextPopup = PaginaPrincipalContextPopup
-      object edt_saidapadrao: TEdit
-        Left = 600
+      OnShow = PaginaPrincipalShow
+      object edt_buffer: TEdit
+        Left = 1040
         Height = 23
-        Top = 32
+        Top = 425
+        Width = 104
+        TabOrder = 95
+      end
+      object edt_saidapadrao: TEdit
+        Left = 920
+        Height = 23
+        Top = 112
         Width = 88
-        TabOrder = 94
+        TabOrder = 84
         Text = '0'
       end
       object Panel11: TPanel
-        Left = 104
+        Left = 56
         Height = 34
-        Top = 144
+        Top = 56
         Width = 734
         BevelColor = clBlack
         ClientHeight = 34
         ClientWidth = 734
-        TabOrder = 90
+        TabOrder = 80
         object Label17: TLabel
           Left = 664
           Height = 15
@@ -815,31 +847,20 @@ object Form1: TForm1
         end
       end
       object Panel10: TPanel
-        Left = 104
+        Left = 56
         Height = 40
-        Top = 536
+        Top = 448
         Width = 736
         BevelColor = clActiveBorder
         Color = clRed
         ParentColor = False
-        TabOrder = 89
+        TabOrder = 79
         OnClick = Panel1Click
       end
       object Panel9: TPanel
-        Left = 104
+        Left = 56
         Height = 40
-        Top = 496
-        Width = 736
-        BevelColor = clActiveBorder
-        Color = clRed
-        ParentColor = False
-        TabOrder = 80
-        OnClick = Panel1Click
-      end
-      object Panel8: TPanel
-        Left = 104
-        Height = 40
-        Top = 456
+        Top = 408
         Width = 736
         BevelColor = clActiveBorder
         Color = clRed
@@ -847,87 +868,120 @@ object Form1: TForm1
         TabOrder = 71
         OnClick = Panel1Click
       end
-      object Panel7: TPanel
-        Left = 104
+      object Panel8: TPanel
+        Left = 56
         Height = 40
-        Top = 416
+        Top = 368
         Width = 736
         BevelColor = clActiveBorder
         Color = clRed
         ParentColor = False
-        TabOrder = 62
+        TabOrder = 63
+        OnClick = Panel1Click
+      end
+      object Panel7: TPanel
+        Left = 56
+        Height = 40
+        Top = 328
+        Width = 736
+        BevelColor = clActiveBorder
+        Color = clRed
+        ParentColor = False
+        TabOrder = 55
         OnClick = Panel1Click
       end
       object Panel6: TPanel
-        Left = 104
+        Left = 56
         Height = 40
-        Top = 376
+        Top = 288
         Width = 736
         BevelColor = clActiveBorder
         Color = clRed
         ParentColor = False
-        TabOrder = 53
+        TabOrder = 47
         OnClick = Panel1Click
       end
       object Panel5: TPanel
-        Left = 104
+        Left = 56
         Height = 40
-        Top = 336
+        Top = 248
         Width = 736
         BevelColor = clActiveBorder
         Color = clRed
         ParentColor = False
-        TabOrder = 44
+        TabOrder = 39
         OnClick = Panel1Click
       end
       object Panel4: TPanel
-        Left = 104
+        Left = 56
         Height = 40
-        Top = 296
+        Top = 208
         Width = 736
         BevelColor = clActiveBorder
         Color = clRed
         ParentColor = False
-        TabOrder = 35
+        TabOrder = 31
         OnClick = Panel1Click
       end
       object Panel3: TPanel
-        Left = 104
+        Left = 56
         Height = 40
-        Top = 256
+        Top = 168
         Width = 736
         BevelColor = clActiveBorder
+        ClientHeight = 40
+        ClientWidth = 736
         Color = clRed
         ParentColor = False
-        TabOrder = 26
+        TabOrder = 23
         OnClick = Panel1Click
+        object cbb2: TComboBox
+          Left = 537
+          Height = 23
+          Top = 8
+          Width = 96
+          ItemHeight = 15
+          OnChange = cbb2Change
+          TabOrder = 0
+        end
       end
       object Panel2: TPanel
-        Left = 104
+        Left = 56
         Height = 40
-        Top = 216
+        Top = 128
         Width = 736
         BevelColor = clActiveBorder
+        ClientHeight = 40
+        ClientWidth = 736
         Color = clRed
         ParentColor = False
-        TabOrder = 17
+        TabOrder = 15
         OnClick = Panel1Click
+        object cbb1: TComboBox
+          Left = 537
+          Height = 23
+          Top = 8
+          Width = 94
+          ItemHeight = 15
+          OnChange = cbb1Change
+          TabOrder = 0
+        end
       end
       object Panel1: TPanel
-        Left = 104
+        Left = 56
         Height = 40
-        Top = 176
+        Top = 88
         Width = 736
         BevelColor = clActiveBorder
         Color = clRed
         ParentColor = False
-        TabOrder = 8
+        TabOrder = 7
         OnClick = Panel1Click
       end
       object Edit1: TEdit
-        Left = 112
+        Left = 64
         Height = 23
-        Top = 184
+        Top = 96
         Width = 58
         Alignment = taCenter
         OnChange = Edit1Change
@@ -935,64 +989,55 @@ object Form1: TForm1
         Text = '1'
       end
       object Edit2: TEdit
-        Left = 185
+        Left = 137
         Height = 23
-        Top = 184
+        Top = 96
         Width = 84
         Alignment = taCenter
         TabOrder = 1
         Text = '0,0°C'
       end
       object Edit3: TEdit
-        Left = 392
+        Left = 344
         Height = 23
-        Top = 184
+        Top = 95
         Width = 60
         Alignment = taCenter
         OnChange = Edit3Change
         TabOrder = 2
-        Text = '10'
+        Text = '0'
       end
       object Edit4: TEdit
-        Left = 288
+        Left = 240
         Height = 23
-        Top = 183
+        Top = 95
         Width = 87
         Alignment = taCenter
         TabOrder = 3
-        Text = '35,0'
+        Text = '0'
       end
       object Edit5: TEdit
-        Left = 472
+        Left = 424
         Height = 23
-        Top = 183
+        Top = 95
         Width = 62
         Alignment = taCenter
         TabOrder = 4
-        Text = '5'
+        Text = '0'
       end
       object Edit7: TEdit
-        Left = 560
+        Left = 512
         Height = 23
-        Top = 184
+        Top = 96
         Width = 61
         Alignment = taCenter
         TabOrder = 5
-        Text = '2'
-      end
-      object Edit8: TEdit
-        Left = 640
-        Height = 23
-        Top = 184
-        Width = 96
-        Alignment = taCenter
-        TabOrder = 6
-        Text = 'Morango'
+        Text = '0'
       end
       object ToggleBox1: TToggleBox
-        Left = 752
+        Left = 704
         Height = 23
-        Top = 183
+        Top = 95
         Width = 71
         Caption = 'X'
         Color = clYellow
@@ -1004,77 +1049,68 @@ object Form1: TForm1
         Font.Quality = fqDraft
         OnChange = ToggleBox1Change
         ParentFont = False
-        TabOrder = 7
+        TabOrder = 6
       end
       object Edit9: TEdit
-        Left = 112
+        Left = 64
         Height = 23
-        Top = 223
+        Top = 135
         Width = 58
         Alignment = taCenter
         OnChange = Edit1Change
-        TabOrder = 9
+        TabOrder = 8
         Text = '2'
       end
       object Edit10: TEdit
-        Left = 185
+        Left = 137
         Height = 23
-        Top = 224
+        Top = 136
         Width = 84
         Alignment = taCenter
-        TabOrder = 10
+        TabOrder = 9
         Text = '0,0°C'
       end
       object Edit11: TEdit
-        Left = 392
+        Left = 344
         Height = 23
-        Top = 224
+        Top = 136
         Width = 60
         Alignment = taCenter
         OnChange = Edit3Change
-        TabOrder = 11
-        Text = '10'
+        TabOrder = 10
+        Text = '0'
       end
       object Edit12: TEdit
-        Left = 288
+        Left = 240
         Height = 23
-        Top = 223
+        Top = 135
         Width = 87
         Alignment = taCenter
-        TabOrder = 12
-        Text = '35.0°C'
+        TabOrder = 11
+        Text = '0'
       end
       object Edit13: TEdit
-        Left = 472
+        Left = 424
         Height = 23
-        Top = 224
+        Top = 136
         Width = 62
         Alignment = taCenter
-        TabOrder = 13
-        Text = '5'
+        TabOrder = 12
+        Text = '0'
       end
       object Edit14: TEdit
-        Left = 560
+        Left = 512
         Height = 23
-        Top = 224
+        Top = 136
         Width = 61
         Alignment = taCenter
-        TabOrder = 14
-        Text = '2'
-      end
-      object Edit15: TEdit
-        Left = 640
-        Height = 23
-        Top = 224
-        Width = 96
-        Alignment = taCenter
-        TabOrder = 15
-        Text = 'Morango'
+        TabOrder = 13
+        Text = '0'
       end
       object ToggleBox2: TToggleBox
-        Left = 752
+        Left = 704
         Height = 23
-        Top = 224
+        Top = 136
         Width = 71
         Caption = 'X'
         Color = clYellow
@@ -1086,77 +1122,68 @@ object Form1: TForm1
         Font.Quality = fqDraft
         OnChange = ToggleBox2Change
         ParentFont = False
-        TabOrder = 16
+        TabOrder = 14
       end
       object Edit16: TEdit
-        Left = 112
+        Left = 64
         Height = 23
-        Top = 264
+        Top = 176
         Width = 58
         Alignment = taCenter
         OnChange = Edit1Change
-        TabOrder = 18
+        TabOrder = 16
         Text = '3'
       end
       object Edit17: TEdit
-        Left = 185
+        Left = 137
         Height = 23
-        Top = 264
+        Top = 176
         Width = 84
         Alignment = taCenter
-        TabOrder = 19
+        TabOrder = 17
         Text = '0,0°C'
       end
       object Edit18: TEdit
-        Left = 392
+        Left = 344
         Height = 23
-        Top = 264
+        Top = 176
         Width = 60
         Alignment = taCenter
         OnChange = Edit3Change
-        TabOrder = 20
-        Text = '10'
+        TabOrder = 18
+        Text = '0'
       end
       object Edit19: TEdit
-        Left = 288
+        Left = 240
         Height = 23
-        Top = 263
+        Top = 175
         Width = 87
         Alignment = taCenter
-        TabOrder = 21
-        Text = '35.0°C'
+        TabOrder = 19
+        Text = '0'
       end
       object Edit20: TEdit
-        Left = 472
+        Left = 424
         Height = 23
-        Top = 264
+        Top = 176
         Width = 62
         Alignment = taCenter
-        TabOrder = 22
-        Text = '5'
+        TabOrder = 20
+        Text = '0'
       end
       object Edit21: TEdit
-        Left = 560
+        Left = 512
         Height = 23
-        Top = 264
+        Top = 176
         Width = 61
         Alignment = taCenter
-        TabOrder = 23
-        Text = '2'
-      end
-      object Edit22: TEdit
-        Left = 640
-        Height = 23
-        Top = 264
-        Width = 96
-        Alignment = taCenter
-        TabOrder = 24
-        Text = 'Morango'
+        TabOrder = 21
+        Text = '0'
       end
       object ToggleBox3: TToggleBox
-        Left = 752
+        Left = 704
         Height = 23
-        Top = 264
+        Top = 176
         Width = 71
         Caption = 'X'
         Color = clYellow
@@ -1168,77 +1195,68 @@ object Form1: TForm1
         Font.Quality = fqDraft
         OnChange = ToggleBox3Change
         ParentFont = False
-        TabOrder = 25
+        TabOrder = 22
       end
       object Edit23: TEdit
-        Left = 112
+        Left = 64
         Height = 23
-        Top = 304
+        Top = 216
         Width = 58
         Alignment = taCenter
         OnChange = Edit1Change
-        TabOrder = 27
+        TabOrder = 24
         Text = '4'
       end
       object Edit24: TEdit
-        Left = 185
+        Left = 137
         Height = 23
-        Top = 304
+        Top = 216
         Width = 84
         Alignment = taCenter
-        TabOrder = 28
+        TabOrder = 25
         Text = '0,0°C'
       end
       object Edit25: TEdit
-        Left = 392
+        Left = 344
         Height = 23
-        Top = 304
+        Top = 216
         Width = 60
         Alignment = taCenter
         OnChange = Edit3Change
-        TabOrder = 29
-        Text = '10'
+        TabOrder = 26
+        Text = '0'
       end
       object Edit26: TEdit
-        Left = 288
+        Left = 240
         Height = 23
-        Top = 303
+        Top = 215
         Width = 87
         Alignment = taCenter
-        TabOrder = 30
-        Text = '35.0°C'
+        TabOrder = 27
+        Text = '0'
       end
       object Edit27: TEdit
-        Left = 472
+        Left = 424
         Height = 23
-        Top = 304
+        Top = 216
         Width = 62
         Alignment = taCenter
-        TabOrder = 31
-        Text = '5'
+        TabOrder = 28
+        Text = '0'
       end
       object Edit28: TEdit
-        Left = 560
+        Left = 512
         Height = 23
-        Top = 304
+        Top = 216
         Width = 61
         Alignment = taCenter
-        TabOrder = 32
-        Text = '2'
-      end
-      object Edit29: TEdit
-        Left = 640
-        Height = 23
-        Top = 304
-        Width = 96
-        Alignment = taCenter
-        TabOrder = 33
-        Text = 'Morango'
+        TabOrder = 29
+        Text = '0'
       end
       object ToggleBox4: TToggleBox
-        Left = 752
+        Left = 704
         Height = 23
-        Top = 304
+        Top = 215
         Width = 71
         Caption = 'X'
         Color = clYellow
@@ -1250,78 +1268,69 @@ object Form1: TForm1
         Font.Quality = fqDraft
         OnChange = ToggleBox4Change
         ParentFont = False
-        TabOrder = 34
+        TabOrder = 30
       end
       object Edit30: TEdit
-        Left = 112
+        Left = 64
         Height = 23
-        Top = 344
+        Top = 256
         Width = 58
         Alignment = taCenter
         OnChange = Edit1Change
-        TabOrder = 36
+        TabOrder = 32
         Text = '5'
       end
       object Edit31: TEdit
-        Left = 185
+        Left = 137
         Height = 23
-        Top = 344
+        Top = 256
         Width = 84
         Alignment = taCenter
         Color = clWhite
-        TabOrder = 37
+        TabOrder = 33
         Text = '0,0°C'
       end
       object Edit32: TEdit
-        Left = 392
+        Left = 344
         Height = 23
-        Top = 344
+        Top = 256
         Width = 60
         Alignment = taCenter
         OnChange = Edit3Change
-        TabOrder = 38
-        Text = '10'
+        TabOrder = 34
+        Text = '0'
       end
       object Edit33: TEdit
-        Left = 288
+        Left = 240
         Height = 23
-        Top = 344
+        Top = 256
         Width = 87
         Alignment = taCenter
-        TabOrder = 39
-        Text = '35.0°C'
+        TabOrder = 35
+        Text = '0'
       end
       object Edit34: TEdit
-        Left = 472
+        Left = 424
         Height = 23
-        Top = 344
+        Top = 256
         Width = 62
         Alignment = taCenter
-        TabOrder = 40
-        Text = '5'
+        TabOrder = 36
+        Text = '0'
       end
       object Edit35: TEdit
-        Left = 560
+        Left = 512
         Height = 23
-        Top = 344
+        Top = 256
         Width = 61
         Alignment = taCenter
-        TabOrder = 41
-        Text = '2'
-      end
-      object Edit36: TEdit
-        Left = 640
-        Height = 23
-        Top = 344
-        Width = 96
-        Alignment = taCenter
-        TabOrder = 42
-        Text = 'Morango'
+        TabOrder = 37
+        Text = '0'
       end
       object ToggleBox5: TToggleBox
-        Left = 752
+        Left = 704
         Height = 23
-        Top = 344
+        Top = 256
         Width = 71
         Caption = 'X'
         Color = clYellow
@@ -1333,78 +1342,69 @@ object Form1: TForm1
         Font.Quality = fqDraft
         OnChange = ToggleBox5Change
         ParentFont = False
-        TabOrder = 43
+        TabOrder = 38
       end
       object Edit37: TEdit
-        Left = 112
+        Left = 64
         Height = 23
-        Top = 384
+        Top = 296
         Width = 58
         Alignment = taCenter
         OnChange = Edit1Change
-        TabOrder = 45
+        TabOrder = 40
         Text = '6'
       end
       object Edit38: TEdit
-        Left = 185
+        Left = 137
         Height = 23
-        Top = 383
+        Top = 295
         Width = 84
         Alignment = taCenter
         Color = clWhite
-        TabOrder = 46
+        TabOrder = 41
         Text = '0,0°C'
       end
       object Edit39: TEdit
-        Left = 392
+        Left = 344
         Height = 23
-        Top = 384
+        Top = 296
         Width = 60
         Alignment = taCenter
         OnChange = Edit3Change
-        TabOrder = 47
-        Text = '10'
+        TabOrder = 42
+        Text = '0'
       end
       object Edit40: TEdit
-        Left = 288
+        Left = 240
         Height = 23
-        Top = 384
+        Top = 296
         Width = 87
         Alignment = taCenter
-        TabOrder = 48
-        Text = '35.0°C'
+        TabOrder = 43
+        Text = '0'
       end
       object Edit41: TEdit
-        Left = 472
+        Left = 424
         Height = 23
-        Top = 384
+        Top = 296
         Width = 62
         Alignment = taCenter
-        TabOrder = 49
-        Text = '5'
+        TabOrder = 44
+        Text = '0'
       end
       object Edit42: TEdit
-        Left = 560
+        Left = 512
         Height = 23
-        Top = 384
+        Top = 296
         Width = 61
         Alignment = taCenter
-        TabOrder = 50
-        Text = '2'
-      end
-      object Edit43: TEdit
-        Left = 640
-        Height = 23
-        Top = 384
-        Width = 96
-        Alignment = taCenter
-        TabOrder = 51
-        Text = 'Morango'
+        TabOrder = 45
+        Text = '0'
       end
       object ToggleBox6: TToggleBox
-        Left = 752
+        Left = 704
         Height = 23
-        Top = 383
+        Top = 295
         Width = 71
         Caption = 'X'
         Color = clYellow
@@ -1416,77 +1416,69 @@ object Form1: TForm1
         Font.Quality = fqDraft
         OnChange = ToggleBox6Change
         ParentFont = False
-        TabOrder = 52
+        TabOrder = 46
       end
       object Edit44: TEdit
-        Left = 112
+        Left = 64
         Height = 23
-        Top = 424
+        Top = 336
         Width = 58
         Alignment = taCenter
         OnChange = Edit1Change
-        TabOrder = 54
+        TabOrder = 48
         Text = '7'
       end
       object Edit45: TEdit
-        Left = 185
+        Left = 137
         Height = 23
-        Top = 423
+        Top = 335
         Width = 84
         Alignment = taCenter
         Color = clWhite
-        TabOrder = 55
+        TabOrder = 49
         Text = '0,0°C'
       end
       object Edit46: TEdit
-        Left = 392
+        Left = 344
         Height = 23
-        Top = 424
+        Top = 336
         Width = 60
         Alignment = taCenter
         OnChange = Edit3Change
-        TabOrder = 56
-        Text = '10'
+        TabOrder = 50
+        Text = '0'
       end
       object Edit47: TEdit
-        Left = 288
+        Left = 240
         Height = 23
-        Top = 424
+        Top = 336
         Width = 87
         Alignment = taCenter
-        TabOrder = 57
-        Text = '35.0°C'
+        TabOrder = 51
+        Text = '0'
       end
       object Edit48: TEdit
-        Left = 472
+        Left = 424
         Height = 23
-        Top = 424
+        Top = 336
         Width = 62
         Alignment = taCenter
-        TabOrder = 58
-        Text = '5'
+        TabOrder = 52
+        Text = '0'
       end
       object Edit49: TEdit
-        Left = 560
+        Left = 512
         Height = 23
-        Top = 424
+        Top = 336
         Width = 61
         Alignment = taCenter
-        TabOrder = 59
-        Text = '2'
-      end
-      object Edit50: TEdit
-        Left = 640
-        Height = 23
-        Top = 424
-        Width = 96
-        Alignment = taCenter
-        TabOrder = 60
+        TabOrder = 53
+        Text = '0'
       end
       object ToggleBox7: TToggleBox
-        Left = 752
+        Left = 704
         Height = 23
-        Top = 424
+        Top = 336
         Width = 71
         Caption = 'X'
         Color = clYellow
@@ -1498,77 +1490,69 @@ object Form1: TForm1
         Font.Quality = fqDraft
         OnChange = ToggleBox7Change
         ParentFont = False
-        TabOrder = 61
+        TabOrder = 54
       end
       object Edit51: TEdit
-        Left = 112
+        Left = 64
         Height = 23
-        Top = 464
+        Top = 376
         Width = 58
         Alignment = taCenter
         OnChange = Edit1Change
-        TabOrder = 63
+        TabOrder = 56
         Text = '8'
       end
       object Edit52: TEdit
-        Left = 185
+        Left = 137
         Height = 23
-        Top = 463
+        Top = 375
         Width = 84
         Alignment = taCenter
         Color = clWhite
-        TabOrder = 64
+        TabOrder = 57
         Text = '0,0°C'
       end
       object Edit53: TEdit
-        Left = 392
+        Left = 344
         Height = 23
-        Top = 464
+        Top = 376
         Width = 60
         Alignment = taCenter
         OnChange = Edit3Change
-        TabOrder = 65
-        Text = '10'
+        TabOrder = 58
+        Text = '0'
       end
       object Edit54: TEdit
-        Left = 288
+        Left = 240
         Height = 23
-        Top = 464
+        Top = 376
         Width = 87
         Alignment = taCenter
-        TabOrder = 66
-        Text = '35.0°C'
+        TabOrder = 59
+        Text = '0'
       end
       object Edit55: TEdit
-        Left = 472
+        Left = 424
         Height = 23
-        Top = 464
+        Top = 376
         Width = 62
         Alignment = taCenter
-        TabOrder = 67
-        Text = '5'
+        TabOrder = 60
+        Text = '0'
       end
       object Edit56: TEdit
-        Left = 560
+        Left = 512
         Height = 23
-        Top = 464
+        Top = 376
         Width = 61
         Alignment = taCenter
-        TabOrder = 68
-        Text = '2'
-      end
-      object Edit57: TEdit
-        Left = 640
-        Height = 23
-        Top = 464
-        Width = 96
-        Alignment = taCenter
-        TabOrder = 69
+        TabOrder = 61
+        Text = '0'
       end
       object ToggleBox8: TToggleBox
-        Left = 752
+        Left = 704
         Height = 23
-        Top = 464
+        Top = 376
         Width = 71
         Caption = 'X'
         Color = clYellow
@@ -1580,77 +1564,69 @@ object Form1: TForm1
         Font.Quality = fqDraft
         OnChange = ToggleBox8Change
         ParentFont = False
-        TabOrder = 70
+        TabOrder = 62
       end
       object Edit58: TEdit
-        Left = 112
+        Left = 64
         Height = 23
-        Top = 504
+        Top = 416
         Width = 58
         Alignment = taCenter
         OnChange = Edit1Change
-        TabOrder = 72
+        TabOrder = 64
         Text = '9'
       end
       object Edit59: TEdit
-        Left = 185
+        Left = 137
         Height = 23
-        Top = 503
+        Top = 415
         Width = 84
         Alignment = taCenter
         Color = clWhite
-        TabOrder = 73
+        TabOrder = 65
         Text = '0,0°C'
       end
       object Edit60: TEdit
-        Left = 392
+        Left = 344
         Height = 23
-        Top = 504
+        Top = 416
         Width = 60
         Alignment = taCenter
         OnChange = Edit3Change
-        TabOrder = 74
-        Text = '10'
+        TabOrder = 66
+        Text = '0'
       end
       object Edit61: TEdit
-        Left = 288
+        Left = 240
         Height = 23
-        Top = 504
+        Top = 416
         Width = 87
         Alignment = taCenter
-        TabOrder = 75
-        Text = '35.0°C'
+        TabOrder = 67
+        Text = '0'
       end
       object Edit62: TEdit
-        Left = 472
+        Left = 424
         Height = 23
-        Top = 504
+        Top = 416
         Width = 62
         Alignment = taCenter
-        TabOrder = 76
-        Text = '5'
+        TabOrder = 68
+        Text = '0'
       end
       object Edit63: TEdit
-        Left = 560
+        Left = 512
         Height = 23
-        Top = 504
+        Top = 416
         Width = 61
         Alignment = taCenter
-        TabOrder = 77
-        Text = '2'
-      end
-      object Edit64: TEdit
-        Left = 640
-        Height = 23
-        Top = 504
-        Width = 96
-        Alignment = taCenter
-        TabOrder = 78
+        TabOrder = 69
+        Text = '0'
       end
       object ToggleBox9: TToggleBox
-        Left = 752
+        Left = 704
         Height = 23
-        Top = 504
+        Top = 416
         Width = 71
         Caption = 'X'
         Color = clYellow
@@ -1662,77 +1638,69 @@ object Form1: TForm1
         Font.Quality = fqDraft
         OnChange = ToggleBox9Change
         ParentFont = False
-        TabOrder = 79
+        TabOrder = 70
       end
       object Edit65: TEdit
-        Left = 112
+        Left = 64
         Height = 23
-        Top = 544
+        Top = 456
         Width = 58
         Alignment = taCenter
         OnChange = Edit1Change
-        TabOrder = 81
+        TabOrder = 72
         Text = '10'
       end
       object Edit66: TEdit
-        Left = 185
+        Left = 137
         Height = 23
-        Top = 543
+        Top = 455
         Width = 84
         Alignment = taCenter
         Color = clWhite
-        TabOrder = 82
+        TabOrder = 73
         Text = '0,0°C'
       end
       object Edit67: TEdit
-        Left = 392
+        Left = 344
         Height = 23
-        Top = 544
+        Top = 456
         Width = 60
         Alignment = taCenter
         OnChange = Edit3Change
-        TabOrder = 83
-        Text = '10'
+        TabOrder = 74
+        Text = '0'
       end
       object Edit68: TEdit
-        Left = 288
+        Left = 240
         Height = 23
-        Top = 544
+        Top = 456
         Width = 87
         Alignment = taCenter
-        TabOrder = 84
-        Text = '35.0°C'
+        TabOrder = 75
+        Text = '0'
       end
       object Edit69: TEdit
-        Left = 472
+        Left = 424
         Height = 23
-        Top = 544
+        Top = 456
         Width = 62
         Alignment = taCenter
-        TabOrder = 85
-        Text = '5'
+        TabOrder = 76
+        Text = '0'
       end
       object Edit70: TEdit
-        Left = 560
+        Left = 512
         Height = 23
-        Top = 544
+        Top = 456
         Width = 61
         Alignment = taCenter
-        TabOrder = 86
-        Text = '2'
-      end
-      object Edit71: TEdit
-        Left = 640
-        Height = 23
-        Top = 544
-        Width = 96
-        Alignment = taCenter
-        TabOrder = 87
+        TabOrder = 77
+        Text = '0'
       end
       object ToggleBox10: TToggleBox
-        Left = 752
+        Left = 704
         Height = 23
-        Top = 544
+        Top = 456
         Width = 71
         Caption = 'X'
         Color = clYellow
@@ -1744,21 +1712,21 @@ object Form1: TForm1
         Font.Quality = fqDraft
         OnChange = ToggleBox10Change
         ParentFont = False
-        TabOrder = 88
+        TabOrder = 78
       end
       object lbl_Tensao: TLabel
-        Left = 744
+        Left = 944
         Height = 15
-        Top = 0
+        Top = 80
         Width = 44
         Caption = 'TENSÃO'
         ParentColor = False
       end
       object edt_tensao: TEdit
-        Left = 704
+        Left = 896
         Height = 49
-        Top = 16
-        Width = 134
+        Top = 96
+        Width = 152
         Alignment = taCenter
         Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
@@ -1768,12 +1736,12 @@ object Form1: TForm1
         Font.Quality = fqDraft
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 91
+        TabOrder = 81
       end
       object edt_condensador: TEdit
-        Left = 112
+        Left = 896
         Height = 49
-        Top = 648
+        Top = 184
         Width = 158
         Alignment = taCenter
         Font.CharSet = ANSI_CHARSET
@@ -1784,20 +1752,20 @@ object Form1: TForm1
         Font.Quality = fqDraft
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 92
+        TabOrder = 82
       end
       object Label18: TLabel
-        Left = 144
+        Left = 928
         Height = 15
-        Top = 632
+        Top = 168
         Width = 87
         Caption = 'CONDENSADOR'
         ParentColor = False
       end
       object edt_vacuometro: TEdit
-        Left = 352
+        Left = 896
         Height = 49
-        Top = 648
+        Top = 279
         Width = 248
         Alignment = taCenter
         Font.CharSet = ANSI_CHARSET
@@ -1809,26 +1777,159 @@ object Form1: TForm1
         Font.Style = [fsBold]
         OnChange = edt_vacuometroChange
         ParentFont = False
-        TabOrder = 93
+        TabOrder = 83
       end
       object Label19: TLabel
-        Left = 432
+        Left = 976
         Height = 15
-        Top = 632
+        Top = 264
         Width = 78
         Caption = 'VACUÔMETRO'
         ParentColor = False
       end
+      object cbb0: TComboBox
+        Left = 593
+        Height = 23
+        Top = 95
+        Width = 96
+        ItemHeight = 15
+        MaxLength = 3
+        OnChange = cbb0Change
+        TabOrder = 85
+      end
+      object cbb3: TComboBox
+        Left = 593
+        Height = 23
+        Top = 216
+        Width = 96
+        ItemHeight = 15
+        MaxLength = 3
+        OnChange = cbb3Change
+        TabOrder = 86
+      end
+      object cbb4: TComboBox
+        Left = 593
+        Height = 23
+        Top = 256
+        Width = 96
+        ItemHeight = 15
+        MaxLength = 3
+        OnChange = cbb4Change
+        TabOrder = 87
+      end
+      object cbb5: TComboBox
+        Left = 593
+        Height = 23
+        Top = 296
+        Width = 96
+        ItemHeight = 15
+        MaxLength = 3
+        OnChange = cbb5Change
+        TabOrder = 88
+      end
+      object cbb6: TComboBox
+        Left = 593
+        Height = 23
+        Top = 337
+        Width = 96
+        ItemHeight = 15
+        MaxLength = 3
+        OnChange = cbb6Change
+        TabOrder = 89
+      end
+      object cbb7: TComboBox
+        Left = 593
+        Height = 23
+        Top = 377
+        Width = 96
+        ItemHeight = 15
+        MaxLength = 3
+        OnChange = cbb7Change
+        TabOrder = 90
+      end
+      object cbb8: TComboBox
+        Left = 593
+        Height = 23
+        Top = 417
+        Width = 96
+        ItemHeight = 15
+        MaxLength = 3
+        OnChange = cbb8Change
+        TabOrder = 91
+      end
+      object cbb9: TComboBox
+        Left = 593
+        Height = 23
+        Top = 457
+        Width = 96
+        ItemHeight = 15
+        MaxLength = 3
+        OnChange = cbb9Change
+        TabOrder = 92
+      end
+      object btn_pagina1: TButton
+        Left = 792
+        Height = 200
+        Top = 88
+        Width = 32
+        Caption = '1'
+        OnClick = btn_pagina1Click
+        TabOrder = 93
+      end
+      object btn_pagina2: TButton
+        Left = 792
+        Height = 201
+        Top = 288
+        Width = 32
+        Caption = '2'
+        OnClick = btn_pagina2Click
+        TabOrder = 94
+      end
+      object Button8: TButton
+        Left = 888
+        Height = 42
+        Top = 417
+        Width = 138
+        Caption = 'Button8'
+        OnClick = Button8Click
+        TabOrder = 96
+      end
+      object btn_Conectar_Serial: TButton
+        Left = 896
+        Height = 30
+        Top = 344
+        Width = 109
+        Caption = 'Conectar Serial'
+        OnClick = btn_Conectar_SerialClick
+        TabOrder = 97
+      end
+      object Pn_COM: TPanel
+        Left = 0
+        Height = 21
+        Top = 0
+        Width = 1192
+        Caption = 'OFFLINE'
+        Color = clBlack
+        Font.CharSet = ANSI_CHARSET
+        Font.Color = clYellow
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Pitch = fpVariable
+        Font.Quality = fqDraft
+        ParentColor = False
+        ParentFont = False
+        TabOrder = 98
+      end
     end
     object TabSheet1: TTabSheet
       Caption = 'Receitas'
-      ClientHeight = 678
-      ClientWidth = 954
+      ClientHeight = 550
+      ClientWidth = 1188
       OnContextPopup = TabSheet1ContextPopup
       object Panel16: TPanel
-        Left = 181
+        Left = 312
         Height = 49
-        Top = 351
+        Top = 279
         Width = 539
         BevelColor = clBlack
         Caption = 'Panel16'
@@ -1837,9 +1938,9 @@ object Form1: TForm1
         TabOrder = 29
       end
       object Panel19: TPanel
-        Left = 181
+        Left = 312
         Height = 49
-        Top = 509
+        Top = 437
         Width = 539
         BevelColor = clBlack
         Caption = 'Panel19'
@@ -1848,9 +1949,9 @@ object Form1: TForm1
         TabOrder = 47
       end
       object Panel18: TPanel
-        Left = 181
+        Left = 312
         Height = 49
-        Top = 456
+        Top = 384
         Width = 539
         BevelColor = clBlack
         Caption = 'Panel18'
@@ -1859,9 +1960,9 @@ object Form1: TForm1
         TabOrder = 41
       end
       object Panel17: TPanel
-        Left = 181
+        Left = 312
         Height = 49
-        Top = 404
+        Top = 332
         Width = 539
         BevelColor = clBlack
         Caption = 'Panel17'
@@ -1870,9 +1971,9 @@ object Form1: TForm1
         TabOrder = 35
       end
       object Panel15: TPanel
-        Left = 181
+        Left = 312
         Height = 49
-        Top = 298
+        Top = 226
         Width = 539
         BevelColor = clBlack
         Caption = 'Panel15'
@@ -1881,9 +1982,9 @@ object Form1: TForm1
         TabOrder = 23
       end
       object Panel14: TPanel
-        Left = 181
+        Left = 312
         Height = 49
-        Top = 245
+        Top = 173
         Width = 539
         BevelColor = clBlack
         Caption = 'Panel14'
@@ -1892,9 +1993,9 @@ object Form1: TForm1
         TabOrder = 17
       end
       object Panel12: TPanel
-        Left = 181
+        Left = 312
         Height = 49
-        Top = 139
+        Top = 67
         Width = 539
         BevelColor = clBlack
         Caption = 'Panel12'
@@ -1903,54 +2004,54 @@ object Form1: TForm1
         TabOrder = 5
       end
       object edt_rec0_nome: TEdit
-        Left = 200
+        Left = 331
         Height = 23
-        Top = 153
+        Top = 81
         Width = 92
         Alignment = taCenter
         TabOrder = 0
         Text = '<none>'
       end
       object edt_rec0_setpoint: TEdit
-        Left = 312
+        Left = 443
         Height = 23
-        Top = 153
+        Top = 81
         Width = 78
         Alignment = taCenter
         TabOrder = 1
         Text = '0,0'
       end
       object edt_rec0_on: TEdit
-        Left = 412
+        Left = 543
         Height = 23
-        Top = 153
+        Top = 81
         Width = 79
         Alignment = taCenter
         TabOrder = 2
         Text = '0,0'
       end
       object edt_rec0_off: TEdit
-        Left = 512
+        Left = 643
         Height = 23
-        Top = 153
+        Top = 81
         Width = 80
         Alignment = taCenter
         TabOrder = 3
         Text = '0,0'
       end
       object edt_rec0_histerese: TEdit
-        Left = 616
+        Left = 747
         Height = 23
-        Top = 153
+        Top = 81
         Width = 86
         Alignment = taCenter
         TabOrder = 4
         Text = '0,0'
       end
       object Panel13: TPanel
-        Left = 181
+        Left = 312
         Height = 49
-        Top = 192
+        Top = 120
         Width = 539
         BevelColor = clBlack
         Caption = 'Panel13'
@@ -1959,324 +2060,324 @@ object Form1: TForm1
         TabOrder = 6
       end
       object edt_rec1_nome: TEdit
-        Left = 200
+        Left = 331
         Height = 23
-        Top = 206
+        Top = 134
         Width = 92
         Alignment = taCenter
         TabOrder = 7
         Text = '<none>'
       end
       object edt_rec1_setpoint: TEdit
-        Left = 312
+        Left = 443
         Height = 23
-        Top = 206
+        Top = 134
         Width = 78
         Alignment = taCenter
         TabOrder = 8
         Text = '0,0'
       end
       object edt_rec1_on: TEdit
-        Left = 412
+        Left = 543
         Height = 23
-        Top = 206
+        Top = 134
         Width = 79
         Alignment = taCenter
         TabOrder = 9
         Text = '0,0'
       end
       object edt_rec1_off: TEdit
-        Left = 512
+        Left = 643
         Height = 23
-        Top = 206
+        Top = 134
         Width = 80
         Alignment = taCenter
         TabOrder = 10
         Text = '0,0'
       end
       object edt_rec1_histerese: TEdit
-        Left = 616
+        Left = 747
         Height = 23
-        Top = 206
+        Top = 134
         Width = 86
         Alignment = taCenter
         TabOrder = 11
         Text = '0,0'
       end
       object edt_rec2_nome: TEdit
-        Left = 200
+        Left = 331
         Height = 23
-        Top = 259
+        Top = 187
         Width = 92
         Alignment = taCenter
         TabOrder = 12
         Text = '<none>'
       end
       object edt_rec2_setpoint: TEdit
-        Left = 312
+        Left = 443
         Height = 23
-        Top = 259
+        Top = 187
         Width = 78
         Alignment = taCenter
         TabOrder = 13
         Text = '0,0'
       end
       object edt_rec2_on: TEdit
-        Left = 412
+        Left = 543
         Height = 23
-        Top = 259
+        Top = 187
         Width = 79
         Alignment = taCenter
         TabOrder = 14
         Text = '0,0'
       end
       object edt_rec2_off: TEdit
-        Left = 512
+        Left = 643
         Height = 23
-        Top = 259
+        Top = 187
         Width = 80
         Alignment = taCenter
         TabOrder = 15
         Text = '0,0'
       end
       object edt_rec2_histerese: TEdit
-        Left = 616
+        Left = 747
         Height = 23
-        Top = 259
+        Top = 187
         Width = 86
         Alignment = taCenter
         TabOrder = 16
         Text = '0,0'
       end
       object edt_rec3_nome: TEdit
-        Left = 200
+        Left = 331
         Height = 23
-        Top = 312
+        Top = 240
         Width = 92
         Alignment = taCenter
         TabOrder = 18
         Text = '<none>'
       end
       object edt_rec3_setpoint: TEdit
-        Left = 312
+        Left = 443
         Height = 23
-        Top = 312
+        Top = 240
         Width = 78
         Alignment = taCenter
         TabOrder = 19
         Text = '0,0'
       end
       object edt_rec3_on: TEdit
-        Left = 412
+        Left = 543
         Height = 23
-        Top = 312
+        Top = 240
         Width = 79
         Alignment = taCenter
         TabOrder = 20
         Text = '0,0'
       end
       object edt_rec3_off: TEdit
-        Left = 512
+        Left = 643
         Height = 23
-        Top = 312
+        Top = 240
         Width = 80
         Alignment = taCenter
         TabOrder = 21
         Text = '0,0'
       end
       object edt_rec3_histerese: TEdit
-        Left = 616
+        Left = 747
         Height = 23
-        Top = 312
+        Top = 240
         Width = 86
         Alignment = taCenter
         TabOrder = 22
         Text = '0,0'
       end
       object edt_rec4_nome: TEdit
-        Left = 200
+        Left = 331
         Height = 23
-        Top = 365
+        Top = 293
         Width = 92
         Alignment = taCenter
         TabOrder = 24
         Text = '<none>'
       end
       object edt_rec4_setpoint: TEdit
-        Left = 312
+        Left = 443
         Height = 23
-        Top = 365
+        Top = 293
         Width = 78
         Alignment = taCenter
         TabOrder = 25
         Text = '0,0'
       end
       object edt_rec4_on: TEdit
-        Left = 412
+        Left = 543
         Height = 23
-        Top = 365
+        Top = 293
         Width = 79
         Alignment = taCenter
         TabOrder = 26
         Text = '0,0'
       end
       object edt_rec4_off: TEdit
-        Left = 512
+        Left = 643
         Height = 23
-        Top = 365
+        Top = 293
         Width = 80
         Alignment = taCenter
         TabOrder = 27
         Text = '0,0'
       end
       object edt_rec4_histerese: TEdit
-        Left = 616
+        Left = 747
         Height = 23
-        Top = 365
+        Top = 293
         Width = 86
         Alignment = taCenter
         TabOrder = 28
         Text = '0,0'
       end
       object edt_rec5_nome: TEdit
-        Left = 200
+        Left = 331
         Height = 23
-        Top = 418
+        Top = 346
         Width = 92
         Alignment = taCenter
         TabOrder = 30
         Text = '<none>'
       end
       object edt_rec5_setpoint: TEdit
-        Left = 312
+        Left = 443
         Height = 23
-        Top = 418
+        Top = 346
         Width = 78
         Alignment = taCenter
         TabOrder = 31
         Text = '0,0'
       end
       object edt_rec5_on: TEdit
-        Left = 412
+        Left = 543
         Height = 23
-        Top = 418
+        Top = 346
         Width = 79
         Alignment = taCenter
         TabOrder = 32
         Text = '0,0'
       end
       object edt_rec5_off: TEdit
-        Left = 512
+        Left = 643
         Height = 23
-        Top = 418
+        Top = 346
         Width = 80
         Alignment = taCenter
         TabOrder = 33
         Text = '0,0'
       end
       object edt_rec5_histerese: TEdit
-        Left = 616
+        Left = 747
         Height = 23
-        Top = 418
+        Top = 346
         Width = 86
         Alignment = taCenter
         TabOrder = 34
         Text = '0,0'
       end
       object edt_rec6_nome: TEdit
-        Left = 200
+        Left = 331
         Height = 23
-        Top = 470
+        Top = 398
         Width = 92
         Alignment = taCenter
         TabOrder = 36
         Text = '<none>'
       end
       object edt_rec6_setpoint: TEdit
-        Left = 312
+        Left = 443
         Height = 23
-        Top = 470
+        Top = 398
         Width = 78
         Alignment = taCenter
         TabOrder = 37
         Text = '0,0'
       end
       object edt_rec6_on: TEdit
-        Left = 412
+        Left = 543
         Height = 23
-        Top = 470
+        Top = 398
         Width = 79
         Alignment = taCenter
         TabOrder = 38
         Text = '0,0'
       end
       object edt_rec6_off: TEdit
-        Left = 512
+        Left = 643
         Height = 23
-        Top = 470
+        Top = 398
         Width = 80
         Alignment = taCenter
         TabOrder = 39
         Text = '0,0'
       end
       object edt_rec6_histerese: TEdit
-        Left = 616
+        Left = 747
         Height = 23
-        Top = 470
+        Top = 398
         Width = 86
         Alignment = taCenter
         TabOrder = 40
         Text = '0,0'
       end
       object edt_rec7_nome: TEdit
-        Left = 200
+        Left = 331
         Height = 23
-        Top = 523
+        Top = 451
         Width = 92
         Alignment = taCenter
         TabOrder = 42
         Text = '<none>'
       end
       object edt_rec7_setpoint: TEdit
-        Left = 312
+        Left = 443
         Height = 23
-        Top = 523
+        Top = 451
         Width = 78
         Alignment = taCenter
         TabOrder = 43
         Text = '0,0'
       end
       object edt_rec7_on: TEdit
-        Left = 412
+        Left = 543
         Height = 23
-        Top = 523
+        Top = 451
         Width = 79
         Alignment = taCenter
         TabOrder = 44
         Text = '0,0'
       end
       object edt_rec7_off: TEdit
-        Left = 512
+        Left = 643
         Height = 23
-        Top = 523
+        Top = 451
         Width = 80
         Alignment = taCenter
         TabOrder = 45
         Text = '0,0'
       end
       object edt_rec7_histerese: TEdit
-        Left = 616
+        Left = 747
         Height = 23
-        Top = 523
+        Top = 451
         Width = 86
         Alignment = taCenter
         TabOrder = 46
         Text = '0,0'
       end
       object Panel20: TPanel
-        Left = 181
+        Left = 312
         Height = 33
-        Top = 104
+        Top = 32
         Width = 539
         BevelColor = clBlack
         ClientHeight = 33
@@ -2366,9 +2467,9 @@ object Form1: TForm1
         end
       end
       object Button5: TButton
-        Left = 384
+        Left = 936
         Height = 42
-        Top = 568
+        Top = 32
         Width = 133
         Caption = 'Transferir'
         OnClick = Button5Click
@@ -2383,9 +2484,25 @@ object Form1: TForm1
   end
   object LeitorDeTemperatura: TTimer
     Enabled = False
-    Interval = 100
+    Interval = 8000
     OnTimer = LeitorDeTemperaturaTimer
     left = 120
     top = 24
+  end
+  object MainMenu1: TMainMenu
+    left = 224
+    top = 24
+    object MenuItem1: TMenuItem
+      Caption = 'Tarefas Especiais'
+      OnClick = MenuItem1Click
+      object Menu_Upload: TMenuItem
+        Caption = 'UpLoad - Transferencia para Executar'
+        OnClick = Menu_UploadClick
+      end
+      object Menu_Format: TMenuItem
+        Caption = 'Format - Excluir todos os parametros'
+        OnClick = Menu_FormatClick
+      end
+    end
   end
 end

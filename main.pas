@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
-  ComCtrls, Grids, Laz_Kernel_Serial, Types, Inifiles;
+  ComCtrls, Grids, Menus, Laz_Kernel_Serial, Types, Inifiles;
 
 type
 
@@ -36,6 +36,7 @@ type
   { TForm1 }
   TForm1 = class(TForm)
     Btn_Buzzer: TButton;
+    btn_Conectar_Serial: TButton;
     btn_Control_Active_write: TButton;
     btn_EscreverMemo: TButton;
     btn_fill: TButton;
@@ -53,6 +54,23 @@ type
     Button3: TButton;
     Button4: TButton;
     Button5: TButton;
+    Button6: TButton;
+    Button7: TButton;
+    btn_pagina1: TButton;
+    btn_pagina2: TButton;
+    Button8: TButton;
+    cbb0: TComboBox;
+    cbb3: TComboBox;
+    cbb4: TComboBox;
+    cbb5: TComboBox;
+    cbb6: TComboBox;
+    cbb7: TComboBox;
+    cbb8: TComboBox;
+    cbb9: TComboBox;
+    cbb1: TComboBox;
+    cbb2: TComboBox;
+    edt_buffer: TEdit;
+    edt_saidaprg: TEdit;
     IEE_Read: TButton;
     IEE_Write: TButton;
     chk_EEPROM_16Bits: TCheckBox;
@@ -63,7 +81,6 @@ type
     Edit12: TEdit;
     Edit13: TEdit;
     Edit14: TEdit;
-    Edit15: TEdit;
     Edit16: TEdit;
     Edit17: TEdit;
     Edit18: TEdit;
@@ -71,14 +88,12 @@ type
     Edit2: TEdit;
     Edit20: TEdit;
     Edit21: TEdit;
-    Edit22: TEdit;
     Edit23: TEdit;
     Edit24: TEdit;
     Edit25: TEdit;
     Edit26: TEdit;
     Edit27: TEdit;
     Edit28: TEdit;
-    Edit29: TEdit;
     Edit3: TEdit;
     Edit30: TEdit;
     Edit31: TEdit;
@@ -86,7 +101,6 @@ type
     Edit33: TEdit;
     Edit34: TEdit;
     Edit35: TEdit;
-    Edit36: TEdit;
     Edit37: TEdit;
     Edit38: TEdit;
     Edit39: TEdit;
@@ -94,7 +108,6 @@ type
     Edit40: TEdit;
     Edit41: TEdit;
     Edit42: TEdit;
-    Edit43: TEdit;
     Edit44: TEdit;
     Edit45: TEdit;
     Edit46: TEdit;
@@ -102,14 +115,12 @@ type
     Edit48: TEdit;
     Edit49: TEdit;
     Edit5: TEdit;
-    Edit50: TEdit;
     Edit51: TEdit;
     Edit52: TEdit;
     Edit53: TEdit;
     Edit54: TEdit;
     Edit55: TEdit;
     Edit56: TEdit;
-    Edit57: TEdit;
     Edit58: TEdit;
     Edit59: TEdit;
     Edit6: TEdit;
@@ -117,7 +128,6 @@ type
     Edit61: TEdit;
     Edit62: TEdit;
     Edit63: TEdit;
-    Edit64: TEdit;
     Edit65: TEdit;
     Edit66: TEdit;
     Edit67: TEdit;
@@ -125,7 +135,6 @@ type
     Edit69: TEdit;
     Edit7: TEdit;
     Edit70: TEdit;
-    Edit71: TEdit;
     IEE_String_add: TEdit;
     IEE_String: TEdit;
     edt_rec1_histerese: TEdit;
@@ -178,7 +187,6 @@ type
     edt_tensao: TEdit;
     edt_vp_string_value: TEdit;
     edt_vp_string: TEdit;
-    Edit8: TEdit;
     Edit9: TEdit;
     Edt_buz_return: TEdit;
     edt_control_active: TEdit;
@@ -240,11 +248,15 @@ type
     Label8: TLabel;
     Label9: TLabel;
     Lbl_Count: TLabel;
+    MainMenu1: TMainMenu;
     ManutencaoCalibracao: TTabSheet;
     Memo1: TMemo;
     Memo2: TMemo;
     Memo3: TMemo;
     Memo4: TMemo;
+    MenuItem1: TMenuItem;
+    Menu_Upload: TMenuItem;
+    Menu_Format: TMenuItem;
     PaginaPrincipal: TTabSheet;
     Panel1: TPanel;
     Panel10: TPanel;
@@ -290,6 +302,8 @@ type
     procedure btn_gravar_vp_intClick(Sender: TObject);
     procedure btn_ler_vp_intClick(Sender: TObject);
     procedure btn_page_writeClick(Sender: TObject);
+    procedure btn_pagina1Click(Sender: TObject);
+    procedure btn_pagina2Click(Sender: TObject);
     procedure btn_resumeClick(Sender: TObject);
     procedure btn_suspendClick(Sender: TObject);
     procedure btn_LerMemoClick(Sender: TObject);
@@ -302,7 +316,19 @@ type
     procedure Button5Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
     procedure Button7Click(Sender: TObject);
+    procedure btn_Conectar_SerialClick(Sender: TObject);
+    procedure Button8Click(Sender: TObject);
+    procedure cbb3Change(Sender: TObject);
+    procedure cbb4Change(Sender: TObject);
+    procedure cbb5Change(Sender: TObject);
+    procedure cbb6Change(Sender: TObject);
+    procedure cbb7Change(Sender: TObject);
+    procedure cbb8Change(Sender: TObject);
+    procedure cbb9Change(Sender: TObject);
     procedure chk_EEPROM_16BitsChange(Sender: TObject);
+    procedure cbb0Change(Sender: TObject);
+    procedure cbb1Change(Sender: TObject);
+    procedure cbb2Change(Sender: TObject);
     procedure Edit1Change(Sender: TObject);
     procedure Edit2Change(Sender: TObject);
     procedure Edit3Change(Sender: TObject);
@@ -311,9 +337,11 @@ type
     procedure FormClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure gpb_proculusClick(Sender: TObject);
     procedure GroupBox1Click(Sender: TObject);
     procedure GroupBox8Click(Sender: TObject);
+    procedure IEE_ReadClick(Sender: TObject);
     procedure IEE_WriteClick(Sender: TObject);
     procedure Label10Click(Sender: TObject);
     procedure LeitorDeTemperaturaTimer(Sender: TObject);
@@ -322,8 +350,12 @@ type
     procedure ControledePaginasChange(Sender: TObject);
     procedure ManutencaoCalibracaoContextPopup(Sender: TObject;
       MousePos: TPoint; var Handled: Boolean);
+    procedure MenuItem1Click(Sender: TObject);
+    procedure Menu_UploadClick(Sender: TObject);
+    procedure Menu_FormatClick(Sender: TObject);
     procedure PaginaPrincipalContextPopup(Sender: TObject; MousePos: TPoint;
       var Handled: Boolean);
+    procedure PaginaPrincipalShow(Sender: TObject);
     procedure Panel12Click(Sender: TObject);
     procedure Panel1Click(Sender: TObject);
     procedure RadioButton1Change(Sender: TObject);
@@ -344,8 +376,14 @@ type
     procedure ToggleBox9Change(Sender: TObject);
     procedure GravarReceita();
     procedure RecuperarReceita();
-    procedure ReceitaFromTEdit();
-    procedure ReceitaToTEdit();
+    procedure For_Record_Receita_From_TEdit();
+    procedure For_TEdit_From_Record_Receita();
+    procedure PreencheComboBox();
+    procedure EnviaReceitaParaPrograma(Mandador:Integer;index:integer);
+    procedure ToggleStatus(toggle:TObject; panel:TObject; mandador : integer);
+    procedure CarregarDadosDoLiofilizador();
+    procedure Aguarda_Atualizacao_do_Edt_Buffer();
+    procedure ConectarSerial();
   private
 
   public
@@ -371,24 +409,21 @@ implementation
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  ouvinte := TThead_USART.Create(FALSE);
-  ouvinte.FreeOnTerminate:=TRUE;
-  ouvinte.Start;
-  ouvinte.Priority:=tpTimeCritical;
+
 
   buzzercnt:=0;
   CountCOM:=0;
 
-  Aparelho:=TSerial.Create;
 
-  try
-    Aparelho.Connect('COM5');
-    Aparelho.Config(115200,8,'N',0,false,false);
-  finally
-    //Aparelho.free;
-  end;
-  Aparelho.FilaFim:=0;
+
+
+
+end;
+
+procedure TForm1.FormShow(Sender: TObject);
+begin
   RecuperarReceita();
+  PreencheComboBox();
 end;
 
 procedure TForm1.gpb_proculusClick(Sender: TObject);
@@ -406,6 +441,13 @@ begin
 
 end;
 
+procedure TForm1.IEE_ReadClick(Sender: TObject);
+begin
+  Aparelho.Ler_EEPROM_String_Mae(strtoint(IEE_String_add.Text),
+                                          TEXTO,
+                                          IEE_String);
+end;
+
 procedure TForm1.IEE_WriteClick(Sender: TObject);
 begin
   Aparelho.Gravar_EEPROM_String_Mae(strtoint(IEE_String_add.Text),
@@ -421,7 +463,7 @@ end;
 
 procedure TForm1.LeitorDeTemperaturaTimer(Sender: TObject);
 begin
-  if(LeitorDeTemperatura.Interval=100) then LeitorDeTemperatura.Interval:=8000;
+  if(LeitorDeTemperatura.Interval=10) then LeitorDeTemperatura.Interval:=8000;
 
   Aparelho.Read_Analogic_Channel(1,0,FLUTUANTE,'V',edt_tensao);
   Aparelho.Read_Analogic_Channel(1,1,FLUTUANTE,'mmHg',edt_vacuometro);
@@ -611,30 +653,189 @@ end;
 
 procedure TForm1.Button5Click(Sender: TObject);
 var
-  i:integer;
+  index:integer;
   addeeprom:integer;
 begin
-  ReceitaFromTEdit();
+  For_Record_Receita_From_TEdit();
+  cbb0.Items.Clear;
+  cbb1.Items.Clear;
+  cbb2.Items.Clear;
+  cbb3.Items.Clear;
+  cbb4.Items.Clear;
+  cbb5.Items.Clear;
+  cbb6.Items.Clear;
+  cbb7.Items.Clear;
+  cbb8.Items.Clear;
+  cbb9.Items.Clear;
+  for index:=0 to 7 do
+      begin
+      addeeprom:=256+(index*16);
+      Aparelho.Gravar_EEPROM_16bits_Interna_Mae(addeeprom+0,trunc(Receita[index].SetPoint*10),FLUTUANTE,edt_saidapadrao);
+      Aparelho.Gravar_EEPROM_8bits_Interna_Mae (addeeprom+4,trunc(Receita[index].Histerese),FLUTUANTE,edt_saidapadrao);
+      Aparelho.Gravar_EEPROM_8bits_Interna_Mae (addeeprom+2,trunc(Receita[index].TempoON),FLUTUANTE,edt_saidapadrao);
+      Aparelho.Gravar_EEPROM_8bits_Interna_Mae (addeeprom+3,trunc(Receita[index].TempoOFF),FLUTUANTE,edt_saidapadrao);
+      Aparelho.Gravar_EEPROM_String_Mae(addeeprom+5,Receita[index].Nome,TEXTO,edt_saidapadrao);
+      end;
+  PreencheComboBox();
+  showmessage('Concluido!'+#13+'Aguarde Atualizacao!');
+end;
+
+
+
+
+
+procedure TForm1.PreencheComboBox();
+var
+  i:integer ;
+begin
   for i:=0 to 7 do
       begin
-        addeeprom:=256+(i*16);
-        Aparelho.Gravar_EEPROM_16bits_Interna_Mae(addeeprom+0,trunc(Receita[i].SetPoint*10),FLUTUANTE,edt_saidapadrao);
-        Aparelho.Gravar_EEPROM_8bits_Interna_Mae (addeeprom+4,trunc(Receita[i].Histerese),FLUTUANTE,edt_saidapadrao);
-        Aparelho.Gravar_EEPROM_8bits_Interna_Mae (addeeprom+2,trunc(Receita[i].TempoON),FLUTUANTE,edt_saidapadrao);
-        Aparelho.Gravar_EEPROM_8bits_Interna_Mae (addeeprom+3,trunc(Receita[i].TempoOFF),FLUTUANTE,edt_saidapadrao);
-        Aparelho.Gravar_EEPROM_String_Mae(addeeprom+5,Receita[i].Nome,TEXTO,edt_saidapadrao);
+        if(Receita[i].nome<>'') then
+           begin
+            cbb0.Items.Add(Receita[i].Nome);
+            cbb1.Items.Add(Receita[i].Nome);
+            cbb2.Items.Add(Receita[i].Nome);
+            cbb3.Items.Add(Receita[i].Nome);
+            cbb4.Items.Add(Receita[i].Nome);
+            cbb5.Items.Add(Receita[i].Nome);
+            cbb6.Items.Add(Receita[i].Nome);
+            cbb7.Items.Add(Receita[i].Nome);
+            cbb8.Items.Add(Receita[i].Nome);
+            cbb9.Items.Add(Receita[i].Nome);
+           end;
       end;
-  showmessage('Concluido');
 end;
+
+
+
+
+
+
+
+
 
 procedure TForm1.Button6Click(Sender: TObject);
 begin
-
+  Aparelho.Show_Programacao(0,HEXADECIMAL,edt_saidaprg);
 end;
 
 procedure TForm1.Button7Click(Sender: TObject);
 begin
+  Aparelho.Format_Program(TEXTO,edt_saidapadrao);
+end;
 
+procedure TForm1.btn_Conectar_SerialClick(Sender: TObject);
+begin
+  ConectarSerial();
+end;
+
+
+procedure TForm1.ConectarSerial();
+begin
+try
+  ouvinte := TThead_USART.Create(FALSE);
+  ouvinte.FreeOnTerminate:=TRUE;
+  ouvinte.Start;
+  ouvinte.Priority:=tpTimeCritical;
+  Aparelho:=TSerial.Create;
+  Aparelho.Connect('COM5');
+  Aparelho.Config(115200,8,'N',0,false,false);
+  Aparelho.FilaFim:=0;
+  LeitorDeTemperatura.Enabled:=TRUE;
+  //CarregarDadosDoLiofilizador();
+except
+  Aparelho.free;
+  showmessage('Erro no modulo de comunicacao');
+end;
+end;
+
+
+
+
+
+
+procedure TForm1.Button8Click(Sender: TObject);
+begin
+  //LeitorDeTemperatura.Enabled:=FALSE;
+  CarregarDadosDoLiofilizador();
+  //LeitorDeTemperatura.Enabled:=TRUE;
+end;
+
+procedure TForm1.cbb3Change(Sender: TObject);
+begin
+  edit26.Text:=floattostr(Receita[cbb3.ItemIndex].SetPoint);
+  edit25.Text:=floattostr(Receita[cbb3.ItemIndex].TempoON);
+  edit27.Text:=floattostr(Receita[cbb3.ItemIndex].TempoOFF);
+  edit28.Text:=floattostr(Receita[cbb3.ItemIndex].Histerese);
+  EnviaReceitaParaPrograma(3,cbb3.ItemIndex);
+  ToggleBox4.Checked:=TRUE;
+  Aparelho.PROCULUS_Goto_Page(19,TEXTO,Form1.edt_saidapadrao);
+end;
+
+procedure TForm1.cbb4Change(Sender: TObject);
+begin
+  edit33.Text:=floattostr(Receita[cbb4.ItemIndex].SetPoint);
+  edit32.Text:=floattostr(Receita[cbb4.ItemIndex].TempoON);
+  edit34.Text:=floattostr(Receita[cbb4.ItemIndex].TempoOFF);
+  edit35.Text:=floattostr(Receita[cbb4.ItemIndex].Histerese);
+  EnviaReceitaParaPrograma(4,cbb4.ItemIndex);
+  ToggleBox5.Checked:=TRUE;
+  Aparelho.PROCULUS_Goto_Page(19,TEXTO,Form1.edt_saidapadrao);
+end;
+
+procedure TForm1.cbb5Change(Sender: TObject);
+begin
+  edit40.Text:=floattostr(Receita[cbb5.ItemIndex].SetPoint);
+  edit39.Text:=floattostr(Receita[cbb5.ItemIndex].TempoON);
+  edit41.Text:=floattostr(Receita[cbb5.ItemIndex].TempoOFF);
+  edit42.Text:=floattostr(Receita[cbb5.ItemIndex].Histerese);
+  EnviaReceitaParaPrograma(5,cbb5.ItemIndex);
+  ToggleBox6.Checked:=TRUE;
+  Aparelho.PROCULUS_Goto_Page(21,TEXTO,Form1.edt_saidapadrao);
+end;
+
+procedure TForm1.cbb6Change(Sender: TObject);
+begin
+  edit47.Text:=floattostr(Receita[cbb6.ItemIndex].SetPoint);
+  edit46.Text:=floattostr(Receita[cbb6.ItemIndex].TempoON);
+  edit48.Text:=floattostr(Receita[cbb6.ItemIndex].TempoOFF);
+  edit49.Text:=floattostr(Receita[cbb6.ItemIndex].Histerese);
+  EnviaReceitaParaPrograma(6,cbb6.ItemIndex);
+  ToggleBox7.Checked:=TRUE;
+  Aparelho.PROCULUS_Goto_Page(21,TEXTO,Form1.edt_saidapadrao);
+end;
+
+procedure TForm1.cbb7Change(Sender: TObject);
+begin
+  edit54.Text:=floattostr(Receita[cbb7.ItemIndex].SetPoint);
+  edit53.Text:=floattostr(Receita[cbb7.ItemIndex].TempoON);
+  edit55.Text:=floattostr(Receita[cbb7.ItemIndex].TempoOFF);
+  edit56.Text:=floattostr(Receita[cbb7.ItemIndex].Histerese);
+  EnviaReceitaParaPrograma(7,cbb7.ItemIndex);
+  ToggleBox8.Checked:=TRUE;
+  Aparelho.PROCULUS_Goto_Page(21,TEXTO,Form1.edt_saidapadrao);
+end;
+
+procedure TForm1.cbb8Change(Sender: TObject);
+begin
+  edit61.Text:=floattostr(Receita[cbb8.ItemIndex].SetPoint);
+  edit60.Text:=floattostr(Receita[cbb8.ItemIndex].TempoON);
+  edit62.Text:=floattostr(Receita[cbb8.ItemIndex].TempoOFF);
+  edit63.Text:=floattostr(Receita[cbb8.ItemIndex].Histerese);
+  EnviaReceitaParaPrograma(8,cbb8.ItemIndex);
+  ToggleBox9.Checked:=TRUE;
+  Aparelho.PROCULUS_Goto_Page(21,TEXTO,Form1.edt_saidapadrao);
+end;
+
+procedure TForm1.cbb9Change(Sender: TObject);
+begin
+  edit68.Text:=floattostr(Receita[cbb9.ItemIndex].SetPoint);
+  edit67.Text:=floattostr(Receita[cbb9.ItemIndex].TempoON);
+  edit69.Text:=floattostr(Receita[cbb9.ItemIndex].TempoOFF);
+  edit70.Text:=floattostr(Receita[cbb9.ItemIndex].Histerese);
+  EnviaReceitaParaPrograma(9,cbb9.ItemIndex);
+  ToggleBox10.Checked:=TRUE;
+  Aparelho.PROCULUS_Goto_Page(21,TEXTO,Form1.edt_saidapadrao);
 end;
 
 
@@ -646,6 +847,299 @@ begin
    else
       Form1.edt_eeprom_value.text:='$00';
 end;
+
+procedure TForm1.cbb0Change(Sender: TObject);
+begin
+  edit4.Text:=floattostr(Receita[cbb0.ItemIndex].SetPoint);
+  edit3.Text:=floattostr(Receita[cbb0.ItemIndex].TempoON);
+  edit5.Text:=floattostr(Receita[cbb0.ItemIndex].TempoOFF);
+  edit7.Text:=floattostr(Receita[cbb0.ItemIndex].Histerese);
+  EnviaReceitaParaPrograma(0,cbb0.ItemIndex);
+  ToggleBox1.Checked:=TRUE;
+  Aparelho.PROCULUS_Goto_Page(19,TEXTO,Form1.edt_saidapadrao);
+end;
+
+procedure TForm1.cbb1Change(Sender: TObject);
+begin
+  edit12.Text:=floattostr(Receita[cbb1.ItemIndex].SetPoint);
+  edit11.Text:=floattostr(Receita[cbb1.ItemIndex].TempoON);
+  edit13.Text:=floattostr(Receita[cbb1.ItemIndex].TempoOFF);
+  edit14.Text:=floattostr(Receita[cbb1.ItemIndex].Histerese);
+  EnviaReceitaParaPrograma(1,cbb1.ItemIndex);
+  ToggleBox2.Checked:=TRUE;
+  Aparelho.PROCULUS_Goto_Page(19,TEXTO,Form1.edt_saidapadrao);
+end;
+
+procedure TForm1.cbb2Change(Sender: TObject);
+begin
+  edit19.Text:=floattostr(Receita[cbb2.ItemIndex].SetPoint);
+  edit18.Text:=floattostr(Receita[cbb2.ItemIndex].TempoON);
+  edit20.Text:=floattostr(Receita[cbb2.ItemIndex].TempoOFF);
+  edit21.Text:=floattostr(Receita[cbb2.ItemIndex].Histerese);
+  EnviaReceitaParaPrograma(2,cbb2.ItemIndex);
+  ToggleBox3.Checked:=TRUE;
+  Aparelho.PROCULUS_Goto_Page(19,TEXTO,Form1.edt_saidapadrao);
+end;
+
+
+procedure TForm1.EnviaReceitaParaPrograma(Mandador:Integer;index:integer);
+var
+  addeeprom:integer;
+begin
+   addeeprom:=52+(Mandador*18);
+   //addeeprom+0 = Plataforma que começa por 0
+   Aparelho.Gravar_EEPROM_16bits_Interna_Mae(addeeprom+1,trunc(Receita[index].SetPoint*10),TEXTO,edt_saidapadrao);
+   Aparelho.Gravar_EEPROM_8bits_Interna_Mae(addeeprom+3,trunc(Receita[index].TempoON),TEXTO,edt_saidapadrao);
+   Aparelho.Gravar_EEPROM_8bits_Interna_Mae(addeeprom+4,trunc(Receita[index].TempoOFF),TEXTO,edt_saidapadrao);
+   Aparelho.Gravar_EEPROM_8bits_Interna_Mae(addeeprom+5,trunc(Receita[index].Histerese),TEXTO,edt_saidapadrao);
+   Aparelho.Gravar_EEPROM_String_Mae(addeeprom+6,Receita[index].Nome,TEXTO,edt_saidapadrao);
+   //Aparelho.Gravar_EEPROM_16bits_Interna_Mae(addeeprom+16,1,TEXTO,edt_saidapadrao);
+   Aparelho.Show_Programacao(Mandador,HEXADECIMAL,edt_saidaprg);
+end;
+
+
+
+
+procedure TForm1.CarregarDadosDoLiofilizador();
+var
+  i : integer;
+  addeeprom:integer;
+  status : integer;
+begin
+  //============================================================================
+  addeeprom:=52+(0*18);
+  Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+1,FLUTUANTE,Edit4);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+3,UINTEGER,Edit3);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+4,UINTEGER,Edit5);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+5,UINTEGER,Edit7);
+  edt_buffer.text:='';
+  Aparelho.Ler_EEPROM_String_Mae(addeeprom+6,TEXTO,edt_buffer);
+  Aguarda_Atualizacao_do_Edt_Buffer();
+  cbb0.Caption:=edt_buffer.text;
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  edt_buffer.text:='';
+  Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+16,UINTEGER,edt_buffer);
+  Aguarda_Atualizacao_do_Edt_Buffer();
+  edt_buffer.text:=Trim(edt_buffer.text);
+  status:=strtoint(edt_buffer.text);
+  if(status=1) then ToggleBox1.checked:=TRUE else ToggleBox1.checked:=FALSE;
+
+
+
+
+  //============================================================================
+  addeeprom:=52+(1*18);
+  Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+1,FLUTUANTE,Edit12);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+3,UINTEGER,Edit11);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+4,UINTEGER,Edit13);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+5,UINTEGER,Edit14);
+  edt_buffer.text:='';
+  Aparelho.Ler_EEPROM_String_Mae(addeeprom+6,TEXTO,edt_buffer);
+  Aguarda_Atualizacao_do_Edt_Buffer();
+  cbb1.Caption:=edt_buffer.text;
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  edt_buffer.text:='';
+  Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+16,UINTEGER,edt_buffer);
+  Aguarda_Atualizacao_do_Edt_Buffer();
+  edt_buffer.text:=Trim(edt_buffer.text);
+  status:=strtoint(edt_buffer.text);
+  if(status=1) then ToggleBox2.checked:=TRUE else ToggleBox2.checked:=FALSE;
+
+
+  //============================================================================
+  addeeprom:=52+(2*18);
+  Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+1,FLUTUANTE,Edit19);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+3,UINTEGER,Edit18);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+4,UINTEGER,Edit20);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+5,UINTEGER,Edit21);
+  edt_buffer.text:='';
+  Aparelho.Ler_EEPROM_String_Mae(addeeprom+6,TEXTO,edt_buffer);
+  Aguarda_Atualizacao_do_Edt_Buffer();
+  cbb2.Caption:=edt_buffer.text;
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  edt_buffer.text:='';
+  Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+16,UINTEGER,edt_buffer);
+  Aguarda_Atualizacao_do_Edt_Buffer();
+  edt_buffer.text:=Trim(edt_buffer.text);
+  status:=strtoint(edt_buffer.text);
+  if(status=1) then ToggleBox3.checked:=TRUE else ToggleBox3.checked:=FALSE;
+
+
+
+
+
+
+
+  //============================================================================
+  addeeprom:=52+(3*18);
+  Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+1,FLUTUANTE,Edit26);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+3,UINTEGER,Edit25);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+4,UINTEGER,Edit27);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+5,UINTEGER,Edit28);
+  edt_buffer.text:='';
+  Aparelho.Ler_EEPROM_String_Mae(addeeprom+6,TEXTO,edt_buffer);
+  Aguarda_Atualizacao_do_Edt_Buffer();
+  cbb3.Caption:=edt_buffer.text;
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  edt_buffer.text:='';
+  Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+16,UINTEGER,edt_buffer);
+  Aguarda_Atualizacao_do_Edt_Buffer();
+  edt_buffer.text:=Trim(edt_buffer.text);
+  status:=strtoint(edt_buffer.text);
+  if(status=1) then ToggleBox4.checked:=TRUE else ToggleBox4.checked:=FALSE;
+
+
+
+
+
+
+
+  //============================================================================
+  addeeprom:=52+(4*18);
+  Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+1,FLUTUANTE,Edit33);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+3,UINTEGER,Edit32);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+4,UINTEGER,Edit34);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+5,UINTEGER,Edit35);
+  edt_buffer.text:='';
+  Aparelho.Ler_EEPROM_String_Mae(addeeprom+6,TEXTO,edt_buffer);
+  Aguarda_Atualizacao_do_Edt_Buffer();
+  cbb4.Caption:=edt_buffer.text;
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  edt_buffer.text:='';
+  Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+16,UINTEGER,edt_buffer);
+  Aguarda_Atualizacao_do_Edt_Buffer();
+  edt_buffer.text:=Trim(edt_buffer.text);
+  status:=strtoint(edt_buffer.text);
+  if(status=1) then ToggleBox5.checked:=TRUE else ToggleBox5.checked:=FALSE;
+
+
+
+
+
+  //============================================================================
+  addeeprom:=52+(5*18);
+  Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+1,FLUTUANTE,Edit40);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+3,UINTEGER,Edit39);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+4,UINTEGER,Edit41);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+5,UINTEGER,Edit42);
+  edt_buffer.text:='';
+  Aparelho.Ler_EEPROM_String_Mae(addeeprom+6,TEXTO,edt_buffer);
+  Aguarda_Atualizacao_do_Edt_Buffer();
+  cbb5.Caption:=edt_buffer.text;
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  edt_buffer.text:='';
+  Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+16,UINTEGER,edt_buffer);
+  Aguarda_Atualizacao_do_Edt_Buffer();
+  edt_buffer.text:=Trim(edt_buffer.text);
+  status:=strtoint(edt_buffer.text);
+  if(status=1) then ToggleBox6.checked:=TRUE else ToggleBox6.checked:=FALSE;
+
+
+
+
+
+  //============================================================================
+  addeeprom:=52+(6*18);
+  Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+1,FLUTUANTE,Edit47);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+3,UINTEGER,Edit46);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+4,UINTEGER,Edit48);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+5,UINTEGER,Edit49);
+  edt_buffer.text:='';
+  Aparelho.Ler_EEPROM_String_Mae(addeeprom+6,TEXTO,edt_buffer);
+  Aguarda_Atualizacao_do_Edt_Buffer();
+  cbb6.Caption:=edt_buffer.text;
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  edt_buffer.text:='';
+  Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+16,UINTEGER,edt_buffer);
+  Aguarda_Atualizacao_do_Edt_Buffer();
+  edt_buffer.text:=Trim(edt_buffer.text);
+  status:=strtoint(edt_buffer.text);
+  if(status=1) then ToggleBox7.checked:=TRUE else ToggleBox7.checked:=FALSE;
+
+
+
+
+
+  //============================================================================
+  addeeprom:=52+(7*18);
+  Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+1,FLUTUANTE,Edit54);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+3,UINTEGER,Edit53);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+4,UINTEGER,Edit55);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+5,UINTEGER,Edit56);
+  edt_buffer.text:='';
+  Aparelho.Ler_EEPROM_String_Mae(addeeprom+6,TEXTO,edt_buffer);
+  Aguarda_Atualizacao_do_Edt_Buffer();
+  cbb7.Caption:=edt_buffer.text;
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  edt_buffer.text:='';
+  Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+16,UINTEGER,edt_buffer);
+  Aguarda_Atualizacao_do_Edt_Buffer();
+  edt_buffer.text:=Trim(edt_buffer.text);
+  status:=strtoint(edt_buffer.text);
+  if(status=1) then ToggleBox8.checked:=TRUE else ToggleBox8.checked:=FALSE;
+
+
+
+
+
+  //============================================================================
+  addeeprom:=52+(8*18);
+  Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+1,FLUTUANTE,Edit61);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+3,UINTEGER,Edit60);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+4,UINTEGER,Edit62);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+5,UINTEGER,Edit63);
+  edt_buffer.text:='';
+  Aparelho.Ler_EEPROM_String_Mae(addeeprom+6,TEXTO,edt_buffer);
+  Aguarda_Atualizacao_do_Edt_Buffer();
+  cbb8.Caption:=edt_buffer.text;
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  edt_buffer.text:='';
+  Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+16,UINTEGER,edt_buffer);
+  Aguarda_Atualizacao_do_Edt_Buffer();
+  edt_buffer.text:=Trim(edt_buffer.text);
+  status:=strtoint(edt_buffer.text);
+  if(status=1) then ToggleBox9.checked:=TRUE else ToggleBox9.checked:=FALSE;
+
+
+
+
+  //============================================================================
+  addeeprom:=52+(9*18);
+  Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+1,FLUTUANTE,Edit68);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+3,UINTEGER,Edit67);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+4,UINTEGER,Edit69);
+  Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+5,UINTEGER,Edit70);
+  edt_buffer.text:='';
+  Aparelho.Ler_EEPROM_String_Mae(addeeprom+6,TEXTO,edt_buffer);
+  Aguarda_Atualizacao_do_Edt_Buffer();
+  cbb9.Caption:=edt_buffer.text;
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  edt_buffer.text:='';
+  Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+16,UINTEGER,edt_buffer);
+  Aguarda_Atualizacao_do_Edt_Buffer();
+  edt_buffer.text:=Trim(edt_buffer.text);
+  status:=strtoint(edt_buffer.text);
+  if(status=1) then ToggleBox10.checked:=TRUE else ToggleBox10.checked:=FALSE;
+
+
+
+end;
+
+
+
+
+
+
+
+
 
 procedure TForm1.Edit1Change(Sender: TObject);
 begin
@@ -832,6 +1326,16 @@ begin
   Aparelho.PROCULUS_Goto_Page(strtoint(edt_page.Text),TEXTO,Form1.edt_page_reply);
 end;
 
+procedure TForm1.btn_pagina1Click(Sender: TObject);
+begin
+  Aparelho.PROCULUS_Goto_Page(19,TEXTO,Form1.edt_saidapadrao);
+end;
+
+procedure TForm1.btn_pagina2Click(Sender: TObject);
+begin
+  Aparelho.PROCULUS_Goto_Page(21,TEXTO,Form1.edt_saidapadrao);
+end;
+
 
 procedure TThead_USART.showstatus;
 begin
@@ -927,7 +1431,10 @@ begin
                                   begin
                                   TEdit(Aparelho.fila[0].ObjDestino).Text:='$'+Aparelho.fila[0].result;
                                   end;
-
+                              UINTEGER:
+                                  begin
+                                  TEdit(Aparelho.fila[0].ObjDestino).Text:=InttoStr(StrtoInt('$'+Aparelho.fila[0].result))+' ';
+                                  end;
                          end
                       end;
 
@@ -984,8 +1491,101 @@ begin
 
 end;
 
+procedure TForm1.MenuItem1Click(Sender: TObject);
+begin
+
+end;
+
+procedure TForm1.Menu_UploadClick(Sender: TObject);
+begin
+  Aparelho.Upload_Program(TEXTO,edt_saidapadrao);
+end;
+
+procedure TForm1.Menu_FormatClick(Sender: TObject);
+begin
+  Aparelho.Format_Program(TEXTO,edt_saidapadrao);
+
+  Edit4.text:='0';
+  Edit3.text:='0';
+  Edit5.text:='0';
+  Edit7.text:='0';
+  cbb0.Caption:='';
+  ToggleBox1.Checked:=FALSE;
+
+  Edit12.text:='0';
+  Edit11.text:='0';
+  Edit13.text:='0';
+  Edit14.text:='0';
+  cbb1.Caption:='';
+  ToggleBox2.Checked:=FALSE;
+
+  Edit19.text:='0';
+  Edit18.text:='0';
+  Edit20.text:='0';
+  Edit21.text:='0';
+  cbb2.Caption:='';
+  ToggleBox3.Checked:=FALSE;
+
+  Edit26.text:='0';
+  Edit25.text:='0';
+  Edit27.text:='0';
+  Edit28.text:='0';
+  cbb3.Caption:='';
+  ToggleBox4.Checked:=FALSE;
+
+  Edit33.text:='0';
+  Edit32.text:='0';
+  Edit34.text:='0';
+  Edit35.text:='0';
+  cbb4.Caption:='';
+  ToggleBox5.Checked:=FALSE;
+
+  Edit40.text:='0';
+  Edit39.text:='0';
+  Edit41.text:='0';
+  Edit42.text:='0';
+  cbb5.Caption:='';
+  ToggleBox6.Checked:=FALSE;
+
+  Edit47.text:='0';
+  Edit46.text:='0';
+  Edit48.text:='0';
+  Edit49.text:='0';
+  cbb5.Caption:='';
+  ToggleBox7.Checked:=FALSE;
+
+  Edit54.text:='0';
+  Edit53.text:='0';
+  Edit55.text:='0';
+  Edit56.text:='0';
+  cbb7.Caption:='';
+  ToggleBox8.Checked:=FALSE;
+
+  Edit61.text:='0';
+  Edit60.text:='0';
+  Edit62.text:='0';
+  Edit63.text:='0';
+  cbb8.Caption:='';
+  ToggleBox9.Checked:=FALSE;
+
+  Edit68.text:='0';
+  Edit67.text:='0';
+  Edit69.text:='0';
+  Edit70.text:='0';
+  cbb9.Caption:='';
+  ToggleBox10.Checked:=FALSE;
+
+
+
+end;
+
 procedure TForm1.PaginaPrincipalContextPopup(Sender: TObject; MousePos: TPoint;
   var Handled: Boolean);
+begin
+
+end;
+
+procedure TForm1.PaginaPrincipalShow(Sender: TObject);
 begin
 
 end;
@@ -1040,167 +1640,100 @@ begin
 
 end;
 
-procedure TForm1.ToggleBox10Change(Sender: TObject);
-begin
-  if(ToggleBox10.Checked=True) then
-     begin
-       ToggleBox10.Caption:='OK';
-       Panel10.Color:=clLime;
-       Aparelho.PROCULUS_Write_VP_Int(349,1,TEXTO,edt_saidapadrao);
-     end
-  else
-     begin
-       ToggleBox10.Caption:='X';
-       Panel10.Color:=clRed;
-       Aparelho.PROCULUS_Write_VP_Int(349,0,TEXTO,edt_saidapadrao);
-     end;
-end;
 
 procedure TForm1.ToggleBox1Change(Sender: TObject);
 begin
-  if(ToggleBox1.Checked=True) then
-     begin
-       ToggleBox1.Caption:='OK';
-       Panel1.Color:=clLime;
-       Aparelho.PROCULUS_Write_VP_Int(241,1,TEXTO,edt_saidapadrao);
-     end
-  else
-     begin
-       ToggleBox1.Caption:='X';
-       Panel1.Color:=clRed;
-       Aparelho.PROCULUS_Write_VP_Int(241,0,TEXTO,edt_saidapadrao);
-     end;
+  ToggleStatus(Sender, Panel1, 1);
+  Aparelho.Show_Programacao(0,HEXADECIMAL,edt_saidaprg);
+  Aparelho.PROCULUS_Goto_Page(19,TEXTO,Form1.edt_saidapadrao);
 end;
 
 procedure TForm1.ToggleBox2Change(Sender: TObject);
 begin
-  if(ToggleBox2.Checked=True) then
-     begin
-       ToggleBox2.Caption:='OK';
-       Panel2.Color:=clLime;
-       Aparelho.PROCULUS_Write_VP_Int(253,1,TEXTO,edt_saidapadrao);
-     end
-  else
-     begin
-       ToggleBox2.Caption:='X';
-       Panel2.Color:=clRed;
-       Aparelho.PROCULUS_Write_VP_Int(253,0,TEXTO,edt_saidapadrao);
-     end;
+  ToggleStatus(Sender, Panel2, 2);
+  Aparelho.Show_Programacao(1,HEXADECIMAL,edt_saidaprg);
+  Aparelho.PROCULUS_Goto_Page(19,TEXTO,Form1.edt_saidapadrao);
 end;
 
 procedure TForm1.ToggleBox3Change(Sender: TObject);
 begin
-  if(ToggleBox3.Checked=True) then
-     begin
-       ToggleBox3.Caption:='OK';
-       Panel3.Color:=clLime;
-       Aparelho.PROCULUS_Write_VP_Int(265,1,TEXTO,edt_saidapadrao);
-     end
-  else
-     begin
-       ToggleBox3.Caption:='X';
-       Panel3.Color:=clRed;
-       Aparelho.PROCULUS_Write_VP_Int(265,0,TEXTO,edt_saidapadrao);
-     end;
+  ToggleStatus(Sender, Panel3, 3);
+  Aparelho.Show_Programacao(2,HEXADECIMAL,edt_saidaprg);
+  Aparelho.PROCULUS_Goto_Page(19,TEXTO,Form1.edt_saidapadrao);
 end;
 
 procedure TForm1.ToggleBox4Change(Sender: TObject);
 begin
-  if(ToggleBox4.Checked=True) then
-     begin
-       ToggleBox4.Caption:='OK';
-       Panel4.Color:=clLime;
-       Aparelho.PROCULUS_Write_VP_Int(277,1,TEXTO,edt_saidapadrao);
-     end
-  else
-     begin
-       ToggleBox4.Caption:='X';
-       Panel4.Color:=clRed;
-       Aparelho.PROCULUS_Write_VP_Int(277,0,TEXTO,edt_saidapadrao);
-     end;
+  ToggleStatus(Sender, Panel4, 4);
+  Aparelho.Show_Programacao(3,HEXADECIMAL,edt_saidaprg);
+  Aparelho.PROCULUS_Goto_Page(19,TEXTO,Form1.edt_saidapadrao);
 end;
 
 procedure TForm1.ToggleBox5Change(Sender: TObject);
 begin
-  if(ToggleBox5.Checked=True) then
-     begin
-       ToggleBox5.Caption:='OK';
-       Panel5.Color:=clLime;
-       Aparelho.PROCULUS_Write_VP_Int(289,1,TEXTO,edt_saidapadrao);
-     end
-  else
-     begin
-       ToggleBox5.Caption:='X';
-       Panel5.Color:=clRed;
-       Aparelho.PROCULUS_Write_VP_Int(289,0,TEXTO,edt_saidapadrao);
-     end;
+  ToggleStatus(Sender, Panel5, 5);
+  Aparelho.Show_Programacao(4,HEXADECIMAL,edt_saidaprg);
+  Aparelho.PROCULUS_Goto_Page(19,TEXTO,Form1.edt_saidapadrao);
 end;
 
 procedure TForm1.ToggleBox6Change(Sender: TObject);
 begin
-  if(ToggleBox6.Checked=True) then
-     begin
-       ToggleBox6.Caption:='OK';
-       Panel6.Color:=clLime;
-       Aparelho.PROCULUS_Write_VP_Int(301,1,TEXTO,edt_saidapadrao);
-     end
-  else
-     begin
-       ToggleBox6.Caption:='X';
-       Panel6.Color:=clRed;
-       Aparelho.PROCULUS_Write_VP_Int(301,0,TEXTO,edt_saidapadrao);
-     end;
+  ToggleStatus(Sender, Panel6, 6);
+  Aparelho.Show_Programacao(5,HEXADECIMAL,edt_saidaprg);
+  Aparelho.PROCULUS_Goto_Page(21,TEXTO,Form1.edt_saidapadrao);
 end;
 
 procedure TForm1.ToggleBox7Change(Sender: TObject);
 begin
-  if(ToggleBox7.Checked=True) then
-     begin
-       ToggleBox7.Caption:='OK';
-       Panel7.Color:=clLime;
-       Aparelho.PROCULUS_Write_VP_Int(313,1,TEXTO,edt_saidapadrao);
-     end
-  else
-     begin
-       ToggleBox7.Caption:='X';
-       Panel7.Color:=clRed;
-       Aparelho.PROCULUS_Write_VP_Int(313,0,TEXTO,edt_saidapadrao);
-     end;
+  ToggleStatus(Sender, Panel7, 7);
+  Aparelho.Show_Programacao(6,HEXADECIMAL,edt_saidaprg);
+  Aparelho.PROCULUS_Goto_Page(21,TEXTO,Form1.edt_saidapadrao);
 end;
 
 procedure TForm1.ToggleBox8Change(Sender: TObject);
 begin
-  if(ToggleBox8.Checked=True) then
-     begin
-       ToggleBox8.Caption:='OK';
-       Panel8.Color:=clLime;
-       Aparelho.PROCULUS_Write_VP_Int(325,1,TEXTO,edt_saidapadrao);
-     end
-  else
-     begin
-       ToggleBox8.Caption:='X';
-       Panel8.Color:=clRed;
-       Aparelho.PROCULUS_Write_VP_Int(325,0,TEXTO,edt_saidapadrao);
-     end;
+  ToggleStatus(Sender, Panel8, 8);
+  Aparelho.Show_Programacao(7,HEXADECIMAL,edt_saidaprg);
+  Aparelho.PROCULUS_Goto_Page(21,TEXTO,Form1.edt_saidapadrao);
 end;
 
 procedure TForm1.ToggleBox9Change(Sender: TObject);
 begin
-  if(ToggleBox9.Checked=True) then
+  ToggleStatus(Sender, Panel9, 9);
+  Aparelho.Show_Programacao(8,HEXADECIMAL,edt_saidaprg);
+  Aparelho.PROCULUS_Goto_Page(21,TEXTO,Form1.edt_saidapadrao);
+end;
+
+procedure TForm1.ToggleBox10Change(Sender: TObject);
+begin
+  ToggleStatus(Sender, Panel10,10);
+  Aparelho.Show_Programacao(9,HEXADECIMAL,edt_saidaprg);
+  Aparelho.PROCULUS_Goto_Page(21,TEXTO,Form1.edt_saidapadrao);
+end;
+
+
+procedure TForm1.ToggleStatus(toggle:TObject; panel:TObject; mandador:integer);
+var
+   addeeprom:integer;
+begin
+   addeeprom:=52+(Mandador*18)-2;
+
+  if TTogglebox(toggle).Checked then
      begin
-       ToggleBox9.Caption:='OK';
-       Panel9.Color:=clLime;
-       Aparelho.PROCULUS_Write_VP_Int(337,1,TEXTO,edt_saidapadrao);
+       TTogglebox(toggle).Caption:='OK';
+       TPanel(panel).Color:=clLime;
+       Aparelho.Gravar_EEPROM_16bits_Interna_Mae(addeeprom,1,TEXTO,edt_saidapadrao);
      end
   else
      begin
-       ToggleBox9.Caption:='X';
-       Panel9.Color:=clRed;
-       Aparelho.PROCULUS_Write_VP_Int(337,0,TEXTO,edt_saidapadrao);
+       TTogglebox(toggle).Caption:='X';
+       TPanel(panel).Color:=clRed;
+       Aparelho.Gravar_EEPROM_16bits_Interna_Mae(addeeprom,0,TEXTO,edt_saidapadrao);
      end;
 end;
 
-procedure TForm1.ReceitaFromTEdit();
+
+procedure TForm1.For_Record_Receita_From_TEdit();
 begin
   Receita[0].Nome     :=           edt_rec0_nome.Text;
   Receita[0].SetPoint :=StrToFloat(edt_rec0_setpoint.Text);
@@ -1253,7 +1786,7 @@ begin
 
 end;
 
-procedure TForm1.ReceitaToTEdit();
+procedure TForm1.For_TEdit_From_Record_Receita();
 begin
   edt_rec0_nome.text     :=Receita[0].Nome;
   edt_rec0_setpoint.text :=floattostr(Receita[0].SetPoint);
@@ -1311,7 +1844,7 @@ var
 begin
   ArqINI:= TIniFile.Create(ExtractFilePath(ParamSTR(0))+'Receita.ini');
   try
-    ReceitaFromTEdit();
+    For_Record_Receita_From_TEdit();
 
     ArqINI.WriteString('Receita0','Nome',     Receita[0].Nome);
     ArqINI.WriteFloat ('Receita0','SetPoint', Receita[0].SetPoint);
@@ -1421,12 +1954,37 @@ begin
   Receita[7].TempoOFF := ArqINI.ReadFloat ('Receita7','TempoOFF', 0.0);
   Receita[7].Histerese:= ArqINI.ReadFloat ('Receita7','Histerese',0.0);
 
-  ReceitaToTEdit();
+  For_TEdit_From_Record_Receita();
 
   finally
     FreeAndNil(ArqINI);
   end;
 end;
+
+
+
+procedure TForm1.Aguarda_Atualizacao_do_Edt_Buffer();
+var
+  tempo:integer;
+  begin
+  tempo:=8000;
+  while(edt_buffer.text='') do
+        begin
+        edt_buffer.Invalidate;
+        edt_buffer.Update;
+        edt_buffer.Repaint;
+        Application.ProcessMessages;
+        if(tempo=0) then
+           exit
+        else
+           dec(tempo);
+        end;
+        sleep(1);
+  end;
+
+
+
+
 
 end.
 
