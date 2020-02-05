@@ -1,10 +1,10 @@
 object Form1: TForm1
-  Left = 134
-  Height = 600
-  Top = 121
+  Left = 221
+  Height = 599
+  Top = 120
   Width = 1196
   Caption = 'JJ Cientifica Ind. e Com. de Equipamentos Científicos'
-  ClientHeight = 580
+  ClientHeight = 579
   ClientWidth = 1196
   Font.CharSet = ANSI_CHARSET
   Font.Color = clBlack
@@ -26,7 +26,7 @@ object Form1: TForm1
     TabOrder = 0
     Text = 'Edit6'
   end
-  object ControledePaginas: TPageControl
+  object ControleDePaginas: TPageControl
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = Owner
     AnchorSideRight.Control = Owner
@@ -34,7 +34,7 @@ object Form1: TForm1
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrCenter
     Left = 0
-    Height = 579
+    Height = 578
     Top = 0
     Width = 1196
     ActivePage = PaginaPrincipal
@@ -46,14 +46,14 @@ object Form1: TForm1
     Font.Pitch = fpVariable
     Font.Quality = fqDraft
     ParentFont = False
+    ParentShowHint = False
     TabIndex = 1
     TabOrder = 1
-    OnChange = ControledePaginasChange
+    OnChange = ControleDePaginasChange
     object ManutencaoCalibracao: TTabSheet
       Caption = 'Manutencao e Calibracao'
-      ClientHeight = 551
+      ClientHeight = 550
       ClientWidth = 1188
-      OnContextPopup = ManutencaoCalibracaoContextPopup
       object Memo1: TMemo
         Left = 560
         Height = 544
@@ -159,7 +159,6 @@ object Form1: TForm1
         ClientHeight = 76
         ClientWidth = 548
         TabOrder = 7
-        OnClick = GroupBox1Click
         object btn_LerMemo: TButton
           Left = 8
           Height = 40
@@ -314,7 +313,6 @@ object Form1: TForm1
         ClientHeight = 46
         ClientWidth = 341
         TabOrder = 8
-        OnClick = gpb_proculusClick
         object btn_ler_vp_int: TButton
           Left = 12
           Height = 23
@@ -534,7 +532,6 @@ object Form1: TForm1
           Top = 48
           Width = 75
           Caption = 'Confere'
-          OnClick = btn_fill_confereClick
           TabOrder = 5
         end
       end
@@ -673,7 +670,6 @@ object Form1: TForm1
         ClientHeight = 46
         ClientWidth = 339
         TabOrder = 16
-        OnClick = GroupBox8Click
         object IEE_Read: TButton
           Left = 6
           Height = 23
@@ -752,14 +748,12 @@ object Form1: TForm1
     end
     object PaginaPrincipal: TTabSheet
       Caption = 'Página Principal'
-      ClientHeight = 551
+      ClientHeight = 550
       ClientWidth = 1188
-      OnContextPopup = PaginaPrincipalContextPopup
-      OnShow = PaginaPrincipalShow
       object edt_buffer: TEdit
-        Left = 1040
+        Left = 960
         Height = 23
-        Top = 425
+        Top = 288
         Width = 104
         TabOrder = 95
       end
@@ -843,7 +837,6 @@ object Form1: TForm1
           Width = 58
           Caption = 'Plataforma'
           ParentColor = False
-          OnClick = Label10Click
         end
       end
       object Panel10: TPanel
@@ -855,7 +848,6 @@ object Form1: TForm1
         Color = clRed
         ParentColor = False
         TabOrder = 79
-        OnClick = Panel1Click
       end
       object Panel9: TPanel
         Left = 56
@@ -866,7 +858,6 @@ object Form1: TForm1
         Color = clRed
         ParentColor = False
         TabOrder = 71
-        OnClick = Panel1Click
       end
       object Panel8: TPanel
         Left = 56
@@ -877,7 +868,6 @@ object Form1: TForm1
         Color = clRed
         ParentColor = False
         TabOrder = 63
-        OnClick = Panel1Click
       end
       object Panel7: TPanel
         Left = 56
@@ -888,7 +878,6 @@ object Form1: TForm1
         Color = clRed
         ParentColor = False
         TabOrder = 55
-        OnClick = Panel1Click
       end
       object Panel6: TPanel
         Left = 56
@@ -899,7 +888,6 @@ object Form1: TForm1
         Color = clRed
         ParentColor = False
         TabOrder = 47
-        OnClick = Panel1Click
       end
       object Panel5: TPanel
         Left = 56
@@ -910,7 +898,6 @@ object Form1: TForm1
         Color = clRed
         ParentColor = False
         TabOrder = 39
-        OnClick = Panel1Click
       end
       object Panel4: TPanel
         Left = 56
@@ -921,7 +908,6 @@ object Form1: TForm1
         Color = clRed
         ParentColor = False
         TabOrder = 31
-        OnClick = Panel1Click
       end
       object Panel3: TPanel
         Left = 56
@@ -934,7 +920,6 @@ object Form1: TForm1
         Color = clRed
         ParentColor = False
         TabOrder = 23
-        OnClick = Panel1Click
         object cbb2: TComboBox
           Left = 537
           Height = 23
@@ -956,7 +941,6 @@ object Form1: TForm1
         Color = clRed
         ParentColor = False
         TabOrder = 15
-        OnClick = Panel1Click
         object cbb1: TComboBox
           Left = 537
           Height = 23
@@ -976,7 +960,6 @@ object Form1: TForm1
         Color = clRed
         ParentColor = False
         TabOrder = 7
-        OnClick = Panel1Click
       end
       object Edit1: TEdit
         Left = 64
@@ -984,7 +967,6 @@ object Form1: TForm1
         Top = 96
         Width = 58
         Alignment = taCenter
-        OnChange = Edit1Change
         TabOrder = 0
         Text = '1'
       end
@@ -1003,7 +985,6 @@ object Form1: TForm1
         Top = 95
         Width = 60
         Alignment = taCenter
-        OnChange = Edit3Change
         TabOrder = 2
         Text = '0'
       end
@@ -1057,7 +1038,6 @@ object Form1: TForm1
         Top = 135
         Width = 58
         Alignment = taCenter
-        OnChange = Edit1Change
         TabOrder = 8
         Text = '2'
       end
@@ -1076,7 +1056,6 @@ object Form1: TForm1
         Top = 136
         Width = 60
         Alignment = taCenter
-        OnChange = Edit3Change
         TabOrder = 10
         Text = '0'
       end
@@ -1130,7 +1109,6 @@ object Form1: TForm1
         Top = 176
         Width = 58
         Alignment = taCenter
-        OnChange = Edit1Change
         TabOrder = 16
         Text = '3'
       end
@@ -1149,7 +1127,6 @@ object Form1: TForm1
         Top = 176
         Width = 60
         Alignment = taCenter
-        OnChange = Edit3Change
         TabOrder = 18
         Text = '0'
       end
@@ -1203,7 +1180,6 @@ object Form1: TForm1
         Top = 216
         Width = 58
         Alignment = taCenter
-        OnChange = Edit1Change
         TabOrder = 24
         Text = '4'
       end
@@ -1222,7 +1198,6 @@ object Form1: TForm1
         Top = 216
         Width = 60
         Alignment = taCenter
-        OnChange = Edit3Change
         TabOrder = 26
         Text = '0'
       end
@@ -1276,7 +1251,6 @@ object Form1: TForm1
         Top = 256
         Width = 58
         Alignment = taCenter
-        OnChange = Edit1Change
         TabOrder = 32
         Text = '5'
       end
@@ -1296,7 +1270,6 @@ object Form1: TForm1
         Top = 256
         Width = 60
         Alignment = taCenter
-        OnChange = Edit3Change
         TabOrder = 34
         Text = '0'
       end
@@ -1350,7 +1323,6 @@ object Form1: TForm1
         Top = 296
         Width = 58
         Alignment = taCenter
-        OnChange = Edit1Change
         TabOrder = 40
         Text = '6'
       end
@@ -1370,7 +1342,6 @@ object Form1: TForm1
         Top = 296
         Width = 60
         Alignment = taCenter
-        OnChange = Edit3Change
         TabOrder = 42
         Text = '0'
       end
@@ -1424,7 +1395,6 @@ object Form1: TForm1
         Top = 336
         Width = 58
         Alignment = taCenter
-        OnChange = Edit1Change
         TabOrder = 48
         Text = '7'
       end
@@ -1444,7 +1414,6 @@ object Form1: TForm1
         Top = 336
         Width = 60
         Alignment = taCenter
-        OnChange = Edit3Change
         TabOrder = 50
         Text = '0'
       end
@@ -1498,7 +1467,6 @@ object Form1: TForm1
         Top = 376
         Width = 58
         Alignment = taCenter
-        OnChange = Edit1Change
         TabOrder = 56
         Text = '8'
       end
@@ -1518,7 +1486,6 @@ object Form1: TForm1
         Top = 376
         Width = 60
         Alignment = taCenter
-        OnChange = Edit3Change
         TabOrder = 58
         Text = '0'
       end
@@ -1572,7 +1539,6 @@ object Form1: TForm1
         Top = 416
         Width = 58
         Alignment = taCenter
-        OnChange = Edit1Change
         TabOrder = 64
         Text = '9'
       end
@@ -1592,7 +1558,6 @@ object Form1: TForm1
         Top = 416
         Width = 60
         Alignment = taCenter
-        OnChange = Edit3Change
         TabOrder = 66
         Text = '0'
       end
@@ -1646,7 +1611,6 @@ object Form1: TForm1
         Top = 456
         Width = 58
         Alignment = taCenter
-        OnChange = Edit1Change
         TabOrder = 72
         Text = '10'
       end
@@ -1666,7 +1630,6 @@ object Form1: TForm1
         Top = 456
         Width = 60
         Alignment = taCenter
-        OnChange = Edit3Change
         TabOrder = 74
         Text = '0'
       end
@@ -1775,7 +1738,6 @@ object Form1: TForm1
         Font.Pitch = fpVariable
         Font.Quality = fqDraft
         Font.Style = [fsBold]
-        OnChange = edt_vacuometroChange
         ParentFont = False
         TabOrder = 83
       end
@@ -1886,22 +1848,13 @@ object Form1: TForm1
         TabOrder = 94
       end
       object Button8: TButton
-        Left = 888
-        Height = 42
-        Top = 417
-        Width = 138
-        Caption = 'Button8'
+        Left = 896
+        Height = 32
+        Top = 344
+        Width = 250
+        Caption = 'Fazer DownLoad da Programação'
         OnClick = Button8Click
         TabOrder = 96
-      end
-      object btn_Conectar_Serial: TButton
-        Left = 896
-        Height = 30
-        Top = 344
-        Width = 109
-        Caption = 'Conectar Serial'
-        OnClick = btn_Conectar_SerialClick
-        TabOrder = 97
       end
       object Pn_COM: TPanel
         Left = 0
@@ -1918,14 +1871,31 @@ object Form1: TForm1
         Font.Quality = fqDraft
         ParentColor = False
         ParentFont = False
+        TabOrder = 97
+      end
+      object Button9: TButton
+        Left = 896
+        Height = 31
+        Top = 384
+        Width = 248
+        Caption = 'Fazer UpLoad da Programação'
+        OnClick = Button9Click
         TabOrder = 98
+      end
+      object Button10: TButton
+        Left = 896
+        Height = 29
+        Top = 424
+        Width = 248
+        Caption = 'Formatar Programação'
+        OnClick = Button10Click
+        TabOrder = 99
       end
     end
     object TabSheet1: TTabSheet
       Caption = 'Receitas'
       ClientHeight = 550
       ClientWidth = 1188
-      OnContextPopup = TabSheet1ContextPopup
       object Panel16: TPanel
         Left = 312
         Height = 49
@@ -2476,6 +2446,204 @@ object Form1: TForm1
         TabOrder = 49
       end
     end
+    object TabSheet2: TTabSheet
+      Caption = 'Parâmetros'
+      ClientHeight = 550
+      ClientWidth = 1188
+      object GroupBox9: TGroupBox
+        Left = 24
+        Height = 527
+        Top = 16
+        Width = 584
+        Caption = 'LIOFILIZADOR'
+        ClientHeight = 507
+        ClientWidth = 580
+        TabOrder = 0
+        object GroupBox10: TGroupBox
+          Left = 15
+          Height = 156
+          Top = 8
+          Width = 545
+          Caption = 'CONDENSADOR'
+          ClientHeight = 136
+          ClientWidth = 541
+          TabOrder = 0
+          object edt_Condensador_Libera_Vacuo: TEdit
+            Left = 296
+            Height = 23
+            Top = 56
+            Width = 43
+            Alignment = taCenter
+            TabOrder = 0
+            Text = '0'
+          end
+          object Button11: TButton
+            Left = 21
+            Height = 28
+            Top = 24
+            Width = 93
+            Caption = 'Ler'
+            OnClick = Button11Click
+            TabOrder = 1
+          end
+          object Button12: TButton
+            Left = 21
+            Height = 29
+            Top = 72
+            Width = 93
+            Caption = 'Gravar'
+            OnClick = Button12Click
+            TabOrder = 2
+          end
+          object Label30: TLabel
+            Left = 184
+            Height = 15
+            Top = 60
+            Width = 103
+            Caption = 'Liberação do Vácuo'
+            ParentColor = False
+          end
+          object Label36: TLabel
+            Left = 344
+            Height = 15
+            Top = 60
+            Width = 13
+            Caption = '°C'
+            ParentColor = False
+          end
+        end
+        object GroupBox11: TGroupBox
+          Left = 17
+          Height = 155
+          Top = 168
+          Width = 543
+          Caption = 'VÁCUO'
+          ClientHeight = 135
+          ClientWidth = 539
+          TabOrder = 1
+          object edt_Vacuo_Alarme: TEdit
+            Left = 282
+            Height = 23
+            Top = 53
+            Width = 51
+            Alignment = taCenter
+            TabOrder = 0
+            Text = '0'
+          end
+          object Button13: TButton
+            Left = 19
+            Height = 28
+            Top = 28
+            Width = 93
+            Caption = 'Ler'
+            OnClick = Button13Click
+            TabOrder = 1
+          end
+          object btn_Gravar_Seg_Vacuo: TButton
+            Left = 18
+            Height = 28
+            Top = 76
+            Width = 93
+            Caption = 'Gravar'
+            OnClick = btn_Gravar_Seg_VacuoClick
+            TabOrder = 2
+          end
+          object Label33: TLabel
+            Left = 182
+            Height = 15
+            Top = 56
+            Width = 90
+            Caption = 'Alarme do Vácuo'
+            ParentColor = False
+          end
+          object Label37: TLabel
+            Left = 344
+            Height = 15
+            Top = 56
+            Width = 39
+            Caption = 'mmHG'
+            ParentColor = False
+          end
+        end
+        object GroupBox12: TGroupBox
+          Left = 16
+          Height = 166
+          Top = 328
+          Width = 546
+          Caption = 'AQUECIMENTO'
+          ClientHeight = 146
+          ClientWidth = 542
+          TabOrder = 2
+          object edt_Aquecimento_Seg_Condensador: TEdit
+            Left = 314
+            Height = 23
+            Top = 45
+            Width = 46
+            Alignment = taCenter
+            TabOrder = 0
+            Text = '0'
+          end
+          object edt_Aquecimento_Seg_Vacuo: TEdit
+            Left = 272
+            Height = 23
+            Top = 93
+            Width = 56
+            Alignment = taCenter
+            TabOrder = 1
+            Text = '0'
+          end
+          object btn_Ler_Seg_Aquecimento: TButton
+            Left = 20
+            Height = 28
+            Top = 40
+            Width = 95
+            Caption = 'Ler'
+            OnClick = btn_Ler_Seg_AquecimentoClick
+            TabOrder = 2
+          end
+          object btn_Gravar_Seg_Aquecimento: TButton
+            Left = 20
+            Height = 30
+            Top = 88
+            Width = 94
+            Caption = 'Gravar'
+            TabOrder = 3
+          end
+          object Label34: TLabel
+            Left = 160
+            Height = 15
+            Top = 48
+            Width = 146
+            Caption = 'Segurança do Condensador'
+            ParentColor = False
+          end
+          object Label35: TLabel
+            Left = 160
+            Height = 15
+            Top = 96
+            Width = 107
+            Caption = 'Segurança do Vácuo'
+            ParentColor = False
+          end
+          object Label38: TLabel
+            Left = 368
+            Height = 15
+            Top = 48
+            Width = 13
+            Caption = '°C'
+            ParentColor = False
+          end
+          object Label39: TLabel
+            Left = 336
+            Height = 15
+            Top = 96
+            Width = 39
+            Caption = 'mmHG'
+            ParentColor = False
+          end
+        end
+      end
+    end
   end
   object OnLineSystem: TTimer
     OnTimer = OnLineSystemTimer
@@ -2483,8 +2651,7 @@ object Form1: TForm1
     top = 24
   end
   object LeitorDeTemperatura: TTimer
-    Enabled = False
-    Interval = 8000
+    Interval = 10
     OnTimer = LeitorDeTemperaturaTimer
     left = 120
     top = 24
@@ -2494,7 +2661,6 @@ object Form1: TForm1
     top = 24
     object MenuItem1: TMenuItem
       Caption = 'Tarefas Especiais'
-      OnClick = MenuItem1Click
       object Menu_Upload: TMenuItem
         Caption = 'UpLoad - Transferencia para Executar'
         OnClick = Menu_UploadClick
