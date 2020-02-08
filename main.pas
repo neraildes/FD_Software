@@ -6,7 +6,11 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
-  ComCtrls, Grids, Menus, Laz_Kernel_Serial, Types, Inifiles;
+  ComCtrls, Grids, Menus, Buttons, Laz_Kernel_Serial, Types, Inifiles, LCLType;
+
+const
+  DESCONECTAR = 0;
+  CONECTAR    = 1;
 
 type
 
@@ -35,6 +39,10 @@ type
 
   { TForm1 }
   TForm1 = class(TForm)
+    bib_DataLog: TBitBtn;
+    bib_Condensador: TBitBtn;
+    bib_Vacuo: TBitBtn;
+    bib_Aquecimento: TBitBtn;
     Btn_Buzzer: TButton;
     btn_Control_Active_write: TButton;
     btn_EscreverMemo: TButton;
@@ -48,12 +56,8 @@ type
     btn_suspend: TButton;
     Button1: TButton;
     Button10: TButton;
-    Button11: TButton;
-    Button12: TButton;
-    Button13: TButton;
-    btn_Gravar_Seg_Vacuo: TButton;
-    btn_Ler_Seg_Aquecimento: TButton;
-    btn_Gravar_Seg_Aquecimento: TButton;
+    btn_Config_Ler: TButton;
+    btn_Config_Gravar: TButton;
     Button2: TButton;
     btn_vp_string_read: TButton;
     btn_vp_strinng_write: TButton;
@@ -76,6 +80,8 @@ type
     cbb9: TComboBox;
     cbb1: TComboBox;
     cbb2: TComboBox;
+    cbb_COMPORT: TComboBox;
+    edt_DisplaySize: TEdit;
     edt_Vacuo_Alarme: TEdit;
     edt_Aquecimento_Seg_Condensador: TEdit;
     edt_Aquecimento_Seg_Vacuo: TEdit;
@@ -85,6 +91,9 @@ type
     GroupBox10: TGroupBox;
     GroupBox11: TGroupBox;
     GroupBox12: TGroupBox;
+    GroupBox13: TGroupBox;
+    GroupBox14: TGroupBox;
+    GroupBox15: TGroupBox;
     GroupBox9: TGroupBox;
     IEE_Read: TButton;
     IEE_Write: TButton;
@@ -261,6 +270,7 @@ type
     Label37: TLabel;
     Label38: TLabel;
     Label39: TLabel;
+    Label40: TLabel;
     lbl_Tensao: TLabel;
     Label2: TLabel;
     Label3: TLabel;
@@ -302,14 +312,17 @@ type
     Panel8: TPanel;
     Panel9: TPanel;
     Pn_COM: TPanel;
+    Pn_COM_Check: TPanel;
     rb_24C1025: TRadioButton;
     rb_EEPROM: TRadioButton;
-    OnLineSystem: TTimer;
-    LeitorDeTemperatura: TTimer;
+    tmr_online: TTimer;
+    tmr_temperaturas: TTimer;
     TabSheet1: TTabSheet;
     TabSheet2: TTabSheet;
+    tmr_condensador: TTimer;
     ToggleBox1: TToggleBox;
     ToggleBox10: TToggleBox;
+    tgb_Serial: TToggleBox;
     ToggleBox2: TToggleBox;
     ToggleBox3: TToggleBox;
     ToggleBox4: TToggleBox;
@@ -318,13 +331,17 @@ type
     ToggleBox7: TToggleBox;
     ToggleBox8: TToggleBox;
     ToggleBox9: TToggleBox;
+    procedure bib_AquecimentoClick(Sender: TObject);
+    procedure bib_CondensadorClick(Sender: TObject);
+    procedure bib_DataLogClick(Sender: TObject);
+    procedure bib_VacuoClick(Sender: TObject);
     procedure Btn_BuzzerClick(Sender: TObject);
+    procedure btn_Config_GravarClick(Sender: TObject);
+    procedure btn_Config_LerClick(Sender: TObject);
     procedure btn_Control_Active_writeClick(Sender: TObject);
     procedure btn_EscreverMemoClick(Sender: TObject);
     procedure btn_fillClick(Sender: TObject);
-    procedure btn_Gravar_Seg_VacuoClick(Sender: TObject);
     procedure btn_gravar_vp_intClick(Sender: TObject);
-    procedure btn_Ler_Seg_AquecimentoClick(Sender: TObject);
     procedure btn_ler_vp_intClick(Sender: TObject);
     procedure btn_page_writeClick(Sender: TObject);
     procedure btn_pagina1Click(Sender: TObject);
@@ -335,9 +352,6 @@ type
     procedure btn_vp_string_readClick(Sender: TObject);
     procedure btn_vp_strinng_writeClick(Sender: TObject);
     procedure Button10Click(Sender: TObject);
-    procedure Button11Click(Sender: TObject);
-    procedure Button12Click(Sender: TObject);
-    procedure Button13Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
@@ -359,21 +373,22 @@ type
     procedure cbb1Change(Sender: TObject);
     procedure cbb2Change(Sender: TObject);
     procedure ControleDePaginasChange(Sender: TObject);
-    procedure FormClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure IEE_ReadClick(Sender: TObject);
     procedure IEE_WriteClick(Sender: TObject);
-    procedure LeitorDeTemperaturaTimer(Sender: TObject);
+    procedure tmr_condensadorTimer(Sender: TObject);
+    procedure tmr_temperaturasTimer(Sender: TObject);
     procedure ListaAdd(cmd:string);
     function  ListaUse():string;
     procedure Menu_UploadClick(Sender: TObject);
     procedure Menu_FormatClick(Sender: TObject);
     procedure rb_24C1025Change(Sender: TObject);
     procedure rb_EEPROMChange(Sender: TObject);
-    procedure OnLineSystemTimer(Sender: TObject);
+    procedure tmr_onlineTimer(Sender: TObject);
     procedure ToggleBox10Change(Sender: TObject);
+    procedure tgb_SerialChange(Sender: TObject);
     procedure ToggleBox1Change(Sender: TObject);
     procedure ToggleBox2Change(Sender: TObject);
     procedure ToggleBox3Change(Sender: TObject);
@@ -383,17 +398,19 @@ type
     procedure ToggleBox7Change(Sender: TObject);
     procedure ToggleBox8Change(Sender: TObject);
     procedure ToggleBox9Change(Sender: TObject);
-    procedure GravarReceita();
-    procedure RecuperarReceita();
     procedure For_Record_Receita_From_TEdit();
     procedure For_TEdit_From_Record_Receita();
     procedure PreencheComboBox();
     procedure EnviaReceitaParaPrograma(Mandador:Integer;index:integer);
     procedure ToggleStatus(toggle:TObject; panel:TObject; mandador : integer);
     procedure Puxar_dados_de_programacao_do_Hardware();
-    procedure Aguarda_Atualizacao_do_Edt_Buffer();
-    procedure ConectarSerial();
+    procedure Aguarda_Atualizacao_do_TEdit(objeto : TObject);
+    procedure ConectarSerial(chave:integer);
     procedure Transferir_Lista_de_Receitas();
+    procedure RecuperarReceita();
+    procedure Recuperar_Config();
+    procedure GravarReceita();
+    procedure Gravar_Config();
   private
 
   public
@@ -417,13 +434,15 @@ implementation
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   CountCOM:=0;
-  ConectarSerial();
+  ControleDePaginas.PageIndex:=1;
+  //ConectarSerial(CONECTAR);
   //RecuperarReceita();
   //PreencheComboBox();
 end;
 
 procedure TForm1.FormShow(Sender: TObject);
 begin
+  Recuperar_Config();
   RecuperarReceita();
   PreencheComboBox();
 end;
@@ -443,9 +462,14 @@ begin
                                              edt_saidapadrao);
 end;
 
-procedure TForm1.LeitorDeTemperaturaTimer(Sender: TObject);
+procedure TForm1.tmr_condensadorTimer(Sender: TObject);
 begin
-  if(LeitorDeTemperatura.Interval<8000) then LeitorDeTemperatura.Interval:=8000;
+  tmr_condensador.Enabled:=FALSE;
+end;
+
+procedure TForm1.tmr_temperaturasTimer(Sender: TObject);
+begin
+  if(tmr_temperaturas.Interval<8000) then tmr_temperaturas.Interval:=8000;
 
   Aparelho.Read_Analogic_Channel(1,0,FLUTUANTE,'V',edt_tensao);
   Aparelho.Read_Analogic_Channel(1,1,FLUTUANTE,'mmHg',edt_vacuometro);
@@ -649,27 +673,6 @@ begin
     ToggleBox10.Checked:=FALSE;
 end;
 
-procedure TForm1.Button11Click(Sender: TObject);
-begin
-  Aparelho.Ler_EEPROM_16bits_Interna_Mae($01,FLUTUANTE,edt_Condensador_Libera_Vacuo);
-end;
-
-procedure TForm1.Button12Click(Sender: TObject);
-begin
-  Aparelho.Gravar_EEPROM_16bits_Interna_Mae($01,
-                                            trunc(strtofloat(edt_Condensador_Libera_Vacuo.text)*10),
-                                            FLUTUANTE,edt_saidapadrao);
-  Aparelho.PROCULUS_Write_VP_Int(210,
-                                 trunc(strtofloat(edt_Condensador_Libera_Vacuo.text)*10),
-                                 FLUTUANTE,
-                                 edt_saidapadrao);
-end;
-
-procedure TForm1.Button13Click(Sender: TObject);
-begin
-  Aparelho.Ler_EEPROM_16bits_Interna_Mae($03,FLUTUANTE,edt_Vacuo_Alarme);
-end;
-
 procedure TForm1.Button1Click(Sender: TObject);
 var
   valor:longint;
@@ -823,30 +826,46 @@ begin
   Aparelho.Format_Program(TEXTO,edt_saidapadrao);
 end;
 
-procedure TForm1.ConectarSerial();
+procedure TForm1.ConectarSerial(chave:integer);
 begin
 try
+
+   if(chave=CONECTAR) then
+      begin
+      ouvinte := TThead_USART.Create(FALSE);
+      ouvinte.FreeOnTerminate:=TRUE;
+      ouvinte.Start;
+      ouvinte.Priority:=tpTimeCritical;
+      Aparelho:=TSerial.Create;
+      Aparelho.Connect(cbb_COMPORT.Caption);
+      Aparelho.Config(115200,8,'N',0,false,false);
+      end;
+
+   if(chave=DESCONECTAR) then
+      begin
+       ouvinte.Terminate;
+       FreeAndNil(Aparelho);
+      end;
+except
+  Aparelho.free;
+  showmessage('Erro no modulo de comunicacao');
+end;
+
+ {
   if(Aparelho=nil) then
      begin
-        ouvinte := TThead_USART.Create(FALSE);
-        ouvinte.FreeOnTerminate:=TRUE;
-        ouvinte.Start;
-        ouvinte.Priority:=tpTimeCritical;
-        Aparelho:=TSerial.Create;
-        Aparelho.Connect('COM5');
-        Aparelho.Config(115200,8,'N',0,false,false);
+
         Aparelho.FilaFim:=0;
         Aparelho.Purge;
      end
   else
      begin
         ouvinte.Suspend;
+        Aparelho.FilaFim:=0;
         Aparelho.Free;
      end;
-except
-  Aparelho.free;
-  showmessage('Erro no modulo de comunicacao');
-end;
+
+}
 end;
 
 
@@ -1017,9 +1036,12 @@ end;
 procedure TForm1.ControleDePaginasChange(Sender: TObject);
 begin
   //Showmessage('Clicou na Aba '+inttostr(ControleDePaginas.PageIndex));
-  if(ControleDePaginas.PageIndex=1) then PreencheComboBox();
+  if(ControleDePaginas.PageIndex=1) then
+     begin
+     PreencheComboBox();
+     Aparelho.PROCULUS_Goto_Page(15,TEXTO,Form1.edt_saidapadrao);
+     end;
 end;
-
 
 procedure TForm1.EnviaReceitaParaPrograma(Mandador:Integer;index:integer);
 var
@@ -1053,12 +1075,12 @@ begin
   Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+5,UINTEGER,Edit7);
   edt_buffer.text:='';
   Aparelho.Ler_EEPROM_String_Mae(addeeprom+6,TEXTO,edt_buffer);
-  Aguarda_Atualizacao_do_Edt_Buffer();
+  Aguarda_Atualizacao_do_TEdit(edt_buffer);
   cbb0.Caption:=edt_buffer.text;
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   edt_buffer.text:='';
   Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+16,UINTEGER,edt_buffer);
-  Aguarda_Atualizacao_do_Edt_Buffer();
+  Aguarda_Atualizacao_do_TEdit(edt_buffer);
   Application.ProcessMessages;
   edt_buffer.text:=Trim(edt_buffer.text);
   status:=strtoint(edt_buffer.text);
@@ -1075,12 +1097,12 @@ begin
   Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+5,UINTEGER,Edit14);
   edt_buffer.text:='';
   Aparelho.Ler_EEPROM_String_Mae(addeeprom+6,TEXTO,edt_buffer);
-  Aguarda_Atualizacao_do_Edt_Buffer();
+  Aguarda_Atualizacao_do_TEdit(edt_buffer);
   cbb1.Caption:=edt_buffer.text;
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   edt_buffer.text:='';
   Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+16,UINTEGER,edt_buffer);
-  Aguarda_Atualizacao_do_Edt_Buffer();
+  Aguarda_Atualizacao_do_TEdit(edt_buffer);
   edt_buffer.text:=Trim(edt_buffer.text);
   status:=strtoint(edt_buffer.text);
   if(status=1) then ToggleBox2.checked:=TRUE else ToggleBox2.checked:=FALSE;
@@ -1094,13 +1116,13 @@ begin
   Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+5,UINTEGER,Edit21);
   edt_buffer.text:='';
   Aparelho.Ler_EEPROM_String_Mae(addeeprom+6,TEXTO,edt_buffer);
-  Aguarda_Atualizacao_do_Edt_Buffer();
+  Aguarda_Atualizacao_do_TEdit(edt_buffer);
   cbb2.Caption:=edt_buffer.text;
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   edt_buffer.text:='';
   Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+16,UINTEGER,edt_buffer);
-  Aguarda_Atualizacao_do_Edt_Buffer();
+  Aguarda_Atualizacao_do_TEdit(edt_buffer);
   edt_buffer.text:=Trim(edt_buffer.text);
   status:=strtoint(edt_buffer.text);
   if(status=1) then ToggleBox3.checked:=TRUE else ToggleBox3.checked:=FALSE;
@@ -1119,13 +1141,13 @@ begin
   Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+5,UINTEGER,Edit28);
   edt_buffer.text:='';
   Aparelho.Ler_EEPROM_String_Mae(addeeprom+6,TEXTO,edt_buffer);
-  Aguarda_Atualizacao_do_Edt_Buffer();
+  Aguarda_Atualizacao_do_TEdit(edt_buffer);
   cbb3.Caption:=edt_buffer.text;
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   edt_buffer.text:='';
   Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+16,UINTEGER,edt_buffer);
-  Aguarda_Atualizacao_do_Edt_Buffer();
+  Aguarda_Atualizacao_do_TEdit(edt_buffer);
   edt_buffer.text:=Trim(edt_buffer.text);
   status:=strtoint(edt_buffer.text);
   if(status=1) then ToggleBox4.checked:=TRUE else ToggleBox4.checked:=FALSE;
@@ -1144,13 +1166,13 @@ begin
   Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+5,UINTEGER,Edit35);
   edt_buffer.text:='';
   Aparelho.Ler_EEPROM_String_Mae(addeeprom+6,TEXTO,edt_buffer);
-  Aguarda_Atualizacao_do_Edt_Buffer();
+  Aguarda_Atualizacao_do_TEdit(edt_buffer);
   cbb4.Caption:=edt_buffer.text;
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   edt_buffer.text:='';
   Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+16,UINTEGER,edt_buffer);
-  Aguarda_Atualizacao_do_Edt_Buffer();
+  Aguarda_Atualizacao_do_TEdit(edt_buffer);
   edt_buffer.text:=Trim(edt_buffer.text);
   status:=strtoint(edt_buffer.text);
   if(status=1) then ToggleBox5.checked:=TRUE else ToggleBox5.checked:=FALSE;
@@ -1167,13 +1189,13 @@ begin
   Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+5,UINTEGER,Edit42);
   edt_buffer.text:='';
   Aparelho.Ler_EEPROM_String_Mae(addeeprom+6,TEXTO,edt_buffer);
-  Aguarda_Atualizacao_do_Edt_Buffer();
+  Aguarda_Atualizacao_do_TEdit(edt_buffer);
   cbb5.Caption:=edt_buffer.text;
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   edt_buffer.text:='';
   Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+16,UINTEGER,edt_buffer);
-  Aguarda_Atualizacao_do_Edt_Buffer();
+  Aguarda_Atualizacao_do_TEdit(edt_buffer);
   edt_buffer.text:=Trim(edt_buffer.text);
   status:=strtoint(edt_buffer.text);
   if(status=1) then ToggleBox6.checked:=TRUE else ToggleBox6.checked:=FALSE;
@@ -1190,13 +1212,13 @@ begin
   Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+5,UINTEGER,Edit49);
   edt_buffer.text:='';
   Aparelho.Ler_EEPROM_String_Mae(addeeprom+6,TEXTO,edt_buffer);
-  Aguarda_Atualizacao_do_Edt_Buffer();
+  Aguarda_Atualizacao_do_TEdit(edt_buffer);
   cbb6.Caption:=edt_buffer.text;
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   edt_buffer.text:='';
   Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+16,UINTEGER,edt_buffer);
-  Aguarda_Atualizacao_do_Edt_Buffer();
+  Aguarda_Atualizacao_do_TEdit(edt_buffer);
   edt_buffer.text:=Trim(edt_buffer.text);
   status:=strtoint(edt_buffer.text);
   if(status=1) then ToggleBox7.checked:=TRUE else ToggleBox7.checked:=FALSE;
@@ -1213,13 +1235,13 @@ begin
   Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+5,UINTEGER,Edit56);
   edt_buffer.text:='';
   Aparelho.Ler_EEPROM_String_Mae(addeeprom+6,TEXTO,edt_buffer);
-  Aguarda_Atualizacao_do_Edt_Buffer();
+  Aguarda_Atualizacao_do_TEdit(edt_buffer);
   cbb7.Caption:=edt_buffer.text;
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   edt_buffer.text:='';
   Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+16,UINTEGER,edt_buffer);
-  Aguarda_Atualizacao_do_Edt_Buffer();
+  Aguarda_Atualizacao_do_TEdit(edt_buffer);
   edt_buffer.text:=Trim(edt_buffer.text);
   status:=strtoint(edt_buffer.text);
   if(status=1) then ToggleBox8.checked:=TRUE else ToggleBox8.checked:=FALSE;
@@ -1236,13 +1258,13 @@ begin
   Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+5,UINTEGER,Edit63);
   edt_buffer.text:='';
   Aparelho.Ler_EEPROM_String_Mae(addeeprom+6,TEXTO,edt_buffer);
-  Aguarda_Atualizacao_do_Edt_Buffer();
+  Aguarda_Atualizacao_do_TEdit(edt_buffer);
   cbb8.Caption:=edt_buffer.text;
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   edt_buffer.text:='';
   Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+16,UINTEGER,edt_buffer);
-  Aguarda_Atualizacao_do_Edt_Buffer();
+  Aguarda_Atualizacao_do_TEdit(edt_buffer);
   edt_buffer.text:=Trim(edt_buffer.text);
   status:=strtoint(edt_buffer.text);
   if(status=1) then ToggleBox9.checked:=TRUE else ToggleBox9.checked:=FALSE;
@@ -1258,13 +1280,13 @@ begin
   Aparelho.Ler_EEPROM_8bits_Interna_Mae(addeeprom+5,UINTEGER,Edit70);
   edt_buffer.text:='';
   Aparelho.Ler_EEPROM_String_Mae(addeeprom+6,TEXTO,edt_buffer);
-  Aguarda_Atualizacao_do_Edt_Buffer();
+  Aguarda_Atualizacao_do_TEdit(edt_buffer);
   cbb9.Caption:=edt_buffer.text;
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   edt_buffer.text:='';
   Aparelho.Ler_EEPROM_16bits_Interna_Mae(addeeprom+16,UINTEGER,edt_buffer);
-  Aguarda_Atualizacao_do_Edt_Buffer();
+  Aguarda_Atualizacao_do_TEdit(edt_buffer);
   edt_buffer.text:=Trim(edt_buffer.text);
   status:=strtoint(edt_buffer.text);
   if(status=1) then ToggleBox10.checked:=TRUE else ToggleBox10.checked:=FALSE;
@@ -1281,17 +1303,20 @@ end;
 
 
 
-procedure TForm1.FormClick(Sender: TObject);
-begin
-  ouvinte.Suspend;
-  sleep(50);
-end;
-
 procedure TForm1.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-   ouvinte.Suspend;
-   Aparelho.free;
+   Gravar_Config();
    GravarReceita();
+   if(ouvinte<>nil) then
+      begin
+      //ouvinte.WaitFor;
+      ouvinte.Terminate;
+      end;
+   if(Aparelho<>nil) then
+      begin
+       Aparelho.Free;
+       Aparelho:=nil;
+      end;
 end;
 
 procedure TForm1.btn_resumeClick(Sender: TObject);
@@ -1309,6 +1334,178 @@ begin
   inc(valor);
   Edt_ss_time.text:=inttostr(valor);
   Aparelho.Buzzer(strtoint(Edt_ss_time.text),TEXTO,Form1.Edt_buz_return);
+end;
+
+procedure TForm1.bib_DataLogClick(Sender: TObject);
+begin
+   if(bib_DataLog.ShowHint=FALSE) then
+      begin
+      Aparelho.PROCULUS_Write_VP_Int(2,1,TEXTO,edt_saidapadrao); //LIGA BOTAO DATALOG
+      bib_DataLog.Glyph.LoadFromFile(ExtractFilePath(ParamSTR(0))+'imagens\DataLog_ON.bmp');
+      bib_DataLog.ShowHint:=TRUE
+      end
+   else
+      begin
+      Aparelho.PROCULUS_Write_VP_Int(2,0,TEXTO,edt_saidapadrao); //DESLIGA BOTAO DATALOG
+      bib_DataLog.Glyph.LoadFromFile(ExtractFilePath(ParamSTR(0))+'imagens\DataLog_OFF.bmp');
+      bib_DataLog.ShowHint:=FALSE;
+      end;
+end;
+
+procedure TForm1.bib_VacuoClick(Sender: TObject);
+var
+  tempo:integer;
+begin
+   if(bib_Vacuo.ShowHint=FALSE) then
+      begin
+      Aparelho.PROCULUS_Write_VP_Int(4,1,TEXTO,edt_saidapadrao); //LIGA BOTAO VACUO
+      bib_Vacuo.Glyph.LoadFromFile(ExtractFilePath(ParamSTR(0))+'imagens\Vacuo_ON.bmp');
+      bib_Vacuo.ShowHint:=TRUE
+      end
+   else
+      begin
+      //Aparelho.PROCULUS_Control_Active(66,TEXTO,edt_saidapadrao);
+      Aparelho.PROCULUS_Write_VP_Int(4,0,TEXTO,edt_saidapadrao); //DESLIGA BOTAO VACUO
+      bib_Vacuo.Glyph.LoadFromFile(ExtractFilePath(ParamSTR(0))+'imagens\Vacuo_OFF.bmp');
+      bib_Vacuo.ShowHint:=FALSE;
+      tmr_temperaturas.Enabled:=FALSE;
+      tempo:=0;
+      while (tempo<3000) do
+         begin
+           Application.ProcessMessages;
+           inc(tempo);
+           sleep(1);
+         end;
+      if (MessageDlg('Pergunta','Deseja encerrar o processo?',mtInformation, [mbYes, mbNo],0)=mrYes) then
+         begin
+           Aparelho.PROCULUS_Control_Active(10,TEXTO,edt_saidapadrao);  //PRESSIONADO SIM
+           Aparelho.PROCULUS_Write_VP_Int(6,240,TEXTO,edt_saidapadrao);
+         end
+      else
+         begin
+           Aparelho.PROCULUS_Control_Active(20,TEXTO,edt_saidapadrao);  //PRESSIONADO NAO
+           Aparelho.PROCULUS_Write_VP_Int(6,241,TEXTO,edt_saidapadrao);
+         end;
+
+      tmr_temperaturas.Enabled:=TRUE;
+      end;
+end;
+
+procedure TForm1.bib_CondensadorClick(Sender: TObject);
+begin
+     if(bib_Condensador.ShowHint=FALSE) then
+      begin
+         if(tmr_condensador.Enabled=FALSE) then
+            begin
+            Aparelho.PROCULUS_Write_VP_Int(3,1,TEXTO,edt_saidapadrao); //LIGA BOTAO CONDENSADOR
+            bib_Condensador.Glyph.LoadFromFile(ExtractFilePath(ParamSTR(0))+'imagens\Condensador_ON.bmp');
+            bib_Condensador.ShowHint:=TRUE
+            end
+        else
+           begin
+           showmessage('Aguarde 30 segundos antes de religar o condensador');
+           end;
+      end
+   else
+      begin
+      tmr_condensador.Enabled:=TRUE;
+      Aparelho.PROCULUS_Write_VP_Int(3,0,TEXTO,edt_saidapadrao); //DESLIGA BOTAO CONDENSADOR
+      bib_Condensador.Glyph.LoadFromFile(ExtractFilePath(ParamSTR(0))+'imagens\Condensador_OFF.bmp');
+      bib_Condensador.ShowHint:=FALSE;
+      end;
+end;
+
+procedure TForm1.bib_AquecimentoClick(Sender: TObject);
+begin
+     if(bib_Aquecimento.ShowHint=FALSE) then
+        begin
+        Aparelho.PROCULUS_Write_VP_Int(5,1,TEXTO,edt_saidapadrao); //LIGA BOTAO AQUECIMENTO
+        bib_Aquecimento.Glyph.LoadFromFile(ExtractFilePath(ParamSTR(0))+'imagens\Aquecimento_ON.bmp');
+        bib_Aquecimento.ShowHint:=TRUE
+        end
+     else
+        begin
+        Aparelho.PROCULUS_Write_VP_Int(5,0,TEXTO,edt_saidapadrao); //DESLIGA BOTAO AQUECIMENTO
+        bib_Aquecimento.Glyph.LoadFromFile(ExtractFilePath(ParamSTR(0))+'imagens\Aquecimento_OFF.bmp');
+        bib_Aquecimento.ShowHint:=FALSE;
+        end;
+end;
+
+
+
+procedure TForm1.btn_Config_GravarClick(Sender: TObject);
+var
+  variavel:integer;
+begin
+//Aparelho.PROCULUS_Goto_Page(23,TEXTO,Form1.edt_saidapadrao);
+
+variavel:=trunc(strtofloat(edt_Condensador_Libera_Vacuo.text)*10);
+if(variavel<0) then variavel:=($FFFF+variavel)+1;
+Aparelho.Gravar_EEPROM_16bits_Interna_Mae($01,
+                                          variavel,
+                                          FLUTUANTE,edt_saidapadrao);
+Aparelho.PROCULUS_Write_VP_Int(210,
+                               trunc(strtofloat(edt_Condensador_Libera_Vacuo.text)*10),
+                               FLUTUANTE,
+                               edt_saidapadrao);
+
+//------------------------------------------------------------------------------
+Aparelho.Gravar_EEPROM_16bits_Interna_Mae($03,
+                                          trunc(strtofloat(edt_Vacuo_Alarme.text)*10),
+                                          FLUTUANTE,edt_saidapadrao);
+Aparelho.PROCULUS_Write_VP_Int(211,
+                               trunc(strtofloat(edt_Vacuo_Alarme.text)*10),
+                               FLUTUANTE,
+                               edt_saidapadrao);
+
+//------------------------------------------------------------------------------
+variavel:=trunc(strtofloat(edt_Aquecimento_Seg_Condensador.text)*10);
+if(variavel<0) then variavel:=($FFFF+variavel)+1;
+Aparelho.Gravar_EEPROM_16bits_Interna_Mae($05,
+                                          variavel,
+                                          TEXTO,edt_saidapadrao);
+
+Aparelho.PROCULUS_Write_VP_Int(212,
+                               trunc(strtofloat(edt_Aquecimento_Seg_Condensador.text)*10),
+                               TEXTO,
+                               edt_saidapadrao
+                               );
+//------------------------------------------------------------------------------
+Aparelho.Gravar_EEPROM_16bits_Interna_Mae($07,
+                                          trunc(strtofloat(edt_Aquecimento_Seg_Vacuo.text)*10),
+                                          TEXTO,edt_saidapadrao);
+
+Aparelho.PROCULUS_Write_VP_Int(213,
+                               trunc(strtofloat(edt_Aquecimento_Seg_Vacuo.text)*10),
+                               TEXTO,
+                               edt_saidapadrao
+                               );
+//------------------------------------------------------------------------------
+Aparelho.Gravar_EEPROM_16bits_Interna_Mae($FA,
+                                          trunc(strtofloat(edt_DisplaySize.text)*10),
+                                          TEXTO,edt_saidapadrao);
+
+Aparelho.PROCULUS_Write_VP_Int(214,
+                               trunc(strtofloat(edt_DisplaySize.text)*10),
+                               TEXTO,
+                               edt_saidapadrao
+                               );
+
+
+
+
+
+
+end;
+
+procedure TForm1.btn_Config_LerClick(Sender: TObject);
+begin
+   //Aparelho.PROCULUS_Goto_Page(23,TEXTO,Form1.edt_saidapadrao);
+   Aparelho.Ler_EEPROM_16bits_Interna_Mae($01,FLUTUANTE,edt_Condensador_Libera_Vacuo);
+   Aparelho.Ler_EEPROM_16bits_Interna_Mae($03,FLUTUANTE,edt_Vacuo_Alarme);
+   Aparelho.Ler_EEPROM_16bits_Interna_Mae($05,FLUTUANTE,edt_Aquecimento_Seg_Condensador);
+   Aparelho.Ler_EEPROM_16bits_Interna_Mae($07,FLUTUANTE,edt_Aquecimento_Seg_Vacuo);
+   Aparelho.Ler_EEPROM_16bits_Interna_Mae($FA,FLUTUANTE,edt_DisplaySize);
 end;
 
 procedure TForm1.btn_Control_Active_writeClick(Sender: TObject);
@@ -1411,19 +1608,6 @@ begin
                                    );
 end;
 
-procedure TForm1.btn_Gravar_Seg_VacuoClick(Sender: TObject);
-begin
-Aparelho.Gravar_EEPROM_16bits_Interna_Mae($03,
-                                          trunc(strtofloat(edt_Vacuo_Alarme.text)*10),
-                                          TEXTO,edt_saidapadrao);
-
-Aparelho.PROCULUS_Write_VP_Int(211,
-                               trunc(strtofloat(edt_Vacuo_Alarme.text)*10),
-                               TEXTO,
-                               edt_saidapadrao
-                               );
-end;
-
 procedure TForm1.btn_gravar_vp_intClick(Sender: TObject);
 begin
   Aparelho.PROCULUS_Write_VP_Int(strtoint(edt_vp_add_int.Text),
@@ -1431,12 +1615,6 @@ begin
                                  TEXTO,
                                  Form1.edt_vp_value_int_reply
                                  );
-end;
-
-procedure TForm1.btn_Ler_Seg_AquecimentoClick(Sender: TObject);
-begin
-  Aparelho.Ler_EEPROM_16bits_Interna_Mae($05,FLUTUANTE,edt_Aquecimento_Seg_Condensador);
-  Aparelho.Ler_EEPROM_16bits_Interna_Mae($07,FLUTUANTE,edt_Aquecimento_Seg_Vacuo);
 end;
 
 procedure TForm1.btn_ler_vp_intClick(Sender: TObject);
@@ -1523,7 +1701,7 @@ begin
                                   if(numreal>32768) then
                                   numreal:=numreal-65536;
                                   numreal:=numreal/10.0;
-                                  SaidaString:=formatfloat('00.0',numreal);
+                                  SaidaString:=formatfloat('#0.0',numreal);
                                   if(StrToFloat(SaidaString)=-0.1) then
                                      begin
                                        TEdit(Aparelho.fila[0].ObjDestino).Text:='Sem Placa';
@@ -1696,22 +1874,29 @@ begin
   edt_eeprom_add.text:='$0000';
 end;
 
-procedure TForm1.OnLineSystemTimer(Sender: TObject);
+procedure TForm1.tmr_onlineTimer(Sender: TObject);
 begin
 
   if(CountCOM>0) then
      begin
-       //showmessage('Entrou timer');
        dec(CountCOM);
        Pn_COM.Color:=clLime;
        Pn_COM.Caption:='ONLINE';
        Pn_COM.Font.Color:=clBlack;
+
+       Pn_COM_Check.Color:=clLime;
+       Pn_COM_Check.Caption:='ONLINE';
+       Pn_COM_Check.Font.Color:=clBlack;
      end
   else
      begin
        Pn_COM.Color:=clBlack;
        Pn_COM.Caption:='OFFLINE';
        Pn_COM.Font.Color:=clLime;
+
+       Pn_COM_Check.Color:=clBlack;
+       Pn_COM_Check.Caption:='OFFLINE';
+       Pn_COM_Check.Font.Color:=clLime;
      end;
 end;
 
@@ -1783,6 +1968,22 @@ begin
   ToggleStatus(Sender, Panel10,10);
   Aparelho.Show_Programacao(9,HEXADECIMAL,edt_saidaprg);
   Aparelho.PROCULUS_Goto_Page(21,TEXTO,Form1.edt_saidapadrao);
+end;
+
+procedure TForm1.tgb_SerialChange(Sender: TObject);
+begin
+    if(Aparelho=nil) then
+     begin
+     tgb_Serial.Caption:='Desconectar';
+     ConectarSerial(CONECTAR);
+     cbb_COMPORT.Enabled:=FALSE;
+     end
+  else
+     begin
+     tgb_Serial.Caption:='Conectar';
+     ConectarSerial(DESCONECTAR);
+     cbb_COMPORT.Enabled:=TRUE;
+     end;
 end;
 
 
@@ -1912,6 +2113,23 @@ begin
 
 end;
 
+
+procedure TForm1.Gravar_Config();
+var
+  ArqINIConfig : TIniFile;
+begin
+  ArqINIConfig:= TIniFile.Create(ExtractFilePath(ParamSTR(0))+'Config.ini');
+  try
+    ArqINIConfig.WriteString('Geral','COMPORT',cbb_COMPORT.Caption);
+    ArqINIConfig.WriteBool('Geral','Estado',tgb_Serial.Checked);
+  finally
+    FreeAndNil(ArqINIConfig);
+  end;
+end;
+
+
+
+
 procedure TForm1.GravarReceita();
 var
   ArqINI : TIniFile;
@@ -1973,6 +2191,21 @@ begin
 
 end;
 
+
+
+procedure TForm1.Recuperar_Config();
+var
+  ArqINIConfig : TIniFile;
+begin
+  ArqINIConfig:= TIniFile.Create(ExtractFilePath(ParamSTR(0))+'Config.ini');
+  try
+    cbb_COMPORT.Caption:= ArqINIConfig.ReadString('Geral','COMPORT','COM5');
+    tgb_Serial.Checked:= ArqINIConfig.ReadBool('Geral','Estado',FALSE);
+    if(tgb_Serial.Checked=TRUE) then cbb_COMPORT.Enabled:=FALSE;
+  finally
+    FreeAndNil(ArqINIConfig);
+  end;
+end;
 
 procedure TForm1.RecuperarReceita();
 var
@@ -2043,15 +2276,16 @@ end;
 
 
 
-procedure TForm1.Aguarda_Atualizacao_do_Edt_Buffer();
+procedure TForm1.Aguarda_Atualizacao_do_TEdit(objeto : TObject);
 begin
-  while(edt_buffer.text='') do
+  while(TEdit(Objeto).text='') do
     begin
-    edt_buffer.Invalidate;
-    edt_buffer.Update;
-    edt_buffer.Repaint;
-    Application.ProcessMessages;
-  end;
+     TEdit(Objeto).Invalidate;
+     TEdit(Objeto).Update;
+     TEdit(Objeto).Repaint;
+     Application.ProcessMessages;
+     if Application.Terminated then break;
+    end;
 end;
 
 

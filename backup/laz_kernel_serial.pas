@@ -70,8 +70,18 @@ const
    COMMAND_SHOW_PROGRAM    = $42;
    COMMAND_FORMAT          = $43;
    COMMAND_UPLOAD_PRG      = $44;
+   COMMAND_BOTOEIRAS       = $45;
    //...
    //----------------------------------
+
+//-------CONSTANTES BOTOEIRAS-----------
+   BOTAO_DATALOG           = $02;
+   BOTAO_VACUO             = $03;
+   BOTAO_CONDENSADOR       = $04;
+   BOTAO_AQUECIMENTO       = $06;
+
+   ESTADO_DESLIGAR         = $00;
+   ESTADO_LIGAR            = $01;
 
 
 //-------------------------------------
@@ -82,13 +92,11 @@ const
    WRITE = 1;
 
 //---------------RESULTTYPE----------------
-UINT8       = 0;
-SINT8       = 1;
-UINT16      = 2;
-SINT16      = 3;
-HEXADECIMAL = 4;
-FLUTUANTE   = 5;
-TEXTO       = 6;
+UINTEGER    = 0;
+SINTEGER    = 1;
+HEXADECIMAL = 2;
+FLUTUANTE   = 3;
+TEXTO       = 4;
 
 type
   TFila = Record
@@ -309,6 +317,10 @@ type
       procedure Upload_Program(resultType : integer;
                                ObjDestino : TObject);
 
+      procedure Liofilizador_Botao(botao : integer;
+                                   estado: integer;
+                              resultType : integer;
+                              ObjDestino : TObject);
       //------------------------------------------------------------------------
 
 
@@ -930,7 +942,6 @@ procedure TSerial.PROCULUS_Read_VP_String(vp : integer;
                                   resultType : integer;
                                   ObjDestino : TObject);
 var
-   i : integer;
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
@@ -950,7 +961,6 @@ procedure TSerial.Ler_EEPROM_String_Mae( add: integer;
                                  resultType : integer;
                                  ObjDestino : TObject);
 var
-   i : integer;
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
@@ -1093,6 +1103,29 @@ end;
 
 
 
+procedure TSerial.Liofilizador_Botao(botao : integer;
+                                     estado: integer;
+                                resultType : integer;
+                                ObjDestino : TObject);
+var
+   buffer : array [0..TXBUFFERSIZE ] of byte;
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  fila[FilaFim].RXpayload:=3;
+  fila[FilaFim].TotalReturn:=17;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
+
+  buffer[0]:= (botao>>8) and $FF;
+  buffer[1]:= (botao>>0) and $FF;
+  buffer[2]:= (estado>>8) and $FF;
+  buffer[3]:= (estado>>0) and $FF;
+  KernelCommand(COMMAND_BOTOEIRAS, 0, 4, buffer);
+end;
+
+
+
 
 
 
@@ -1142,7 +1175,6 @@ var
   carga: AnsiString;
   texto: AnsiString;
   cnt  : byte;
-  i    : byte;
 begin
   carga:=
   HEADER+              //Cabeçalho da comunicação serial
@@ -1219,8 +1251,8 @@ begin
          end;
 
 
-  finally
-      //free;
+  except
+      showmessage('Ocorreu Excessão');
   end;
 
   result := retorno;

@@ -70,6 +70,7 @@ const
    COMMAND_SHOW_PROGRAM    = $42;
    COMMAND_FORMAT          = $43;
    COMMAND_UPLOAD_PRG      = $44;
+
    //...
    //----------------------------------
 
@@ -928,7 +929,6 @@ procedure TSerial.PROCULUS_Read_VP_String(vp : integer;
                                   resultType : integer;
                                   ObjDestino : TObject);
 var
-   i : integer;
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
@@ -948,7 +948,6 @@ procedure TSerial.Ler_EEPROM_String_Mae( add: integer;
                                  resultType : integer;
                                  ObjDestino : TObject);
 var
-   i : integer;
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
@@ -1093,12 +1092,6 @@ end;
 
 
 
-
-
-
-
-
-
 procedure TSerial.EEPROM_24C1025_Fill_All(resultType : integer;
                                          destino : integer;
                                             chip : integer;
@@ -1140,7 +1133,6 @@ var
   carga: AnsiString;
   texto: AnsiString;
   cnt  : byte;
-  i    : byte;
 begin
   carga:=
   HEADER+              //Cabeçalho da comunicação serial
@@ -1217,8 +1209,8 @@ begin
          end;
 
 
-  finally
-      //free;
+  except
+      showmessage('Ocorreu Excessão');
   end;
 
   result := retorno;
