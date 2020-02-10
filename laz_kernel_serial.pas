@@ -88,6 +88,7 @@ SINTEGER    = 1;
 HEXADECIMAL = 2;
 FLUTUANTE   = 3;
 TEXTO       = 4;
+HORA        = 5;
 
 type
   TFila = Record
@@ -307,6 +308,9 @@ type
 
       procedure Upload_Program(resultType : integer;
                                ObjDestino : TObject);
+
+      procedure Time_Process_Read(resultType : integer;
+                                  ObjDestino : TObject);
 
       //------------------------------------------------------------------------
 
@@ -1085,6 +1089,25 @@ begin
   buffer[0]:=0;
   KernelCommand(COMMAND_UPLOAD_PRG, 0, 1, buffer);
 end;
+
+
+procedure TSerial.Time_Process_Read(resultType : integer;
+                                    ObjDestino : TObject);
+var
+   buffer : array [0..TXBUFFERSIZE ] of byte;
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  fila[FilaFim].RXpayload:=2;
+  fila[FilaFim].TotalReturn:=7;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
+  buffer[0]:=0;
+  KernelCommand(COMMAND_CLK_PIC_R, 0, 1, buffer);
+end;
+
+
+
 
 
 

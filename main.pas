@@ -54,6 +54,7 @@ type
     btn_page_write: TButton;
     btn_resume: TButton;
     btn_suspend: TButton;
+    btn_time_process_write: TButton;
     Button1: TButton;
     Button10: TButton;
     btn_Config_Ler: TButton;
@@ -81,19 +82,23 @@ type
     cbb1: TComboBox;
     cbb2: TComboBox;
     cbb_COMPORT: TComboBox;
+    edt_time_process: TEdit;
     edt_DisplaySize: TEdit;
+    edt_time_process_reply: TEdit;
     edt_Vacuo_Alarme: TEdit;
     edt_Aquecimento_Seg_Condensador: TEdit;
     edt_Aquecimento_Seg_Vacuo: TEdit;
     edt_Condensador_Libera_Vacuo: TEdit;
     edt_buffer: TEdit;
     edt_saidaprg: TEdit;
+    btn_time_process_read: TButton;
     GroupBox10: TGroupBox;
     GroupBox11: TGroupBox;
     GroupBox12: TGroupBox;
     GroupBox13: TGroupBox;
     GroupBox14: TGroupBox;
     GroupBox15: TGroupBox;
+    GroupBox16: TGroupBox;
     GroupBox9: TGroupBox;
     IEE_Read: TButton;
     IEE_Write: TButton;
@@ -349,6 +354,7 @@ type
     procedure btn_resumeClick(Sender: TObject);
     procedure btn_suspendClick(Sender: TObject);
     procedure btn_LerMemoClick(Sender: TObject);
+    procedure btn_time_process_readClick(Sender: TObject);
     procedure btn_vp_string_readClick(Sender: TObject);
     procedure btn_vp_strinng_writeClick(Sender: TObject);
     procedure Button10Click(Sender: TObject);
@@ -485,6 +491,8 @@ begin
   Aparelho.Read_Analogic_Channel(6,1,FLUTUANTE,'°C',Edit52);
   Aparelho.Read_Analogic_Channel(7,0,FLUTUANTE,'°C',Edit59);
   Aparelho.Read_Analogic_Channel(7,1,FLUTUANTE,'°C',Edit66);
+
+  Aparelho.Time_Process_Read(HORA,edt_time_process);
 end;
 
 
@@ -579,6 +587,11 @@ begin
   end
 
 
+end;
+
+procedure TForm1.btn_time_process_readClick(Sender: TObject);
+begin
+  Aparelho.Time_Process_Read(HORA,edt_time_process_reply);
 end;
 
 procedure TForm1.btn_vp_string_readClick(Sender: TObject);
@@ -1338,6 +1351,7 @@ end;
 
 procedure TForm1.bib_DataLogClick(Sender: TObject);
 begin
+   Aparelho.PROCULUS_Goto_Page(15,TEXTO,Form1.edt_saidapadrao);
    if(bib_DataLog.ShowHint=FALSE) then
       begin
       Aparelho.PROCULUS_Write_VP_Int(2,1,TEXTO,edt_saidapadrao); //LIGA BOTAO DATALOG
@@ -1356,6 +1370,7 @@ procedure TForm1.bib_VacuoClick(Sender: TObject);
 var
   tempo:integer;
 begin
+   Aparelho.PROCULUS_Goto_Page(15,TEXTO,Form1.edt_saidapadrao);
    if(bib_Vacuo.ShowHint=FALSE) then
       begin
       Aparelho.PROCULUS_Write_VP_Int(4,1,TEXTO,edt_saidapadrao); //LIGA BOTAO VACUO
@@ -1393,6 +1408,7 @@ end;
 
 procedure TForm1.bib_CondensadorClick(Sender: TObject);
 begin
+     Aparelho.PROCULUS_Goto_Page(15,TEXTO,Form1.edt_saidapadrao);
      if(bib_Condensador.ShowHint=FALSE) then
       begin
          if(tmr_condensador.Enabled=FALSE) then
@@ -1417,6 +1433,7 @@ end;
 
 procedure TForm1.bib_AquecimentoClick(Sender: TObject);
 begin
+     Aparelho.PROCULUS_Goto_Page(15,TEXTO,Form1.edt_saidapadrao);
      if(bib_Aquecimento.ShowHint=FALSE) then
         begin
         Aparelho.PROCULUS_Write_VP_Int(5,1,TEXTO,edt_saidapadrao); //LIGA BOTAO AQUECIMENTO
@@ -1681,8 +1698,10 @@ begin
         strtmp:='';
         for i:=0 to 4 do
             strtmp:=strtmp+IntToHex(Word(Buffer_IO[i]),2);
+
         Form1.Memo1.Lines.Add(strtmp);
-        if (POS('CDCDCD', strtmp)>0) then
+
+        if (POS('CDCDCD', strtmp)>0)then
             begin
              CountCOM:=5;
              if(Aparelho.FilaFim>0) then
@@ -1735,6 +1754,11 @@ begin
                               UINTEGER:
                                   begin
                                   TEdit(Aparelho.fila[0].ObjDestino).Text:=InttoStr(StrtoInt('$'+Aparelho.fila[0].result));
+                                  end;
+                              HORA:
+                                  begin
+                                  TEdit(Aparelho.fila[0].ObjDestino).Text:= formatfloat('00',StrtoInt('$'+copy(Aparelho.fila[0].result,1,2)))+':'+
+                                                                            formatfloat('00',StrtoInt('$'+copy(Aparelho.fila[0].result,3,2))) ;
                                   end;
                          end
                       end;

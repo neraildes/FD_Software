@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 67
+  Left = 83
   Height = 659
-  Top = 35
+  Top = 123
   Width = 1196
   Caption = 'JJ Cientifica Ind. e Com. de Equipamentos Científicos'
   ClientHeight = 639
@@ -306,7 +306,7 @@ object Form1: TForm1
       object gpb_proculus: TGroupBox
         Left = 8
         Height = 66
-        Top = 264
+        Top = 256
         Width = 345
         Caption = 'PROCULUS VP INTEGER'
         ClientHeight = 46
@@ -535,9 +535,9 @@ object Form1: TForm1
         end
       end
       object GroupBox6: TGroupBox
-        Left = 7
+        Left = 9
         Height = 64
-        Top = 344
+        Top = 320
         Width = 299
         Caption = 'PROCULUS VP STRING'
         ClientHeight = 44
@@ -578,9 +578,9 @@ object Form1: TForm1
         end
       end
       object GroupBox7: TGroupBox
-        Left = 4
+        Left = 9
         Height = 64
-        Top = 432
+        Top = 448
         Width = 297
         Caption = 'READ ANALOGIC CHANNEL'
         ClientHeight = 44
@@ -743,6 +743,40 @@ object Form1: TForm1
         Caption = 'Format Dba'
         OnClick = Button7Click
         TabOrder = 19
+      end
+      object GroupBox16: TGroupBox
+        Left = 9
+        Height = 64
+        Top = 384
+        Width = 299
+        Caption = 'GroupBox16'
+        ClientHeight = 44
+        ClientWidth = 295
+        TabOrder = 20
+        object btn_time_process_read: TButton
+          Left = 19
+          Height = 27
+          Top = 4
+          Width = 76
+          Caption = 'Ler'
+          OnClick = btn_time_process_readClick
+          TabOrder = 0
+        end
+        object edt_time_process_reply: TEdit
+          Left = 208
+          Height = 23
+          Top = 6
+          Width = 67
+          TabOrder = 1
+        end
+        object btn_time_process_write: TButton
+          Left = 109
+          Height = 27
+          Top = 4
+          Width = 69
+          Caption = 'Gravar'
+          TabOrder = 2
+        end
       end
     end
     object PaginaPrincipal: TTabSheet
@@ -3480,6 +3514,22 @@ object Form1: TForm1
         ParentShowHint = False
         TabOrder = 103
       end
+      object edt_time_process: TEdit
+        Left = 896
+        Height = 49
+        Top = 525
+        Width = 158
+        Alignment = taCenter
+        Font.CharSet = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -35
+        Font.Name = 'Arial'
+        Font.Pitch = fpVariable
+        Font.Quality = fqDraft
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 104
+      end
     end
     object TabSheet1: TTabSheet
       Caption = 'Receitas'
@@ -4037,7 +4087,7 @@ object Form1: TForm1
     end
     object TabSheet2: TTabSheet
       Caption = 'Parâmetros'
-      ClientHeight = 550
+      ClientHeight = 609
       ClientWidth = 1188
       object GroupBox9: TGroupBox
         Left = 24
@@ -4301,6 +4351,7 @@ object Form1: TForm1
     top = 104
   end
   object tmr_temperaturas: TTimer
+    Enabled = False
     Interval = 10
     OnTimer = tmr_temperaturasTimer
     left = 1112

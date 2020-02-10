@@ -70,18 +70,9 @@ const
    COMMAND_SHOW_PROGRAM    = $42;
    COMMAND_FORMAT          = $43;
    COMMAND_UPLOAD_PRG      = $44;
-   COMMAND_BOTOEIRAS       = $45;
+
    //...
    //----------------------------------
-
-//-------CONSTANTES BOTOEIRAS-----------
-   BOTAO_DATALOG           = $02;
-   BOTAO_VACUO             = $03;
-   BOTAO_CONDENSADOR       = $04;
-   BOTAO_AQUECIMENTO       = $06;
-
-   ESTADO_DESLIGAR         = $00;
-   ESTADO_LIGAR            = $01;
 
 
 //-------------------------------------
@@ -97,6 +88,7 @@ SINTEGER    = 1;
 HEXADECIMAL = 2;
 FLUTUANTE   = 3;
 TEXTO       = 4;
+HORA        = 5;
 
 type
   TFila = Record
@@ -317,10 +309,9 @@ type
       procedure Upload_Program(resultType : integer;
                                ObjDestino : TObject);
 
-      procedure Liofilizador_Botao(botao : integer;
-                                   estado: integer;
-                              resultType : integer;
-                              ObjDestino : TObject);
+      procedure Time_Process_Read(resultType : integer;
+                                  ObjDestino : TObject);
+
       //------------------------------------------------------------------------
 
 
@@ -1100,30 +1091,20 @@ begin
 end;
 
 
-
-
-
-procedure TSerial.Liofilizador_Botao(botao : integer;
-                                     estado: integer;
-                                resultType : integer;
-                                ObjDestino : TObject);
+procedure TSerial.Time_Process_Read(resultType : integer;
+                                    ObjDestino : TObject);
 var
    buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
-  fila[FilaFim].RXpayload:=3;
-  fila[FilaFim].TotalReturn:=17;
+  fila[FilaFim].RXpayload:=2;
+  fila[FilaFim].TotalReturn:=8;
   fila[FilaFim].ObjDestino:=ObjDestino;
   fila[FilaFim].resTypeData:=resultType;
-
-  buffer[0]:= (botao>>8) and $FF;
-  buffer[1]:= (botao>>0) and $FF;
-  buffer[2]:= (estado>>8) and $FF;
-  buffer[3]:= (estado>>0) and $FF;
-  KernelCommand(COMMAND_BOTOEIRAS, 0, 4, buffer);
+  buffer[0]:=0;
+  KernelCommand(COMMAND_CLK_PIC_R, 0, 1, buffer);
 end;
-
 
 
 

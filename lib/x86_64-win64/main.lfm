@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 73
+  Left = 70
   Height = 659
-  Top = 117
+  Top = 120
   Width = 1196
   Caption = 'JJ Cientifica Ind. e Com. de Equipamentos Científicos'
   ClientHeight = 639
@@ -36,7 +36,7 @@ object Form1: TForm1
     Height = 637
     Top = 0
     Width = 1196
-    ActivePage = TabSheet2
+    ActivePage = ManutencaoCalibracao
     Anchors = [akTop, akLeft, akRight, akBottom]
     Font.CharSet = ANSI_CHARSET
     Font.Color = clBlack
@@ -46,7 +46,7 @@ object Form1: TForm1
     Font.Quality = fqDraft
     ParentFont = False
     ParentShowHint = False
-    TabIndex = 3
+    TabIndex = 0
     TabOrder = 1
     OnChange = ControleDePaginasChange
     object ManutencaoCalibracao: TTabSheet
@@ -306,7 +306,7 @@ object Form1: TForm1
       object gpb_proculus: TGroupBox
         Left = 8
         Height = 66
-        Top = 264
+        Top = 256
         Width = 345
         Caption = 'PROCULUS VP INTEGER'
         ClientHeight = 46
@@ -535,9 +535,9 @@ object Form1: TForm1
         end
       end
       object GroupBox6: TGroupBox
-        Left = 7
+        Left = 9
         Height = 64
-        Top = 344
+        Top = 320
         Width = 299
         Caption = 'PROCULUS VP STRING'
         ClientHeight = 44
@@ -578,9 +578,9 @@ object Form1: TForm1
         end
       end
       object GroupBox7: TGroupBox
-        Left = 4
+        Left = 9
         Height = 64
-        Top = 432
+        Top = 448
         Width = 297
         Caption = 'READ ANALOGIC CHANNEL'
         ClientHeight = 44
@@ -743,6 +743,40 @@ object Form1: TForm1
         Caption = 'Format Dba'
         OnClick = Button7Click
         TabOrder = 19
+      end
+      object GroupBox16: TGroupBox
+        Left = 9
+        Height = 64
+        Top = 384
+        Width = 299
+        Caption = 'GroupBox16'
+        ClientHeight = 44
+        ClientWidth = 295
+        TabOrder = 20
+        object btn_time_process_read: TButton
+          Left = 19
+          Height = 27
+          Top = 4
+          Width = 76
+          Caption = 'Ler'
+          OnClick = btn_time_process_readClick
+          TabOrder = 0
+        end
+        object edt_time_process_reply: TEdit
+          Left = 208
+          Height = 23
+          Top = 6
+          Width = 67
+          TabOrder = 1
+        end
+        object btn_time_process_write: TButton
+          Left = 109
+          Height = 27
+          Top = 4
+          Width = 69
+          Caption = 'Gravar'
+          TabOrder = 2
+        end
       end
     end
     object PaginaPrincipal: TTabSheet
@@ -3479,6 +3513,22 @@ object Form1: TForm1
         OnClick = bib_AquecimentoClick
         ParentShowHint = False
         TabOrder = 103
+      end
+      object edt_time_process: TEdit
+        Left = 896
+        Height = 49
+        Top = 525
+        Width = 158
+        Alignment = taCenter
+        Font.CharSet = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -35
+        Font.Name = 'Arial'
+        Font.Pitch = fpVariable
+        Font.Quality = fqDraft
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 104
       end
     end
     object TabSheet1: TTabSheet
