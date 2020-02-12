@@ -4,14 +4,13 @@
     <PathDelim Value="\"/>
     <Version Value="11"/>
     <BuildModes Active="Default"/>
-    <Units Count="11">
+    <Units Count="14">
       <Unit0>
         <Filename Value="JJCientifica.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="-1"/>
         <CursorPos Y="20"/>
         <UsageCount Value="228"/>
-        <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="main.pas"/>
@@ -21,8 +20,8 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Main"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="1745"/>
-        <CursorPos X="144" Y="1759"/>
+        <TopLine Value="441"/>
+        <CursorPos X="7" Y="458"/>
         <UsageCount Value="228"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -40,16 +39,16 @@
       <Unit3>
         <Filename Value="laz_kernel_serial.pas"/>
         <UnitName Value="Laz_kernel_serial"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="1085"/>
-        <CursorPos X="31" Y="1102"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="90"/>
+        <CursorPos X="8" Y="110"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit3>
       <Unit4>
         <Filename Value="C:\lazarus\lcl\interfaces\win32\win32memostrings.inc"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="48"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="46"/>
         <CursorPos Y="61"/>
         <UsageCount Value="110"/>
         <Loaded Value="True"/>
@@ -59,167 +58,187 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="5408"/>
         <CursorPos Y="5420"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="2"/>
       </Unit5>
       <Unit6>
         <Filename Value="Sinapse\source\lib\synaser.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="865"/>
         <CursorPos Y="878"/>
-        <UsageCount Value="82"/>
+        <UsageCount Value="76"/>
       </Unit6>
       <Unit7>
         <Filename Value="C:\lazarus\lcl\interfaces\win32\win32object.inc"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="401"/>
-        <CursorPos Y="413"/>
-        <UsageCount Value="90"/>
-        <Loaded Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="385"/>
+        <CursorPos Y="407"/>
+        <UsageCount Value="100"/>
       </Unit7>
       <Unit8>
         <Filename Value="C:\lazarus\lcl\include\customform.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="1466"/>
         <CursorPos Y="1478"/>
-        <UsageCount Value="46"/>
+        <UsageCount Value="40"/>
       </Unit8>
       <Unit9>
         <Filename Value="C:\lazarus\lcl\include\application.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="2259"/>
         <CursorPos Y="2271"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="2"/>
       </Unit9>
       <Unit10>
         <Filename Value="C:\lazarus\components\lazutils\laztracer.pas"/>
         <UnitName Value="LazTracer"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="36"/>
         <CursorPos Y="50"/>
-        <UsageCount Value="86"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="100"/>
       </Unit10>
+      <Unit11>
+        <Filename Value="C:\lazarus\lcl\customtimer.pas"/>
+        <UnitName Value="CustomTimer"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="137"/>
+        <CursorPos Y="151"/>
+        <UsageCount Value="11"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="C:\lazarus\lcl\interfaces\win32\win32callback.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="2829"/>
+        <CursorPos Y="2851"/>
+        <UsageCount Value="11"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="C:\lazarus\lcl\include\control.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="3555"/>
+        <CursorPos Y="3568"/>
+        <UsageCount Value="11"/>
+      </Unit13>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="main.pas"/>
-        <Caret Line="1694" Column="46" TopLine="1676"/>
+        <Caret Line="1813" Column="93" TopLine="1790"/>
       </Position1>
       <Position2>
         <Filename Value="main.pas"/>
-        <Caret Line="1692" Column="55" TopLine="1678"/>
+        <Caret Line="1817" Column="111" TopLine="1794"/>
       </Position2>
       <Position3>
         <Filename Value="main.pas"/>
-        <Caret Line="1694" Column="45" TopLine="1680"/>
+        <Caret Line="1821" Column="125" TopLine="1798"/>
       </Position3>
       <Position4>
         <Filename Value="main.pas"/>
-        <Caret Line="407" Column="31" TopLine="394"/>
+        <Caret Line="1822" Column="125" TopLine="1799"/>
       </Position4>
       <Position5>
         <Filename Value="main.pas"/>
-        <Caret Line="2305" Column="46" TopLine="2290"/>
+        <Caret Line="1827" Column="34" TopLine="1804"/>
       </Position5>
       <Position6>
         <Filename Value="main.pas"/>
-        <Caret Line="1702" Column="46" TopLine="1681"/>
+        <Caret Line="1829" Column="48" TopLine="1806"/>
       </Position6>
       <Position7>
         <Filename Value="main.pas"/>
-        <Caret Line="1708" Column="53" TopLine="1684"/>
+        <Caret Line="1831" Column="68" TopLine="1808"/>
       </Position7>
       <Position8>
         <Filename Value="main.pas"/>
-        <Caret Line="1705" Column="10" TopLine="1686"/>
+        <Caret Line="1832" Column="67" TopLine="1809"/>
       </Position8>
       <Position9>
         <Filename Value="main.pas"/>
-        <Caret Line="1710" Column="39" TopLine="1696"/>
+        <Caret Line="1833" Column="72" TopLine="1810"/>
       </Position9>
       <Position10>
         <Filename Value="main.pas"/>
-        <Caret Line="1700" Column="21" TopLine="1696"/>
+        <Caret Line="1834" Column="70" TopLine="1811"/>
       </Position10>
       <Position11>
         <Filename Value="main.pas"/>
-        <Caret Line="1709" Column="23" TopLine="1696"/>
+        <Caret Line="1835" Column="71" TopLine="1812"/>
       </Position11>
       <Position12>
         <Filename Value="main.pas"/>
-        <Caret Line="1708" Column="41" TopLine="1696"/>
+        <Caret Line="1836" Column="72" TopLine="1813"/>
       </Position12>
       <Position13>
         <Filename Value="main.pas"/>
-        <Caret Line="1709" Column="24" TopLine="1696"/>
+        <Caret Line="1837" Column="71" TopLine="1814"/>
       </Position13>
       <Position14>
         <Filename Value="main.pas"/>
-        <Caret Line="1711" Column="16" TopLine="1698"/>
+        <Caret Line="1840" Column="64" TopLine="1817"/>
       </Position14>
       <Position15>
         <Filename Value="main.pas"/>
-        <Caret Line="1708" TopLine="1698"/>
+        <Caret Line="1842" Column="33" TopLine="1819"/>
       </Position15>
       <Position16>
-        <Filename Value="main.pas"/>
-        <Caret Line="1688"/>
+        <Filename Value="laz_kernel_serial.pas"/>
+        <Caret Line="96" Column="49" TopLine="90"/>
       </Position16>
       <Position17>
         <Filename Value="laz_kernel_serial.pas"/>
-        <Caret Line="311" Column="56" TopLine="297"/>
+        <Caret Line="95" Column="8" TopLine="90"/>
       </Position17>
       <Position18>
-        <Filename Value="main.pas"/>
-        <Caret Line="1697" TopLine="1670"/>
+        <Filename Value="laz_kernel_serial.pas"/>
+        <Caret Line="110" Column="45" TopLine="90"/>
       </Position18>
       <Position19>
         <Filename Value="main.pas"/>
-        <Caret Line="590" Column="53" TopLine="587"/>
+        <Caret Line="450" TopLine="436"/>
       </Position19>
       <Position20>
         <Filename Value="main.pas"/>
-        <Caret Line="582" Column="32" TopLine="577"/>
+        <Caret Line="422" Column="15" TopLine="409"/>
       </Position20>
       <Position21>
         <Filename Value="main.pas"/>
-        <Caret Line="1672" Column="12" TopLine="1648"/>
+        <Caret Line="2285" Column="3" TopLine="2280"/>
       </Position21>
       <Position22>
-        <Filename Value="laz_kernel_serial.pas"/>
-        <Caret Line="91" Column="17" TopLine="73"/>
+        <Filename Value="main.pas"/>
+        <Caret Line="886" Column="59" TopLine="881"/>
       </Position22>
       <Position23>
-        <Filename Value="laz_kernel_serial.pas"/>
-        <Caret Line="312" Column="29" TopLine="290"/>
+        <Filename Value="main.pas"/>
+        <Caret Line="419" Column="29" TopLine="406"/>
       </Position23>
       <Position24>
-        <Filename Value="laz_kernel_serial.pas"/>
-        <Caret Line="1102" Column="31" TopLine="1085"/>
+        <Filename Value="main.pas"/>
+        <Caret Line="449" Column="34" TopLine="437"/>
       </Position24>
       <Position25>
-        <Filename Value="C:\lazarus\lcl\interfaces\win32\win32memostrings.inc"/>
-        <Caret Line="63" Column="78" TopLine="48"/>
+        <Filename Value="main.pas"/>
+        <Caret Line="419" Column="29" TopLine="406"/>
       </Position25>
       <Position26>
         <Filename Value="main.pas"/>
-        <Caret Line="1756" Column="101" TopLine="1732"/>
+        <Caret Line="451" Column="17" TopLine="427"/>
       </Position26>
       <Position27>
         <Filename Value="main.pas"/>
-        <Caret Line="1758" Column="101" TopLine="1734"/>
+        <Caret Line="884" Column="32" TopLine="860"/>
       </Position27>
       <Position28>
         <Filename Value="main.pas"/>
-        <Caret Line="1757" Column="101" TopLine="1733"/>
+        <Caret Line="2064" Column="20" TopLine="2040"/>
       </Position28>
       <Position29>
         <Filename Value="main.pas"/>
-        <Caret Line="1758" Column="92" TopLine="1744"/>
+        <Caret Line="2070" Column="20" TopLine="2046"/>
       </Position29>
       <Position30>
         <Filename Value="main.pas"/>
-        <Caret Line="1759" Column="144" TopLine="1744"/>
+        <Caret Line="419" Column="29" TopLine="406"/>
       </Position30>
     </JumpHistory>
     <RunParams>
@@ -227,4 +246,15 @@
       <Modes Count="0" ActiveMode=""/>
     </RunParams>
   </ProjectSession>
+  <Debugging>
+    <BreakPoints Count="1">
+      <Item1>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="main.pas"/>
+        <Line Value="770"/>
+      </Item1>
+    </BreakPoints>
+  </Debugging>
 </CONFIG>

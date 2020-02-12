@@ -58,8 +58,9 @@ const
    COMMAND_LDC_PAGE        = $25;
    COMMAND_CONTROL_ACTIVE  = $26;
    //...
-   COMMAND_CLK_PIC_W       = $2E;
-   COMMAND_CLK_PIC_R       = $2F;
+   COMMAND_PROC_CLOCK_R    = $2D;
+   COMMAND_CLK_RTC_R       = $2E;
+   COMMAND_CLK_RTC_W       = $2F;
    //---------------SLAVE--------------
    COMMAND_RELAY           = $30;
    COMMAND_INPUT_LED       = $31;
@@ -106,7 +107,7 @@ type
 
   TSerial = class(TBlockSerial)
     public
-      fila    : array[0..BUFFER_PC] of TFila;
+      Fila    : array[0..BUFFER_PC] of TFila;
       FilaFim : integer;
       constructor Create(); overload;
 
@@ -311,6 +312,14 @@ type
 
       procedure Time_Process_Read(resultType : integer;
                                   ObjDestino : TObject);
+
+      procedure Time_RTC_Read(     value : integer;
+                              resultType : integer;
+                              ObjDestino : TObject);
+
+      procedure Time_RTC_Write(     tempo : string;
+                               resultType : integer;
+                               ObjDestino : TObject);
 
       //------------------------------------------------------------------------
 
@@ -1103,14 +1112,49 @@ begin
   fila[FilaFim].ObjDestino:=ObjDestino;
   fila[FilaFim].resTypeData:=resultType;
   buffer[0]:=0;
-  KernelCommand(COMMAND_CLK_PIC_R, 0, 1, buffer);
+  KernelCommand(COMMAND_PROC_CLOCK_R, 0, 1, buffer);
+end;
+
+procedure TSerial.Time_RTC_Read(    value  : integer;
+                                resultType : integer;
+                                ObjDestino : TObject);
+var
+   buffer : array [0..TXBUFFERSIZE ] of byte;
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  fila[FilaFim].RXpayload:=9;
+  fila[FilaFim].TotalReturn:=20;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
+  buffer[0]:=value;
+  KernelCommand(COMMAND_CLK_RTC_R, 0, 1, buffer);
 end;
 
 
 
+procedure TSerial.Time_RTC_Write(     tempo : string;
+                                 resultType : integer;
+                                 ObjDestino : TObject);
+var
+   buffer : array [0..TXBUFFERSIZE ] of byte;
+   i:integer;
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  fila[FilaFim].RXpayload:=9;
+  fila[FilaFim].TotalReturn:=20;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
 
+  showmessage(tempo);
 
-
+  for i:=0 to length(tempo) do
+      begin
+        buffer[i]:= byte(tempo[i+1]);
+      end;
+  KernelCommand(COMMAND_CLK_RTC_W, 0, length(tempo)+1, buffer);
+end;
 
 
 

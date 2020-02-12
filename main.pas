@@ -54,7 +54,7 @@ type
     btn_page_write: TButton;
     btn_resume: TButton;
     btn_suspend: TButton;
-    btn_time_process_write: TButton;
+    btn_Ler_RTC: TButton;
     Button1: TButton;
     Button10: TButton;
     btn_Config_Ler: TButton;
@@ -82,6 +82,9 @@ type
     cbb1: TComboBox;
     cbb2: TComboBox;
     cbb_COMPORT: TComboBox;
+    ckb_time_pc: TCheckBox;
+    edt_tmp_data: TEdit;
+    edt_tmp_hora: TEdit;
     edt_time_process: TEdit;
     edt_DisplaySize: TEdit;
     edt_time_process_reply: TEdit;
@@ -99,6 +102,7 @@ type
     GroupBox14: TGroupBox;
     GroupBox15: TGroupBox;
     GroupBox16: TGroupBox;
+    GroupBox17: TGroupBox;
     GroupBox9: TGroupBox;
     IEE_Read: TButton;
     IEE_Write: TButton;
@@ -347,6 +351,7 @@ type
     procedure btn_EscreverMemoClick(Sender: TObject);
     procedure btn_fillClick(Sender: TObject);
     procedure btn_gravar_vp_intClick(Sender: TObject);
+    procedure btn_Ler_RTCClick(Sender: TObject);
     procedure btn_ler_vp_intClick(Sender: TObject);
     procedure btn_page_writeClick(Sender: TObject);
     procedure btn_pagina1Click(Sender: TObject);
@@ -417,6 +422,7 @@ type
     procedure Recuperar_Config();
     procedure GravarReceita();
     procedure Gravar_Config();
+    procedure AtualizaBotoes();
   private
 
   public
@@ -441,17 +447,51 @@ procedure TForm1.FormCreate(Sender: TObject);
 begin
   CountCOM:=0;
   ControleDePaginas.PageIndex:=1;
-  //ConectarSerial(CONECTAR);
+  Recuperar_Config();
+  ConectarSerial(CONECTAR);
+  Aparelho.FilaFim:=0;
   //RecuperarReceita();
   //PreencheComboBox();
 end;
 
 procedure TForm1.FormShow(Sender: TObject);
 begin
-  Recuperar_Config();
   RecuperarReceita();
   PreencheComboBox();
+  AtualizaBotoes();
 end;
+
+
+procedure TForm1.AtualizaBotoes();
+begin
+
+//------------------------------------------------------------------------------
+edt_buffer.text:='';
+Aparelho.PROCULUS_Read_VP_Int(2,UINTEGER,edt_buffer);
+Aguarda_Atualizacao_do_TEdit(edt_buffer);
+if(strtoint(edt_buffer.text)=1) then bib_DataLog.Click;
+//------------------------------------------------------------------------------
+edt_buffer.text:='';
+Aparelho.PROCULUS_Read_VP_Int(3,UINTEGER,edt_buffer);
+Aguarda_Atualizacao_do_TEdit(edt_buffer);
+if(strtoint(edt_buffer.text)=1) then bib_Condensador.Click;
+
+//------------------------------------------------------------------------------
+edt_buffer.text:='';
+Aparelho.PROCULUS_Read_VP_Int(4,UINTEGER,edt_buffer);
+Aguarda_Atualizacao_do_TEdit(edt_buffer);
+if(strtoint(edt_buffer.text)=1) then bib_Vacuo.Click;
+//------------------------------------------------------------------------------
+edt_buffer.text:='';
+Aparelho.PROCULUS_Read_VP_Int(5,UINTEGER,edt_buffer);
+Aguarda_Atualizacao_do_TEdit(edt_buffer);
+if(strtoint(edt_buffer.text)=1) then bib_Aquecimento.Click;
+//------------------------------------------------------------------------------
+
+end;
+
+
+
 
 procedure TForm1.IEE_ReadClick(Sender: TObject);
 begin
@@ -493,6 +533,7 @@ begin
   Aparelho.Read_Analogic_Channel(7,1,FLUTUANTE,'°C',Edit66);
 
   Aparelho.Time_Process_Read(HORA,edt_time_process);
+
 end;
 
 
@@ -1351,7 +1392,7 @@ end;
 
 procedure TForm1.bib_DataLogClick(Sender: TObject);
 begin
-   Aparelho.PROCULUS_Goto_Page(15,TEXTO,Form1.edt_saidapadrao);
+   Aparelho.PROCULUS_Goto_Page(29,TEXTO,Form1.edt_saidapadrao);
    if(bib_DataLog.ShowHint=FALSE) then
       begin
       Aparelho.PROCULUS_Write_VP_Int(2,1,TEXTO,edt_saidapadrao); //LIGA BOTAO DATALOG
@@ -1385,7 +1426,7 @@ begin
       bib_Vacuo.ShowHint:=FALSE;
       tmr_temperaturas.Enabled:=FALSE;
       tempo:=0;
-      while (tempo<3000) do
+      while (tempo<3500) do
          begin
            Application.ProcessMessages;
            inc(tempo);
@@ -1395,11 +1436,13 @@ begin
          begin
            Aparelho.PROCULUS_Control_Active(10,TEXTO,edt_saidapadrao);  //PRESSIONADO SIM
            Aparelho.PROCULUS_Write_VP_Int(6,240,TEXTO,edt_saidapadrao);
+           Application.ProcessMessages;
          end
       else
          begin
            Aparelho.PROCULUS_Control_Active(20,TEXTO,edt_saidapadrao);  //PRESSIONADO NAO
            Aparelho.PROCULUS_Write_VP_Int(6,241,TEXTO,edt_saidapadrao);
+           Application.ProcessMessages;
          end;
 
       tmr_temperaturas.Enabled:=TRUE;
@@ -1453,8 +1496,11 @@ end;
 procedure TForm1.btn_Config_GravarClick(Sender: TObject);
 var
   variavel:integer;
+  datahora:string;
 begin
 //Aparelho.PROCULUS_Goto_Page(23,TEXTO,Form1.edt_saidapadrao);
+
+
 
 variavel:=trunc(strtofloat(edt_Condensador_Libera_Vacuo.text)*10);
 if(variavel<0) then variavel:=($FFFF+variavel)+1;
@@ -1508,8 +1554,16 @@ Aparelho.PROCULUS_Write_VP_Int(214,
                                edt_saidapadrao
                                );
 
+if(ckb_time_pc.Checked=TRUE) then
+   begin
+   datahora:=FormatDateTime('dd/mm/yyhh/nn/ss',now,[]);
+   edt_tmp_data.Text:=FormatDateTime('dd/mm/yy',now,[]);
+   edt_tmp_hora.Text:=FormatDateTime('hh:nn:ss',now,[]);
+   end
+else
+   datahora:=edt_tmp_data.text+edt_tmp_hora.text;
 
-
+Aparelho.Time_RTC_Write(datahora,TEXTO,edt_saidapadrao);
 
 
 
@@ -1523,6 +1577,9 @@ begin
    Aparelho.Ler_EEPROM_16bits_Interna_Mae($05,FLUTUANTE,edt_Aquecimento_Seg_Condensador);
    Aparelho.Ler_EEPROM_16bits_Interna_Mae($07,FLUTUANTE,edt_Aquecimento_Seg_Vacuo);
    Aparelho.Ler_EEPROM_16bits_Interna_Mae($FA,FLUTUANTE,edt_DisplaySize);
+   Aparelho.Time_RTC_Read(0,TEXTO,edt_tmp_data);
+   Aparelho.Time_RTC_Read(1,TEXTO,edt_tmp_hora);
+
 end;
 
 procedure TForm1.btn_Control_Active_writeClick(Sender: TObject);
@@ -1634,6 +1691,11 @@ begin
                                  );
 end;
 
+procedure TForm1.btn_Ler_RTCClick(Sender: TObject);
+begin
+  Aparelho.Time_RTC_Read(0,TEXTO,edt_time_process_reply);
+end;
+
 procedure TForm1.btn_ler_vp_intClick(Sender: TObject);
 begin
   Aparelho.PROCULUS_Read_VP_Int(strtoint(edt_vp_add_int.Text),FLUTUANTE,Form1.edt_vp_value_int_reply);
@@ -1716,6 +1778,7 @@ begin
                         case Aparelho.fila[0].resTypeData of
                               FLUTUANTE :
                                   begin
+
                                   numreal:=Aparelho.HexToInt(Aparelho.fila[0].result);
                                   if(numreal>32768) then
                                   numreal:=numreal-65536;
@@ -1740,9 +1803,7 @@ begin
                                           TEdit(Aparelho.fila[0].ObjDestino).Color:=clWhite;
                                           TEdit(Aparelho.fila[0].ObjDestino).Font.Color:=clBlack;
                                         end;
-
-                                  //Form1.MascararSaida(Aparelho.fila[0].ObjDestino);
-                                  end;
+                                   end;
                               TEXTO :
                                   begin
                                   TEdit(Aparelho.fila[0].ObjDestino).Text:=Aparelho.HexToText(Aparelho.fila[0].result);
