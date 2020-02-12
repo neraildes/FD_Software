@@ -36,7 +36,7 @@ object Form1: TForm1
     Height = 637
     Top = 0
     Width = 1196
-    ActivePage = ManutencaoCalibracao
+    ActivePage = TabSheet2
     Anchors = [akTop, akLeft, akRight, akBottom]
     Font.CharSet = ANSI_CHARSET
     Font.Color = clBlack
@@ -46,7 +46,7 @@ object Form1: TForm1
     Font.Quality = fqDraft
     ParentFont = False
     ParentShowHint = False
-    TabIndex = 0
+    TabIndex = 3
     TabOrder = 1
     OnChange = ControleDePaginasChange
     object ManutencaoCalibracao: TTabSheet
@@ -4292,6 +4292,7 @@ object Form1: TForm1
             Top = 48
             Width = 96
             Caption = 'Conectar'
+            OnChange = tgb_SerialChange
             TabOrder = 1
           end
         end
@@ -4374,7 +4375,6 @@ object Form1: TForm1
     top = 104
   end
   object tmr_temperaturas: TTimer
-    Enabled = False
     Interval = 10
     OnTimer = tmr_temperaturasTimer
     left = 1112

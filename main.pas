@@ -448,8 +448,8 @@ begin
   CountCOM:=0;
   ControleDePaginas.PageIndex:=1;
   Recuperar_Config();
-  ConectarSerial(CONECTAR);
-  Aparelho.FilaFim:=0;
+  //ConectarSerial(CONECTAR);
+  //Aparelho.FilaFim:=0;
   //RecuperarReceita();
   //PreencheComboBox();
 end;
@@ -457,8 +457,8 @@ end;
 procedure TForm1.FormShow(Sender: TObject);
 begin
   RecuperarReceita();
-  PreencheComboBox();
-  AtualizaBotoes();
+  //PreencheComboBox();
+  //AtualizaBotoes();
 end;
 
 
@@ -2287,6 +2287,7 @@ begin
     cbb_COMPORT.Caption:= ArqINIConfig.ReadString('Geral','COMPORT','COM5');
     tgb_Serial.Checked:= ArqINIConfig.ReadBool('Geral','Estado',FALSE);
     if(tgb_Serial.Checked=TRUE) then cbb_COMPORT.Enabled:=FALSE;
+    //ConectarSerial(CONECTAR);
   finally
     FreeAndNil(ArqINIConfig);
   end;
