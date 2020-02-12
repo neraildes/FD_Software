@@ -448,7 +448,7 @@ begin
   CountCOM:=0;
   ControleDePaginas.PageIndex:=1;
   Recuperar_Config();
-  ConectarSerial(CONECTAR);
+  //ConectarSerial(CONECTAR);
   //Aparelho.FilaFim:=0;
   //RecuperarReceita();
   //PreencheComboBox();
@@ -458,7 +458,7 @@ procedure TForm1.FormShow(Sender: TObject);
 begin
   RecuperarReceita();
   PreencheComboBox();
-  //AtualizaBotoes();
+  AtualizaBotoes();
 end;
 
 
@@ -514,6 +514,9 @@ begin
 end;
 
 procedure TForm1.tmr_temperaturasTimer(Sender: TObject);
+var
+  condensador:real;
+  Acondensador:real;
 begin
   if(tmr_temperaturas.Interval<8000) then tmr_temperaturas.Interval:=8000;
 
@@ -533,6 +536,21 @@ begin
   Aparelho.Read_Analogic_Channel(7,1,FLUTUANTE,'°C',Edit66);
 
   Aparelho.Time_Process_Read(HORA,edt_time_process);
+
+  edt_saidapadrao.text:='';
+  Aparelho.Read_Analogic_Channel(2,0,FLUTUANTE,'',edt_saidapadrao);
+  Aguarda_Atualizacao_do_TEdit(edt_saidapadrao);
+  condensador:=strtofloat(edt_saidapadrao.text);
+
+  edt_saidapadrao.text:='';
+  Aparelho.Ler_EEPROM_16bits_Interna_Mae($01,FLUTUANTE,edt_saidapadrao);
+  Aguarda_Atualizacao_do_TEdit(edt_saidapadrao);
+  Acondensador:=strtofloat(edt_saidapadrao.text);
+
+  if(condensador<Acondensador) then
+     edt_condensador.Color:=clLime;
+  else
+     edt_condensador.Color:=clRed;
 
 end;
 
@@ -2287,7 +2305,6 @@ begin
     cbb_COMPORT.Caption:= ArqINIConfig.ReadString('Geral','COMPORT','COM5');
     tgb_Serial.Checked:= ArqINIConfig.ReadBool('Geral','Estado',FALSE);
     if(tgb_Serial.Checked=TRUE) then cbb_COMPORT.Enabled:=FALSE;
-    //ConectarSerial(CONECTAR);
   finally
     FreeAndNil(ArqINIConfig);
   end;
