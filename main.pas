@@ -257,8 +257,8 @@ type
     Label15: TLabel;
     Label16: TLabel;
     Label17: TLabel;
-    Label18: TLabel;
-    Label19: TLabel;
+    lbl_condensador: TLabel;
+    lbl_vacuometro: TLabel;
     Label20: TLabel;
     Label21: TLabel;
     Label22: TLabel;
@@ -398,8 +398,8 @@ type
     procedure rb_24C1025Change(Sender: TObject);
     procedure rb_EEPROMChange(Sender: TObject);
     procedure tmr_onlineTimer(Sender: TObject);
-    procedure ToggleBox10Change(Sender: TObject);
     procedure tgb_SerialChange(Sender: TObject);
+    procedure ToggleBox10Change(Sender: TObject);
     procedure ToggleBox1Change(Sender: TObject);
     procedure ToggleBox2Change(Sender: TObject);
     procedure ToggleBox3Change(Sender: TObject);
@@ -408,11 +408,11 @@ type
     procedure ToggleBox6Change(Sender: TObject);
     procedure ToggleBox7Change(Sender: TObject);
     procedure ToggleBox8Change(Sender: TObject);
-    procedure ToggleBox9Change(Sender: TObject);
     procedure For_Record_Receita_From_TEdit();
     procedure For_TEdit_From_Record_Receita();
     procedure PreencheComboBox();
     procedure EnviaReceitaParaPrograma(Mandador:Integer;index:integer);
+    procedure ToggleBox9Change(Sender: TObject);
     procedure ToggleStatus(toggle:TObject; panel:TObject; mandador : integer);
     procedure Puxar_dados_de_programacao_do_Hardware();
     procedure Aguarda_Atualizacao_do_TEdit(objeto : TObject);
@@ -437,6 +437,7 @@ var
   Receita : array [0..8] of TReceita;
 
 
+
 implementation
 
 {$R *.lfm}
@@ -447,7 +448,7 @@ procedure TForm1.FormCreate(Sender: TObject);
 begin
   CountCOM:=0;
   ControleDePaginas.PageIndex:=1;
-  Recuperar_Config();
+
   //ConectarSerial(CONECTAR);
   //Aparelho.FilaFim:=0;
   //RecuperarReceita();
@@ -456,6 +457,7 @@ end;
 
 procedure TForm1.FormShow(Sender: TObject);
 begin
+  Recuperar_Config();
   RecuperarReceita();
   PreencheComboBox();
   AtualizaBotoes();
@@ -538,6 +540,38 @@ begin
   Aparelho.Time_Process_Read(HORA,edt_time_process);
 
   edt_saidapadrao.text:='';
+  Aparelho.PROCULUS_Read_VP_Int(176,UINTEGER,edt_saidaPadrao);
+  Aguarda_Atualizacao_do_TEdit(edt_saidapadrao);
+  if(edt_saidapadrao.text='1') then
+     edt_condensador.color:=ClLime
+  else if(edt_saidapadrao.text='0') then
+     begin
+     edt_condensador.color:=ClRed;
+     //showmessage(edt_saidapadrao.text);
+     end;
+  {
+  if(edt_Condensador_Libera_Vacuo.text<>'0') then
+  lbl_condensador.caption:='CONDENSADOR ('+edt_Condensador_Libera_Vacuo.text+'°C)';
+  }
+
+  edt_saidapadrao.text:='';
+  Aparelho.PROCULUS_Read_VP_Int(177,UINTEGER,edt_saidaPadrao);
+  Aguarda_Atualizacao_do_TEdit(edt_saidapadrao);
+  if(edt_saidapadrao.text='1') then
+     edt_vacuometro.color:=ClLime
+  else if(edt_saidapadrao.text='0') then
+     edt_vacuometro.color:=ClRed;
+  {
+  if(edt_Vacuo_Alarme.text<>'0')then
+  lbl_vacuometro.caption:='VACUÔMETRO ('+edt_Vacuo_Alarme.text+'mmHg)';
+  }
+
+
+
+
+
+  {
+  edt_saidapadrao.text:='';
   Aparelho.Read_Analogic_Channel(2,0,FLUTUANTE,'',edt_saidapadrao);
   Aguarda_Atualizacao_do_TEdit(edt_saidapadrao);
   condensador:=strtofloat(edt_saidapadrao.text);
@@ -551,7 +585,7 @@ begin
      edt_condensador.Color:=clLime
   else
      edt_condensador.Color:=clRed;
-
+  }
 end;
 
 
@@ -962,7 +996,7 @@ begin
   edit27.Text:=floattostr(Receita[cbb3.ItemIndex].TempoOFF);
   edit28.Text:=floattostr(Receita[cbb3.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(3,cbb3.ItemIndex);
-  if(Receita[cbb3.ItemIndex].Nome=' ') then
+  if(cbb3.Caption=' ') then
      ToggleBox4.Checked:=FALSE
   else
      ToggleBox4.Checked:=TRUE;
@@ -976,7 +1010,7 @@ begin
   edit34.Text:=floattostr(Receita[cbb4.ItemIndex].TempoOFF);
   edit35.Text:=floattostr(Receita[cbb4.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(4,cbb4.ItemIndex);
-  if(Receita[cbb4.ItemIndex].Nome=' ') then
+  if(cbb4.Caption=' ') then
      ToggleBox5.Checked:=FALSE
   else
      ToggleBox5.Checked:=TRUE;
@@ -990,7 +1024,7 @@ begin
   edit41.Text:=floattostr(Receita[cbb5.ItemIndex].TempoOFF);
   edit42.Text:=floattostr(Receita[cbb5.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(5,cbb5.ItemIndex);
-  if(Receita[cbb5.ItemIndex].Nome=' ') then
+  if(cbb5.Caption=' ') then
      ToggleBox6.Checked:=FALSE
   else
      ToggleBox6.Checked:=TRUE;
@@ -1004,7 +1038,7 @@ begin
   edit48.Text:=floattostr(Receita[cbb6.ItemIndex].TempoOFF);
   edit49.Text:=floattostr(Receita[cbb6.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(6,cbb6.ItemIndex);
-  if(Receita[cbb6.ItemIndex].Nome=' ') then
+  if(cbb6.Caption=' ') then
      ToggleBox7.Checked:=FALSE
   else
      ToggleBox7.Checked:=TRUE;
@@ -1018,7 +1052,7 @@ begin
   edit55.Text:=floattostr(Receita[cbb7.ItemIndex].TempoOFF);
   edit56.Text:=floattostr(Receita[cbb7.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(7,cbb7.ItemIndex);
-  if(Receita[cbb7.ItemIndex].Nome=' ') then
+  if(cbb7.Caption=' ') then
      ToggleBox8.Checked:=FALSE
   else
      ToggleBox8.Checked:=TRUE;
@@ -1032,7 +1066,7 @@ begin
   edit62.Text:=floattostr(Receita[cbb8.ItemIndex].TempoOFF);
   edit63.Text:=floattostr(Receita[cbb8.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(8,cbb8.ItemIndex);
-  if(Receita[cbb8.ItemIndex].Nome=' ') then
+  if(cbb8.Caption=' ') then
      ToggleBox9.Checked:=FALSE
   else
      ToggleBox9.Checked:=TRUE;
@@ -1046,7 +1080,7 @@ begin
   edit69.Text:=floattostr(Receita[cbb9.ItemIndex].TempoOFF);
   edit70.Text:=floattostr(Receita[cbb9.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(9,cbb9.ItemIndex);
-  if(Receita[cbb9.ItemIndex].Nome=' ') then
+  if(cbb9.Caption=' ') then
      ToggleBox10.Checked:=FALSE
   else
      ToggleBox10.Checked:=TRUE;
@@ -1070,7 +1104,8 @@ begin
   edit5.Text:=floattostr(Receita[cbb0.ItemIndex].TempoOFF);
   edit7.Text:=floattostr(Receita[cbb0.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(0,cbb0.ItemIndex);
-  if(Receita[cbb0.ItemIndex].Nome=' ') then
+  showmessage('-'+Receita[cbb0.ItemIndex].Nome+'-');
+  if(cbb0.Caption=' ') then
      ToggleBox1.Checked:=FALSE
   else
      ToggleBox1.Checked:=TRUE;
@@ -1084,7 +1119,7 @@ begin
   edit13.Text:=floattostr(Receita[cbb1.ItemIndex].TempoOFF);
   edit14.Text:=floattostr(Receita[cbb1.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(1,cbb1.ItemIndex);
-  if(Receita[cbb1.ItemIndex].Nome=' ') then
+  if(cbb1.Caption=' ') then
      ToggleBox2.Checked:=FALSE
   else
      ToggleBox2.Checked:=TRUE;
@@ -1098,7 +1133,7 @@ begin
   edit20.Text:=floattostr(Receita[cbb2.ItemIndex].TempoOFF);
   edit21.Text:=floattostr(Receita[cbb2.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(2,cbb2.ItemIndex);
-  if(Receita[cbb2.ItemIndex].Nome=' ') then
+  if(cbb2.Caption=' ') then
      ToggleBox3.Checked:=FALSE
   else
      ToggleBox3.Checked:=TRUE;
@@ -1128,6 +1163,13 @@ begin
    Aparelho.Gravar_EEPROM_String_Mae(addeeprom+6,Receita[index].Nome,TEXTO,edt_saidapadrao);
    //Aparelho.Gravar_EEPROM_16bits_Interna_Mae(addeeprom+16,1,TEXTO,edt_saidapadrao);
    Aparelho.Show_Programacao(Mandador,HEXADECIMAL,edt_saidaprg);
+end;
+
+procedure TForm1.ToggleBox9Change(Sender: TObject);
+begin
+ToggleStatus(Sender, Panel9, 9);
+Aparelho.Show_Programacao(8,HEXADECIMAL,edt_saidaprg);
+Aparelho.PROCULUS_Goto_Page(21,TEXTO,Form1.edt_saidapadrao);
 end;
 
 
@@ -1802,24 +1844,32 @@ begin
                                   numreal:=numreal-65536;
                                   numreal:=numreal/10.0;
                                   SaidaString:=formatfloat('#0.0',numreal);
-                                  if(StrToFloat(SaidaString)=-0.1) then
-                                     begin
-                                       TEdit(Aparelho.fila[0].ObjDestino).Text:='Sem Placa';
-                                       TEdit(Aparelho.fila[0].ObjDestino).Color:=clRed;
-                                       TEdit(Aparelho.fila[0].ObjDestino).Font.Color:=clWhite;
-                                     end
+
+                                  if(POS('Edit',TEdit(Aparelho.fila[0].ObjDestino).Name)=0) then
+                                      begin
+                                      TEdit(Aparelho.fila[0].ObjDestino).Text:=SaidaString+Aparelho.fila[0].resUnidade;
+                                      end
                                   else
-                                     if(StrToFloat(SaidaString)<-70.0) then
-                                        begin
-                                          TEdit(Aparelho.fila[0].ObjDestino).Text:='Sem Sensor';
-                                          TEdit(Aparelho.fila[0].ObjDestino).Color:=clYellow;
-                                          TEdit(Aparelho.fila[0].ObjDestino).Font.Color:=clBlack;
-                                        end
-                                        else
-                                        begin
-                                          TEdit(Aparelho.fila[0].ObjDestino).Text:=SaidaString+Aparelho.fila[0].resUnidade;
-                                          TEdit(Aparelho.fila[0].ObjDestino).Color:=clWhite;
-                                          TEdit(Aparelho.fila[0].ObjDestino).Font.Color:=clBlack;
+                                      begin
+                                      if(StrToFloat(SaidaString)=-0.1) then
+                                         begin
+                                           TEdit(Aparelho.fila[0].ObjDestino).Text:='Sem Placa';
+                                           TEdit(Aparelho.fila[0].ObjDestino).Color:=clRed;
+                                           TEdit(Aparelho.fila[0].ObjDestino).Font.Color:=clWhite;
+                                         end
+                                      else
+                                         if(StrToFloat(SaidaString)<-70.0) then
+                                            begin
+                                              TEdit(Aparelho.fila[0].ObjDestino).Text:='Sem Sensor';
+                                              TEdit(Aparelho.fila[0].ObjDestino).Color:=clYellow;
+                                              TEdit(Aparelho.fila[0].ObjDestino).Font.Color:=clBlack;
+                                            end
+                                            else
+                                            begin
+                                              TEdit(Aparelho.fila[0].ObjDestino).Text:=SaidaString+Aparelho.fila[0].resUnidade;
+                                              TEdit(Aparelho.fila[0].ObjDestino).Color:=clWhite;
+                                              TEdit(Aparelho.fila[0].ObjDestino).Font.Color:=clBlack;
+                                            end;
                                         end;
                                    end;
                               TEXTO :
@@ -2019,58 +2069,44 @@ end;
 
 procedure TForm1.ToggleBox3Change(Sender: TObject);
 begin
-  ToggleStatus(Sender, Panel3, 3);
-  Aparelho.Show_Programacao(2,HEXADECIMAL,edt_saidaprg);
-  Aparelho.PROCULUS_Goto_Page(19,TEXTO,Form1.edt_saidapadrao);
+ToggleStatus(Sender, Panel3, 3);
+Aparelho.Show_Programacao(2,HEXADECIMAL,edt_saidaprg);
+Aparelho.PROCULUS_Goto_Page(19,TEXTO,Form1.edt_saidapadrao);
 end;
 
 procedure TForm1.ToggleBox4Change(Sender: TObject);
 begin
-  ToggleStatus(Sender, Panel4, 4);
-  Aparelho.Show_Programacao(3,HEXADECIMAL,edt_saidaprg);
-  Aparelho.PROCULUS_Goto_Page(19,TEXTO,Form1.edt_saidapadrao);
+ToggleStatus(Sender, Panel4, 4);
+Aparelho.Show_Programacao(3,HEXADECIMAL,edt_saidaprg);
+Aparelho.PROCULUS_Goto_Page(19,TEXTO,Form1.edt_saidapadrao);
 end;
 
 procedure TForm1.ToggleBox5Change(Sender: TObject);
 begin
-  ToggleStatus(Sender, Panel5, 5);
-  Aparelho.Show_Programacao(4,HEXADECIMAL,edt_saidaprg);
-  Aparelho.PROCULUS_Goto_Page(19,TEXTO,Form1.edt_saidapadrao);
+ToggleStatus(Sender, Panel5, 5);
+Aparelho.Show_Programacao(4,HEXADECIMAL,edt_saidaprg);
+Aparelho.PROCULUS_Goto_Page(19,TEXTO,Form1.edt_saidapadrao);
 end;
 
 procedure TForm1.ToggleBox6Change(Sender: TObject);
 begin
-  ToggleStatus(Sender, Panel6, 6);
-  Aparelho.Show_Programacao(5,HEXADECIMAL,edt_saidaprg);
-  Aparelho.PROCULUS_Goto_Page(21,TEXTO,Form1.edt_saidapadrao);
+ToggleStatus(Sender, Panel6, 6);
+Aparelho.Show_Programacao(5,HEXADECIMAL,edt_saidaprg);
+Aparelho.PROCULUS_Goto_Page(21,TEXTO,Form1.edt_saidapadrao);
 end;
 
 procedure TForm1.ToggleBox7Change(Sender: TObject);
 begin
-  ToggleStatus(Sender, Panel7, 7);
-  Aparelho.Show_Programacao(6,HEXADECIMAL,edt_saidaprg);
-  Aparelho.PROCULUS_Goto_Page(21,TEXTO,Form1.edt_saidapadrao);
+ToggleStatus(Sender, Panel7, 7);
+Aparelho.Show_Programacao(6,HEXADECIMAL,edt_saidaprg);
+Aparelho.PROCULUS_Goto_Page(21,TEXTO,Form1.edt_saidapadrao);
 end;
 
 procedure TForm1.ToggleBox8Change(Sender: TObject);
 begin
-  ToggleStatus(Sender, Panel8, 8);
-  Aparelho.Show_Programacao(7,HEXADECIMAL,edt_saidaprg);
-  Aparelho.PROCULUS_Goto_Page(21,TEXTO,Form1.edt_saidapadrao);
-end;
-
-procedure TForm1.ToggleBox9Change(Sender: TObject);
-begin
-  ToggleStatus(Sender, Panel9, 9);
-  Aparelho.Show_Programacao(8,HEXADECIMAL,edt_saidaprg);
-  Aparelho.PROCULUS_Goto_Page(21,TEXTO,Form1.edt_saidapadrao);
-end;
-
-procedure TForm1.ToggleBox10Change(Sender: TObject);
-begin
-  ToggleStatus(Sender, Panel10,10);
-  Aparelho.Show_Programacao(9,HEXADECIMAL,edt_saidaprg);
-  Aparelho.PROCULUS_Goto_Page(21,TEXTO,Form1.edt_saidapadrao);
+ToggleStatus(Sender, Panel8, 8);
+Aparelho.Show_Programacao(7,HEXADECIMAL,edt_saidaprg);
+Aparelho.PROCULUS_Goto_Page(21,TEXTO,Form1.edt_saidapadrao);
 end;
 
 procedure TForm1.tgb_SerialChange(Sender: TObject);
@@ -2087,6 +2123,13 @@ begin
      ConectarSerial(DESCONECTAR);
      cbb_COMPORT.Enabled:=TRUE;
      end;
+end;
+
+procedure TForm1.ToggleBox10Change(Sender: TObject);
+begin
+ToggleStatus(Sender, Panel10,10);
+Aparelho.Show_Programacao(9,HEXADECIMAL,edt_saidaprg);
+Aparelho.PROCULUS_Goto_Page(21,TEXTO,Form1.edt_saidapadrao);
 end;
 
 

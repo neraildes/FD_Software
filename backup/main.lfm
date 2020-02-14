@@ -1,10 +1,10 @@
 object Form1: TForm1
   Left = 84
-  Height = 659
-  Top = 120
+  Height = 660
+  Top = 119
   Width = 1196
   Caption = 'JJ Cientifica Ind. e Com. de Equipamentos Científicos'
-  ClientHeight = 639
+  ClientHeight = 640
   ClientWidth = 1196
   Font.CharSet = ANSI_CHARSET
   Font.Color = clBlack
@@ -33,7 +33,7 @@ object Form1: TForm1
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrCenter
     Left = 0
-    Height = 637
+    Height = 639
     Top = 0
     Width = 1196
     ActivePage = PaginaPrincipal
@@ -780,7 +780,7 @@ object Form1: TForm1
     end
     object PaginaPrincipal: TTabSheet
       Caption = 'Página Principal'
-      ClientHeight = 609
+      ClientHeight = 611
       ClientWidth = 1188
       object edt_buffer: TEdit
         Left = 960
@@ -1060,6 +1060,7 @@ object Form1: TForm1
         Font.Name = 'Segoe UI'
         Font.Pitch = fpVariable
         Font.Quality = fqDraft
+        OnChange = ToggleBox1Change
         ParentFont = False
         TabOrder = 6
       end
@@ -1130,6 +1131,7 @@ object Form1: TForm1
         Font.Name = 'Segoe UI'
         Font.Pitch = fpVariable
         Font.Quality = fqDraft
+        OnChange = ToggleBox2Change
         ParentFont = False
         TabOrder = 14
       end
@@ -1200,6 +1202,7 @@ object Form1: TForm1
         Font.Name = 'Segoe UI'
         Font.Pitch = fpVariable
         Font.Quality = fqDraft
+        OnChange = ToggleBox3Change
         ParentFont = False
         TabOrder = 22
       end
@@ -1270,6 +1273,7 @@ object Form1: TForm1
         Font.Name = 'Segoe UI'
         Font.Pitch = fpVariable
         Font.Quality = fqDraft
+        OnChange = ToggleBox4Change
         ParentFont = False
         TabOrder = 30
       end
@@ -1341,6 +1345,7 @@ object Form1: TForm1
         Font.Name = 'Segoe UI'
         Font.Pitch = fpVariable
         Font.Quality = fqDraft
+        OnChange = ToggleBox5Change
         ParentFont = False
         TabOrder = 38
       end
@@ -1402,7 +1407,7 @@ object Form1: TForm1
       object ToggleBox6: TToggleBox
         Left = 704
         Height = 23
-        Top = 295
+        Top = 296
         Width = 71
         Caption = 'X'
         Color = clYellow
@@ -1412,6 +1417,7 @@ object Form1: TForm1
         Font.Name = 'Segoe UI'
         Font.Pitch = fpVariable
         Font.Quality = fqDraft
+        OnChange = ToggleBox6Change
         ParentFont = False
         TabOrder = 46
       end
@@ -1483,6 +1489,7 @@ object Form1: TForm1
         Font.Name = 'Segoe UI'
         Font.Pitch = fpVariable
         Font.Quality = fqDraft
+        OnChange = ToggleBox7Change
         ParentFont = False
         TabOrder = 54
       end
@@ -1554,6 +1561,7 @@ object Form1: TForm1
         Font.Name = 'Segoe UI'
         Font.Pitch = fpVariable
         Font.Quality = fqDraft
+        OnChange = ToggleBox8Change
         ParentFont = False
         TabOrder = 62
       end
@@ -1625,6 +1633,7 @@ object Form1: TForm1
         Font.Name = 'Segoe UI'
         Font.Pitch = fpVariable
         Font.Quality = fqDraft
+        OnChange = ToggleBox9Change
         ParentFont = False
         TabOrder = 70
       end
@@ -1696,11 +1705,12 @@ object Form1: TForm1
         Font.Name = 'Segoe UI'
         Font.Pitch = fpVariable
         Font.Quality = fqDraft
+        OnChange = ToggleBox10Change
         ParentFont = False
         TabOrder = 78
       end
       object lbl_Tensao: TLabel
-        Left = 944
+        Left = 896
         Height = 15
         Top = 80
         Width = 44
@@ -1739,8 +1749,8 @@ object Form1: TForm1
         ParentFont = False
         TabOrder = 82
       end
-      object Label18: TLabel
-        Left = 928
+      object lbl_condensador: TLabel
+        Left = 896
         Height = 15
         Top = 168
         Width = 87
@@ -1763,8 +1773,8 @@ object Form1: TForm1
         ParentFont = False
         TabOrder = 83
       end
-      object Label19: TLabel
-        Left = 976
+      object lbl_vacuometro: TLabel
+        Left = 896
         Height = 15
         Top = 264
         Width = 78
@@ -3522,7 +3532,7 @@ object Form1: TForm1
     end
     object TabSheet1: TTabSheet
       Caption = 'Receitas'
-      ClientHeight = 550
+      ClientHeight = 611
       ClientWidth = 1188
       object Panel16: TPanel
         Left = 312
@@ -4076,7 +4086,7 @@ object Form1: TForm1
     end
     object TabSheet2: TTabSheet
       Caption = 'Parâmetros'
-      ClientHeight = 609
+      ClientHeight = 611
       ClientWidth = 1188
       object GroupBox9: TGroupBox
         Left = 24
