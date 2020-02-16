@@ -324,6 +324,7 @@ type
     Pn_COM_Check: TPanel;
     rb_24C1025: TRadioButton;
     rb_EEPROM: TRadioButton;
+    tmr_vacuo: TTimer;
     tmr_online: TTimer;
     tmr_temperaturas: TTimer;
     TabSheet1: TTabSheet;
@@ -386,7 +387,6 @@ type
     procedure ControleDePaginasChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
-    procedure FormShow(Sender: TObject);
     procedure IEE_ReadClick(Sender: TObject);
     procedure IEE_WriteClick(Sender: TObject);
     procedure tmr_condensadorTimer(Sender: TObject);
@@ -399,6 +399,7 @@ type
     procedure rb_EEPROMChange(Sender: TObject);
     procedure tmr_onlineTimer(Sender: TObject);
     procedure tgb_SerialChange(Sender: TObject);
+    procedure tmr_vacuoTimer(Sender: TObject);
     procedure ToggleBox10Change(Sender: TObject);
     procedure ToggleBox1Change(Sender: TObject);
     procedure ToggleBox2Change(Sender: TObject);
@@ -454,15 +455,6 @@ begin
   //RecuperarReceita();
   //PreencheComboBox();
 end;
-
-procedure TForm1.FormShow(Sender: TObject);
-begin
-  Recuperar_Config();
-  RecuperarReceita();
-  PreencheComboBox();
-  AtualizaBotoes();
-end;
-
 
 procedure TForm1.AtualizaBotoes();
 begin
@@ -520,7 +512,14 @@ var
   condensador:real;
   Acondensador:real;
 begin
-  if(tmr_temperaturas.Interval<8000) then tmr_temperaturas.Interval:=8000;
+  if(tmr_temperaturas.Interval<1000) then
+     begin
+      tmr_temperaturas.Interval:=10000;
+      Recuperar_Config();
+      RecuperarReceita();
+      PreencheComboBox();
+      AtualizaBotoes();
+     end;
 
   Aparelho.Read_Analogic_Channel(1,0,FLUTUANTE,'V',edt_tensao);
   Aparelho.Read_Analogic_Channel(1,1,FLUTUANTE,'mmHg',edt_vacuometro);
@@ -954,7 +953,7 @@ try
       end;
 except
   Aparelho.free;
-  showmessage('Erro no modulo de comunicacao');
+  //showmessage('Erro no modulo de comunicacao');
 end;
 
  {
@@ -1104,7 +1103,6 @@ begin
   edit5.Text:=floattostr(Receita[cbb0.ItemIndex].TempoOFF);
   edit7.Text:=floattostr(Receita[cbb0.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(0,cbb0.ItemIndex);
-  showmessage('-'+Receita[cbb0.ItemIndex].Nome+'-');
   if(cbb0.Caption=' ') then
      ToggleBox1.Checked:=FALSE
   else
@@ -1468,8 +1466,6 @@ begin
 end;
 
 procedure TForm1.bib_VacuoClick(Sender: TObject);
-var
-  tempo:integer;
 begin
    Aparelho.PROCULUS_Goto_Page(15,TEXTO,Form1.edt_saidapadrao);
    if(bib_Vacuo.ShowHint=FALSE) then
@@ -1485,27 +1481,7 @@ begin
       bib_Vacuo.Glyph.LoadFromFile(ExtractFilePath(ParamSTR(0))+'imagens\Vacuo_OFF.bmp');
       bib_Vacuo.ShowHint:=FALSE;
       tmr_temperaturas.Enabled:=FALSE;
-      tempo:=0;
-      while (tempo<3500) do
-         begin
-           Application.ProcessMessages;
-           inc(tempo);
-           sleep(1);
-         end;
-      if (MessageDlg('Pergunta','Deseja encerrar o processo?',mtInformation, [mbYes, mbNo],0)=mrYes) then
-         begin
-           Aparelho.PROCULUS_Control_Active(10,TEXTO,edt_saidapadrao);  //PRESSIONADO SIM
-           Aparelho.PROCULUS_Write_VP_Int(6,240,TEXTO,edt_saidapadrao);
-           Application.ProcessMessages;
-         end
-      else
-         begin
-           Aparelho.PROCULUS_Control_Active(20,TEXTO,edt_saidapadrao);  //PRESSIONADO NAO
-           Aparelho.PROCULUS_Write_VP_Int(6,241,TEXTO,edt_saidapadrao);
-           Application.ProcessMessages;
-         end;
-
-      tmr_temperaturas.Enabled:=TRUE;
+      tmr_vacuo.Enabled:=TRUE;
       end;
 end;
 
@@ -2123,6 +2099,26 @@ begin
      ConectarSerial(DESCONECTAR);
      cbb_COMPORT.Enabled:=TRUE;
      end;
+end;
+
+procedure TForm1.tmr_vacuoTimer(Sender: TObject);
+begin
+    tmr_vacuo.Enabled:=FALSE;
+    if (MessageDlg('Pergunta','Deseja encerrar o processo?',mtInformation, [mbYes, mbNo],0)=mrYes) then
+       begin
+         Aparelho.PROCULUS_Control_Active(10,TEXTO,edt_saidapadrao);  //PRESSIONADO SIM
+         Aparelho.PROCULUS_Write_VP_Int(6,240,TEXTO,edt_saidapadrao);
+         Application.ProcessMessages;
+       end
+    else
+       begin
+         Aparelho.PROCULUS_Control_Active(20,TEXTO,edt_saidapadrao);  //PRESSIONADO NAO
+         Aparelho.PROCULUS_Write_VP_Int(6,241,TEXTO,edt_saidapadrao);
+         Application.ProcessMessages;
+       end;
+
+    tmr_temperaturas.Enabled:=TRUE;
+
 end;
 
 procedure TForm1.ToggleBox10Change(Sender: TObject);

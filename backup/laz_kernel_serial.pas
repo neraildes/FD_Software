@@ -10,7 +10,7 @@ uses
 const
 
    PICEEPROMSIZE = 255;  //Memoria disponível no PIC
-   TXBUFFERSIZE  = 255;
+   TXBUFFERSIZE  = 50;
    RXBUFFERSIZE  = 255;
 
    HEADER            = 'AABB';
@@ -107,7 +107,7 @@ type
 
   TSerial = class(TBlockSerial)
     public
-      fila    : array[0..BUFFER_PC] of TFila;
+      Fila    : array[0..BUFFER_PC] of TFila;
       FilaFim : integer;
       constructor Create(); overload;
 
@@ -1147,8 +1147,6 @@ begin
   fila[FilaFim].ObjDestino:=ObjDestino;
   fila[FilaFim].resTypeData:=resultType;
 
-  showmessage(tempo);
-
   for i:=0 to length(tempo) do
       begin
         buffer[i]:= byte(tempo[i+1]);
@@ -1219,9 +1217,8 @@ begin
 //fila[FilaFim].TotalReturn:=0;
 //fila[FilaFim].ObjOrigem:=nil;
 //fila[FilaFim].ObjDestino:=nil;
-  inc(FilaFim);
-
-
+  Form1.Memo3.Lines.Add(inttostr(FilaFim)+' Comandos.');
+  if (FilaFim<50) then  inc(FilaFim);
 
   //result:= 'Foi Agendado, favor pegar o resultado na Thread';//kernelSerial(carga, TotalReturn);
 end;

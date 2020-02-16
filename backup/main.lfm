@@ -1,10 +1,10 @@
 object Form1: TForm1
-  Left = 84
-  Height = 660
-  Top = 119
+  Left = 70
+  Height = 729
+  Top = 140
   Width = 1196
   Caption = 'JJ Cientifica Ind. e Com. de Equipamentos Científicos'
-  ClientHeight = 640
+  ClientHeight = 709
   ClientWidth = 1196
   Font.CharSet = ANSI_CHARSET
   Font.Color = clBlack
@@ -15,7 +15,6 @@ object Form1: TForm1
   Menu = MainMenu1
   OnClose = FormClose
   OnCreate = FormCreate
-  OnShow = FormShow
   LCLVersion = '2.0.4.0'
   object Edit6: TEdit
     Left = 96
@@ -33,7 +32,7 @@ object Form1: TForm1
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrCenter
     Left = 0
-    Height = 639
+    Height = 707
     Top = 0
     Width = 1196
     ActivePage = PaginaPrincipal
@@ -51,7 +50,7 @@ object Form1: TForm1
     OnChange = ControleDePaginasChange
     object ManutencaoCalibracao: TTabSheet
       Caption = 'Manutencao e Calibracao'
-      ClientHeight = 609
+      ClientHeight = 679
       ClientWidth = 1188
       object Memo1: TMemo
         Left = 560
@@ -780,7 +779,7 @@ object Form1: TForm1
     end
     object PaginaPrincipal: TTabSheet
       Caption = 'Página Principal'
-      ClientHeight = 611
+      ClientHeight = 679
       ClientWidth = 1188
       object edt_buffer: TEdit
         Left = 960
@@ -4265,7 +4264,7 @@ object Form1: TForm1
           end
         end
         object GroupBox15: TGroupBox
-          Left = 10
+          Left = 11
           Height = 148
           Top = 296
           Width = 525
@@ -4382,14 +4381,14 @@ object Form1: TForm1
   end
   object tmr_online: TTimer
     OnTimer = tmr_onlineTimer
-    left = 1112
-    top = 104
+    left = 1120
+    top = 48
   end
   object tmr_temperaturas: TTimer
     Interval = 10
     OnTimer = tmr_temperaturasTimer
-    left = 1112
-    top = 168
+    left = 1120
+    top = 104
   end
   object MainMenu1: TMainMenu
     left = 376
@@ -4408,7 +4407,14 @@ object Form1: TForm1
     Enabled = False
     Interval = 30000
     OnTimer = tmr_condensadorTimer
-    left = 1112
-    top = 232
+    left = 1120
+    top = 160
+  end
+  object tmr_vacuo: TTimer
+    Enabled = False
+    Interval = 10000
+    OnTimer = tmr_vacuoTimer
+    left = 1120
+    top = 216
   end
 end

@@ -10,8 +10,8 @@ uses
 const
 
    PICEEPROMSIZE = 255;  //Memoria disponível no PIC
-   TXBUFFERSIZE  = 255;
-   RXBUFFERSIZE  = 255;
+   TXBUFFERSIZE  = 50;
+   RXBUFFERSIZE  = 50;
 
    HEADER            = 'AABB';
    ORIGEM            = 'C0';
@@ -77,7 +77,7 @@ const
 
 
 //-------------------------------------
-   BUFFER_PC               =  $1FFFF;
+   BUFFER_PC               =  50;
 
 //-----------OUTRAS CONSTANTES-------------
    READ  = 0;
@@ -1147,8 +1147,6 @@ begin
   fila[FilaFim].ObjDestino:=ObjDestino;
   fila[FilaFim].resTypeData:=resultType;
 
-  showmessage(tempo);
-
   for i:=0 to length(tempo) do
       begin
         buffer[i]:= byte(tempo[i+1]);
@@ -1219,9 +1217,8 @@ begin
 //fila[FilaFim].TotalReturn:=0;
 //fila[FilaFim].ObjOrigem:=nil;
 //fila[FilaFim].ObjDestino:=nil;
-  inc(FilaFim);
-
-
+  Form1.Memo3.Lines.Add(inttostr(FilaFim)+' Comandos.');
+  if (FilaFim<50) then  inc(FilaFim);
 
   //result:= 'Foi Agendado, favor pegar o resultado na Thread';//kernelSerial(carga, TotalReturn);
 end;
