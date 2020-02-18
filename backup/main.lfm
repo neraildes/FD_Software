@@ -1,10 +1,11 @@
 object Form1: TForm1
-  Left = 70
-  Height = 729
-  Top = 140
+  Left = -24
+  Height = 640
+  Top = 129
   Width = 1196
+  BorderStyle = bsDialog
   Caption = 'JJ Cientifica Ind. e Com. de Equipamentos Científicos'
-  ClientHeight = 709
+  ClientHeight = 620
   ClientWidth = 1196
   Font.CharSet = ANSI_CHARSET
   Font.Color = clBlack
@@ -15,7 +16,9 @@ object Form1: TForm1
   Menu = MainMenu1
   OnClose = FormClose
   OnCreate = FormCreate
+  Position = poDesktopCenter
   LCLVersion = '2.0.4.0'
+  Scaled = False
   object Edit6: TEdit
     Left = 96
     Height = 23
@@ -32,7 +35,7 @@ object Form1: TForm1
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrCenter
     Left = 0
-    Height = 707
+    Height = 620
     Top = 0
     Width = 1196
     ActivePage = PaginaPrincipal
@@ -52,6 +55,7 @@ object Form1: TForm1
       Caption = 'Manutencao e Calibracao'
       ClientHeight = 679
       ClientWidth = 1188
+      TabVisible = False
       object Memo1: TMemo
         Left = 560
         Height = 544
@@ -779,7 +783,7 @@ object Form1: TForm1
     end
     object PaginaPrincipal: TTabSheet
       Caption = 'Página Principal'
-      ClientHeight = 679
+      ClientHeight = 592
       ClientWidth = 1188
       object edt_buffer: TEdit
         Left = 960
@@ -998,6 +1002,7 @@ object Form1: TForm1
         Top = 96
         Width = 58
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 0
         Text = '1'
       end
@@ -1007,6 +1012,7 @@ object Form1: TForm1
         Top = 96
         Width = 84
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 1
         Text = '0,0°C'
       end
@@ -1016,6 +1022,7 @@ object Form1: TForm1
         Top = 95
         Width = 60
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 2
         Text = '0'
       end
@@ -1025,6 +1032,7 @@ object Form1: TForm1
         Top = 95
         Width = 87
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 3
         Text = '0'
       end
@@ -1034,6 +1042,7 @@ object Form1: TForm1
         Top = 95
         Width = 62
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 4
         Text = '0'
       end
@@ -1043,6 +1052,7 @@ object Form1: TForm1
         Top = 96
         Width = 61
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 5
         Text = '0'
       end
@@ -1069,6 +1079,7 @@ object Form1: TForm1
         Top = 135
         Width = 58
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 8
         Text = '2'
       end
@@ -1078,6 +1089,7 @@ object Form1: TForm1
         Top = 136
         Width = 84
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 9
         Text = '0,0°C'
       end
@@ -1087,6 +1099,7 @@ object Form1: TForm1
         Top = 136
         Width = 60
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 10
         Text = '0'
       end
@@ -1096,6 +1109,7 @@ object Form1: TForm1
         Top = 135
         Width = 87
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 11
         Text = '0'
       end
@@ -1105,6 +1119,7 @@ object Form1: TForm1
         Top = 136
         Width = 62
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 12
         Text = '0'
       end
@@ -1114,6 +1129,7 @@ object Form1: TForm1
         Top = 136
         Width = 61
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 13
         Text = '0'
       end
@@ -1140,6 +1156,7 @@ object Form1: TForm1
         Top = 176
         Width = 58
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 16
         Text = '3'
       end
@@ -1149,6 +1166,7 @@ object Form1: TForm1
         Top = 176
         Width = 84
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 17
         Text = '0,0°C'
       end
@@ -1158,6 +1176,7 @@ object Form1: TForm1
         Top = 176
         Width = 60
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 18
         Text = '0'
       end
@@ -1167,6 +1186,7 @@ object Form1: TForm1
         Top = 175
         Width = 87
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 19
         Text = '0'
       end
@@ -1176,6 +1196,7 @@ object Form1: TForm1
         Top = 176
         Width = 62
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 20
         Text = '0'
       end
@@ -1185,6 +1206,7 @@ object Form1: TForm1
         Top = 176
         Width = 61
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 21
         Text = '0'
       end
@@ -1211,6 +1233,7 @@ object Form1: TForm1
         Top = 216
         Width = 58
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 24
         Text = '4'
       end
@@ -1220,6 +1243,7 @@ object Form1: TForm1
         Top = 216
         Width = 84
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 25
         Text = '0,0°C'
       end
@@ -1229,6 +1253,7 @@ object Form1: TForm1
         Top = 216
         Width = 60
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 26
         Text = '0'
       end
@@ -1238,6 +1263,7 @@ object Form1: TForm1
         Top = 215
         Width = 87
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 27
         Text = '0'
       end
@@ -1247,6 +1273,7 @@ object Form1: TForm1
         Top = 216
         Width = 62
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 28
         Text = '0'
       end
@@ -1256,6 +1283,7 @@ object Form1: TForm1
         Top = 216
         Width = 61
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 29
         Text = '0'
       end
@@ -1282,6 +1310,7 @@ object Form1: TForm1
         Top = 256
         Width = 58
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 32
         Text = '5'
       end
@@ -1292,6 +1321,7 @@ object Form1: TForm1
         Width = 84
         Alignment = taCenter
         Color = clWhite
+        ReadOnly = True
         TabOrder = 33
         Text = '0,0°C'
       end
@@ -1301,6 +1331,7 @@ object Form1: TForm1
         Top = 256
         Width = 60
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 34
         Text = '0'
       end
@@ -1310,6 +1341,7 @@ object Form1: TForm1
         Top = 256
         Width = 87
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 35
         Text = '0'
       end
@@ -1319,6 +1351,7 @@ object Form1: TForm1
         Top = 256
         Width = 62
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 36
         Text = '0'
       end
@@ -1328,6 +1361,7 @@ object Form1: TForm1
         Top = 256
         Width = 61
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 37
         Text = '0'
       end
@@ -1354,6 +1388,7 @@ object Form1: TForm1
         Top = 296
         Width = 58
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 40
         Text = '6'
       end
@@ -1364,6 +1399,7 @@ object Form1: TForm1
         Width = 84
         Alignment = taCenter
         Color = clWhite
+        ReadOnly = True
         TabOrder = 41
         Text = '0,0°C'
       end
@@ -1373,6 +1409,7 @@ object Form1: TForm1
         Top = 296
         Width = 60
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 42
         Text = '0'
       end
@@ -1382,6 +1419,7 @@ object Form1: TForm1
         Top = 296
         Width = 87
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 43
         Text = '0'
       end
@@ -1391,6 +1429,7 @@ object Form1: TForm1
         Top = 296
         Width = 62
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 44
         Text = '0'
       end
@@ -1400,6 +1439,7 @@ object Form1: TForm1
         Top = 296
         Width = 61
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 45
         Text = '0'
       end
@@ -1426,6 +1466,7 @@ object Form1: TForm1
         Top = 336
         Width = 58
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 48
         Text = '7'
       end
@@ -1436,6 +1477,7 @@ object Form1: TForm1
         Width = 84
         Alignment = taCenter
         Color = clWhite
+        ReadOnly = True
         TabOrder = 49
         Text = '0,0°C'
       end
@@ -1445,6 +1487,7 @@ object Form1: TForm1
         Top = 336
         Width = 60
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 50
         Text = '0'
       end
@@ -1454,6 +1497,7 @@ object Form1: TForm1
         Top = 336
         Width = 87
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 51
         Text = '0'
       end
@@ -1463,6 +1507,7 @@ object Form1: TForm1
         Top = 336
         Width = 62
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 52
         Text = '0'
       end
@@ -1472,6 +1517,7 @@ object Form1: TForm1
         Top = 336
         Width = 61
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 53
         Text = '0'
       end
@@ -1498,6 +1544,7 @@ object Form1: TForm1
         Top = 376
         Width = 58
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 56
         Text = '8'
       end
@@ -1508,6 +1555,7 @@ object Form1: TForm1
         Width = 84
         Alignment = taCenter
         Color = clWhite
+        ReadOnly = True
         TabOrder = 57
         Text = '0,0°C'
       end
@@ -1517,6 +1565,7 @@ object Form1: TForm1
         Top = 376
         Width = 60
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 58
         Text = '0'
       end
@@ -1526,6 +1575,7 @@ object Form1: TForm1
         Top = 376
         Width = 87
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 59
         Text = '0'
       end
@@ -1535,6 +1585,7 @@ object Form1: TForm1
         Top = 376
         Width = 62
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 60
         Text = '0'
       end
@@ -1544,6 +1595,7 @@ object Form1: TForm1
         Top = 376
         Width = 61
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 61
         Text = '0'
       end
@@ -1570,6 +1622,7 @@ object Form1: TForm1
         Top = 416
         Width = 58
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 64
         Text = '9'
       end
@@ -1580,6 +1633,7 @@ object Form1: TForm1
         Width = 84
         Alignment = taCenter
         Color = clWhite
+        ReadOnly = True
         TabOrder = 65
         Text = '0,0°C'
       end
@@ -1589,6 +1643,7 @@ object Form1: TForm1
         Top = 416
         Width = 60
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 66
         Text = '0'
       end
@@ -1598,6 +1653,7 @@ object Form1: TForm1
         Top = 416
         Width = 87
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 67
         Text = '0'
       end
@@ -1607,6 +1663,7 @@ object Form1: TForm1
         Top = 416
         Width = 62
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 68
         Text = '0'
       end
@@ -1616,6 +1673,7 @@ object Form1: TForm1
         Top = 416
         Width = 61
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 69
         Text = '0'
       end
@@ -1642,6 +1700,7 @@ object Form1: TForm1
         Top = 456
         Width = 58
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 72
         Text = '10'
       end
@@ -1652,6 +1711,7 @@ object Form1: TForm1
         Width = 84
         Alignment = taCenter
         Color = clWhite
+        ReadOnly = True
         TabOrder = 73
         Text = '0,0°C'
       end
@@ -1661,6 +1721,7 @@ object Form1: TForm1
         Top = 456
         Width = 60
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 74
         Text = '0'
       end
@@ -1670,6 +1731,7 @@ object Form1: TForm1
         Top = 456
         Width = 87
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 75
         Text = '0'
       end
@@ -1679,6 +1741,7 @@ object Form1: TForm1
         Top = 456
         Width = 62
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 76
         Text = '0'
       end
@@ -1688,6 +1751,7 @@ object Form1: TForm1
         Top = 456
         Width = 61
         Alignment = taCenter
+        ReadOnly = True
         TabOrder = 77
         Text = '0'
       end
@@ -1730,7 +1794,9 @@ object Form1: TForm1
         Font.Quality = fqDraft
         Font.Style = [fsBold]
         ParentFont = False
+        ReadOnly = True
         TabOrder = 81
+        Text = '0,0V'
       end
       object edt_condensador: TEdit
         Left = 896
@@ -1738,6 +1804,7 @@ object Form1: TForm1
         Top = 184
         Width = 158
         Alignment = taCenter
+        Color = clRed
         Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -35
@@ -1746,7 +1813,9 @@ object Form1: TForm1
         Font.Quality = fqDraft
         Font.Style = [fsBold]
         ParentFont = False
+        ReadOnly = True
         TabOrder = 82
+        Text = '0,0°C'
       end
       object lbl_condensador: TLabel
         Left = 896
@@ -1762,6 +1831,7 @@ object Form1: TForm1
         Top = 279
         Width = 248
         Alignment = taCenter
+        Color = clRed
         Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -35
@@ -1770,7 +1840,9 @@ object Form1: TForm1
         Font.Quality = fqDraft
         Font.Style = [fsBold]
         ParentFont = False
+        ReadOnly = True
         TabOrder = 83
+        Text = '2000,0mmHg'
       end
       object lbl_vacuometro: TLabel
         Left = 896
@@ -3526,7 +3598,25 @@ object Form1: TForm1
         Font.Quality = fqDraft
         Font.Style = [fsBold]
         ParentFont = False
+        ReadOnly = True
         TabOrder = 104
+        Text = '00:00'
+      end
+      object lbl_executando_processo: TLabel
+        Left = 54
+        Height = 34
+        Top = 23
+        Width = 9
+        Caption = '.'
+        Font.CharSet = ANSI_CHARSET
+        Font.Color = clBlue
+        Font.Height = -29
+        Font.Name = 'Arial'
+        Font.Pitch = fpVariable
+        Font.Quality = fqDraft
+        Font.Style = [fsBold, fsItalic]
+        ParentColor = False
+        ParentFont = False
       end
     end
     object TabSheet1: TTabSheet
@@ -4391,8 +4481,8 @@ object Form1: TForm1
     top = 104
   end
   object MainMenu1: TMainMenu
-    left = 376
-    top = 24
+    left = 1040
+    top = 48
     object MenuItem1: TMenuItem
       Caption = 'Tarefas Especiais'
       object Menu_Upload: TMenuItem
@@ -4412,7 +4502,7 @@ object Form1: TForm1
   end
   object tmr_vacuo: TTimer
     Enabled = False
-    Interval = 10000
+    Interval = 4500
     OnTimer = tmr_vacuoTimer
     left = 1120
     top = 216

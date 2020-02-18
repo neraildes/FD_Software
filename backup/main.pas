@@ -257,6 +257,7 @@ type
     Label15: TLabel;
     Label16: TLabel;
     Label17: TLabel;
+    lbl_executando_processo: TLabel;
     lbl_condensador: TLabel;
     lbl_vacuometro: TLabel;
     Label20: TLabel;
@@ -996,7 +997,13 @@ begin
   edit28.Text:=floattostr(Receita[cbb3.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(3,cbb3.ItemIndex);
   if(cbb3.Caption=' ') then
-     ToggleBox4.Checked:=FALSE
+     begin
+     ToggleBox4.Checked:=FALSE;
+     edit26.text:='0';
+     edit25.text:='0';
+     edit27.text:='0';
+     edit28.text:='0';
+     end
   else
      ToggleBox4.Checked:=TRUE;
   Aparelho.PROCULUS_Goto_Page(19,TEXTO,Form1.edt_saidapadrao);
@@ -1010,7 +1017,13 @@ begin
   edit35.Text:=floattostr(Receita[cbb4.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(4,cbb4.ItemIndex);
   if(cbb4.Caption=' ') then
-     ToggleBox5.Checked:=FALSE
+     begin
+     ToggleBox5.Checked:=FALSE;
+     edit33.text:='0';
+     edit32.text:='0';
+     edit34.text:='0';
+     edit35.text:='0';
+     end
   else
      ToggleBox5.Checked:=TRUE;
   Aparelho.PROCULUS_Goto_Page(19,TEXTO,Form1.edt_saidapadrao);
@@ -1024,7 +1037,13 @@ begin
   edit42.Text:=floattostr(Receita[cbb5.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(5,cbb5.ItemIndex);
   if(cbb5.Caption=' ') then
-     ToggleBox6.Checked:=FALSE
+     begin
+     ToggleBox6.Checked:=FALSE;
+     edit40.text:='0';
+     edit39.text:='0';
+     edit41.text:='0';
+     edit42.text:='0';
+     end
   else
      ToggleBox6.Checked:=TRUE;
   Aparelho.PROCULUS_Goto_Page(21,TEXTO,Form1.edt_saidapadrao);
@@ -1038,7 +1057,13 @@ begin
   edit49.Text:=floattostr(Receita[cbb6.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(6,cbb6.ItemIndex);
   if(cbb6.Caption=' ') then
-     ToggleBox7.Checked:=FALSE
+     begin
+     ToggleBox7.Checked:=FALSE;
+     edit47.text:='0';
+     edit46.text:='0';
+     edit48.text:='0';
+     edit49.text:='0';
+     end
   else
      ToggleBox7.Checked:=TRUE;
   Aparelho.PROCULUS_Goto_Page(21,TEXTO,Form1.edt_saidapadrao);
@@ -1052,7 +1077,13 @@ begin
   edit56.Text:=floattostr(Receita[cbb7.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(7,cbb7.ItemIndex);
   if(cbb7.Caption=' ') then
-     ToggleBox8.Checked:=FALSE
+     begin
+     ToggleBox8.Checked:=FALSE;
+     edit54.text:='0';
+     edit53.text:='0';
+     edit55.text:='0';
+     edit56.text:='0';
+     end
   else
      ToggleBox8.Checked:=TRUE;
   Aparelho.PROCULUS_Goto_Page(21,TEXTO,Form1.edt_saidapadrao);
@@ -1066,7 +1097,13 @@ begin
   edit63.Text:=floattostr(Receita[cbb8.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(8,cbb8.ItemIndex);
   if(cbb8.Caption=' ') then
-     ToggleBox9.Checked:=FALSE
+     begin
+     ToggleBox9.Checked:=FALSE;
+     edit61.text:='0';
+     edit60.text:='0';
+     edit62.text:='0';
+     edit63.text:='0';
+     end
   else
      ToggleBox9.Checked:=TRUE;
   Aparelho.PROCULUS_Goto_Page(21,TEXTO,Form1.edt_saidapadrao);
@@ -1080,7 +1117,13 @@ begin
   edit70.Text:=floattostr(Receita[cbb9.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(9,cbb9.ItemIndex);
   if(cbb9.Caption=' ') then
-     ToggleBox10.Checked:=FALSE
+     begin
+     ToggleBox10.Checked:=FALSE;
+     edit68.text:='0';
+     edit67.text:='0';
+     edit69.text:='0';
+     edit70.text:='0';
+     end
   else
      ToggleBox10.Checked:=TRUE;
   Aparelho.PROCULUS_Goto_Page(21,TEXTO,Form1.edt_saidapadrao);
@@ -1104,7 +1147,13 @@ begin
   edit7.Text:=floattostr(Receita[cbb0.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(0,cbb0.ItemIndex);
   if(cbb0.Caption=' ') then
-     ToggleBox1.Checked:=FALSE
+     begin
+     ToggleBox1.Checked:=FALSE;
+     edit4.text:='0';
+     edit3.text:='0';
+     edit5.text:='0';
+     edit7.text:='0';
+     end
   else
      ToggleBox1.Checked:=TRUE;
   Aparelho.PROCULUS_Goto_Page(19,TEXTO,Form1.edt_saidapadrao);
@@ -1118,7 +1167,13 @@ begin
   edit14.Text:=floattostr(Receita[cbb1.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(1,cbb1.ItemIndex);
   if(cbb1.Caption=' ') then
-     ToggleBox2.Checked:=FALSE
+     begin
+     ToggleBox2.Checked:=FALSE;
+     edit12.text:='0';
+     edit11.text:='0';
+     edit13.text:='0';
+     edit14.text:='0';
+     end
   else
      ToggleBox2.Checked:=TRUE;
   Aparelho.PROCULUS_Goto_Page(19,TEXTO,Form1.edt_saidapadrao);
@@ -1132,7 +1187,13 @@ begin
   edit21.Text:=floattostr(Receita[cbb2.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(2,cbb2.ItemIndex);
   if(cbb2.Caption=' ') then
+     begin
      ToggleBox3.Checked:=FALSE
+     edit19.text:='0';
+     edit18.text:='0';
+     edit20.text:='0';
+     edit21.text:='0';
+     end
   else
      ToggleBox3.Checked:=TRUE;
   Aparelho.PROCULUS_Goto_Page(19,TEXTO,Form1.edt_saidapadrao);
@@ -1472,7 +1533,8 @@ begin
       begin
       Aparelho.PROCULUS_Write_VP_Int(4,1,TEXTO,edt_saidapadrao); //LIGA BOTAO VACUO
       bib_Vacuo.Glyph.LoadFromFile(ExtractFilePath(ParamSTR(0))+'imagens\Vacuo_ON.bmp');
-      bib_Vacuo.ShowHint:=TRUE
+      bib_Vacuo.ShowHint:=TRUE;
+      lbl_executando_processo.caption:='Executando Processo...';
       end
    else
       begin
@@ -1771,14 +1833,9 @@ var
   Buffer_IO : array[0..TXBUFFERSIZE] of char;
   cnt,i : integer;
   strtmp : string;
-  //texto : string;
-  ListaDeComandos : array[0..20] of string;
   node : AnsiString;  //APagar apos ensaios
-  jjj : TObject;
-  HardReply:string;
   numreal : real;
   SaidaString : String;
-
 
 begin
   cnt:=0;
@@ -1797,7 +1854,7 @@ begin
         for i:=0 to 4 do
             strtmp:=strtmp+IntToHex(Word(Buffer_IO[i]),2);
 
-        Form1.Memo1.Lines.Add(strtmp);
+        //Form1.Memo1.Lines.Add(strtmp);
 
         if (POS('CDCDCD', strtmp)>0)then
             begin
@@ -2108,6 +2165,7 @@ begin
        begin
          Aparelho.PROCULUS_Control_Active(10,TEXTO,edt_saidapadrao);  //PRESSIONADO SIM
          Aparelho.PROCULUS_Write_VP_Int(6,240,TEXTO,edt_saidapadrao);
+         lbl_executando_processo.caption:='';
          Application.ProcessMessages;
        end
     else

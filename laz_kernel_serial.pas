@@ -77,7 +77,7 @@ const
 
 
 //-------------------------------------
-   BUFFER_PC               =  50;
+   BUFFER_PC               =  100;
 
 //-----------OUTRAS CONSTANTES-------------
    READ  = 0;
@@ -349,6 +349,8 @@ type
     protected
   end;
 
+var
+   buffer : array [0..TXBUFFERSIZE ] of byte;
 
 implementation
 
@@ -366,8 +368,6 @@ end;
 procedure TSerial.Buzzer(tempo : integer;
                     resultType : integer;
                     ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
 //fila[FilaFim].comando:=carga;
 //fila[FilaFim].result:='';
@@ -377,8 +377,6 @@ begin
   //fila[FilaFim].ObjOrigem:=Sender;
   fila[FilaFim].ObjDestino:=ObjDestino;
   fila[FilaFim].resTypeData:=resultType;
-
-
 
   buffer[0]:=(tempo div 256);
   buffer[1]:=(tempo mod 256);
@@ -407,8 +405,6 @@ procedure TSerial.Gravar_EEPROM_8bits_Interna_Mae(add    : integer;
                                                   data   : integer;
                                               resultType : integer;
                                               ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -428,8 +424,6 @@ procedure TSerial.Gravar_EEPROM_16bits_Interna_Mae(add  : integer;
                                                  data   : integer;
                                              resultType : integer;
                                              ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -452,9 +446,6 @@ procedure TSerial.Gravar_EEPROM_8bits_Interna_Filha(destino : integer;
                                                      data   : integer;
                                                  resultType : integer;
                                                  ObjDestino : TObject);
-
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -475,8 +466,6 @@ procedure TSerial.Gravar_EEPROM_16bits_Interna_Filha(destino : integer;
                                                       data   : integer;
                                                   resultType : integer;
                                                   ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
     //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
     //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -510,8 +499,6 @@ LE16F
 procedure TSerial.Ler_EEPROM_8bits_Interna_Mae(add    : integer;
                                            resultType : integer;
                                            ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -531,8 +518,6 @@ end;
 procedure TSerial.Ler_EEPROM_16bits_Interna_Mae(add    : integer;
                                             resultType : integer;
                                             ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -555,8 +540,6 @@ procedure TSerial.Ler_EEPROM_8bits_Interna_Filha(destino : integer;
                                                   add    : integer;
                                               resultType : integer;
                                               ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -574,8 +557,6 @@ procedure TSerial.Ler_EEPROM_16bits_Interna_Filha(destino : integer;
                                                    add    : integer;
                                                resultType : integer;
                                                ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -608,8 +589,6 @@ procedure TSerial.Gravar_EEPROM_8bits_24C1025_Mae(chip : integer;
                                                   data : integer;
                                             resultType : integer;
                                             ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -635,8 +614,6 @@ procedure TSerial.Gravar_EEPROM_16bits_24C1025_Mae(chip : integer;
                                                    data : integer;
                                              resultType : integer;
                                              ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -667,8 +644,6 @@ procedure TSerial.Gravar_EEPROM_8bits_24C1025_Filha(destino : integer;
                                                        data : integer;
                                                  resultType : integer;
                                                  ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -696,8 +671,6 @@ procedure TSerial.Gravar_EEPROM_16bits_24C1025_Filha(destino : integer;
                                                         data : integer;
                                                   resultType : integer;
                                                   ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -733,8 +706,6 @@ procedure TSerial.Ler_EEPROM_8bits_24C1025_Mae(chip : integer;
                                                add  : longint;
                                          resultType : integer;
                                          ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -758,8 +729,6 @@ procedure TSerial.Ler_EEPROM_16bits_24C1025_Mae(chip : integer;
                                                 add  : longint;
                                           resultType : integer;
                                           ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -784,8 +753,6 @@ procedure TSerial.Ler_EEPROM_8bits_24C1025_Filha(destino : integer;
                                                     add  : longint;
                                               resultType : integer;
                                               ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -810,8 +777,6 @@ procedure TSerial.Ler_EEPROM_16bits_24C1025_Filha(destino : integer;
                                                      add  : longint;
                                                resultType : integer;
                                                ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -835,7 +800,6 @@ procedure TSerial.Gravar_EEPROM_String_Mae(   add: integer;
                                       ObjDestino : TObject);
 var
    i : integer;
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -871,8 +835,6 @@ procedure TSerial.PROCULUS_Write_VP_Int(vp: integer;
                                      value: integer;
                                resultType : integer;
                                ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -893,8 +855,6 @@ end;
 procedure TSerial.PROCULUS_Read_VP_Int(vp: integer;
                               resultType : integer;
                               ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -916,7 +876,6 @@ procedure TSerial.PROCULUS_Write_VP_String(vp : integer;
                                    ObjDestino : TObject);
 var
    i : integer;
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -941,8 +900,6 @@ end;
 procedure TSerial.PROCULUS_Read_VP_String(vp : integer;
                                   resultType : integer;
                                   ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -960,8 +917,6 @@ end;
 procedure TSerial.Ler_EEPROM_String_Mae( add: integer;
                                  resultType : integer;
                                  ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -986,8 +941,6 @@ end;
 procedure TSerial.PROCULUS_Goto_Page(page : integer;
                               resultType : integer;
                               ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -1006,8 +959,6 @@ end;
 procedure TSerial.PROCULUS_Control_Active(Software_Control_Code: byte;
                                                     resultType : integer;
                                                     ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -1033,8 +984,6 @@ procedure TSerial.Read_Analogic_Channel(destino : integer;
                                      resultType : integer;
                                      resUnidade : string;
                                      ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -1053,8 +1002,6 @@ end;
 procedure TSerial.Show_Programacao(index      : integer;
                                    resultType : integer;
                                    ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -1069,8 +1016,6 @@ end;
 
 procedure TSerial.Format_Program(resultType : integer;
                                  ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -1086,8 +1031,6 @@ end;
 
 procedure TSerial.Upload_Program(resultType : integer;
                                  ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -1102,8 +1045,6 @@ end;
 
 procedure TSerial.Time_Process_Read(resultType : integer;
                                     ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -1118,8 +1059,6 @@ end;
 procedure TSerial.Time_RTC_Read(    value  : integer;
                                 resultType : integer;
                                 ObjDestino : TObject);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -1137,7 +1076,6 @@ procedure TSerial.Time_RTC_Write(     tempo : string;
                                  resultType : integer;
                                  ObjDestino : TObject);
 var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
    i:integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
@@ -1161,8 +1099,6 @@ procedure TSerial.EEPROM_24C1025_Fill_All(resultType : integer;
                                          destino : integer;
                                             chip : integer;
                                           value  : integer);
-var
-   buffer : array [0..TXBUFFERSIZE ] of byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
@@ -1217,8 +1153,8 @@ begin
 //fila[FilaFim].TotalReturn:=0;
 //fila[FilaFim].ObjOrigem:=nil;
 //fila[FilaFim].ObjDestino:=nil;
-  Form1.Memo3.Lines.Add(inttostr(FilaFim)+' Comandos.');
-  if (FilaFim<50) then  inc(FilaFim);
+  //Form1.Memo3.Lines.Add(inttostr(FilaFim)+' Comandos.');
+  if (FilaFim<100) then  inc(FilaFim);
 
   //result:= 'Foi Agendado, favor pegar o resultado na Thread';//kernelSerial(carga, TotalReturn);
 end;
@@ -1241,7 +1177,7 @@ var
   decimal: integer;
 begin
 
-  Form1.Memo2.Lines.Add('E: '+comando);   //ENVIADO
+  //Form1.Memo2.Lines.Add('E: '+comando);   //ENVIADO
 
   try
       if(length(comando)>2) then
@@ -1268,8 +1204,8 @@ begin
            Fila[0].result:=Copy(strtmp,length(strtmp)-(Fila[0].RXpayload*2)+1,Fila[0].RXpayload*2+1);
 
 
-           Form1.Memo2.Lines.Add('F: '+strtmp);
-           Form1.Memo2.Lines.Add('R: '+Fila[0].result);   //RECEBIDO
+           //Form1.Memo2.Lines.Add('F: '+strtmp);
+           //Form1.Memo2.Lines.Add('R: '+Fila[0].result);   //RECEBIDO
          end;
 
 
