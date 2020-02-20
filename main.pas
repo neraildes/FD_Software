@@ -6,7 +6,8 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
-  ComCtrls, Grids, Menus, Buttons, Laz_Kernel_Serial, Types, Inifiles, LCLType;
+  ComCtrls, Grids, Menus, Buttons, Laz_Kernel_Serial, Types, Inifiles, LCLType,
+  TAGraph, TASeries, TASources, TADrawUtils, TACustomSeries;
 
 const
   DESCONECTAR = 0;
@@ -82,6 +83,23 @@ type
     cbb1: TComboBox;
     cbb2: TComboBox;
     cbb_COMPORT: TComboBox;
+    Chart1: TChart;
+    Chart2: TChart;
+    cls_temperatura_NTC_03: TLineSeries;
+    cls_temperatura_NTC_04: TLineSeries;
+    cls_temperatura_NTC_05: TLineSeries;
+    cls_temperatura_NTC_06: TLineSeries;
+    cls_temperatura_NTC_07: TLineSeries;
+    cls_temperatura_NTC_08: TLineSeries;
+    cls_temperatura_NTC_09: TLineSeries;
+    cls_temperatura_NTC_10: TLineSeries;
+    cls_temperatura_NTC_02: TLineSeries;
+    Chart3: TChart;
+    cls_tensao: TLineSeries;
+    cls_temperatura_NTC_01: TLineSeries;
+    chl_condensador: TLineSeries;
+    cht_vacuo: TChart;
+    chl_vacuo: TLineSeries;
     ckb_time_pc: TCheckBox;
     edt_tmp_data: TEdit;
     edt_tmp_hora: TEdit;
@@ -107,7 +125,7 @@ type
     IEE_Read: TButton;
     IEE_Write: TButton;
     chk_EEPROM_16Bits: TCheckBox;
-    ControleDePaginas: TPageControl;
+    Folha_de_Abas: TPageControl;
     Edit1: TEdit;
     Edit10: TEdit;
     Edit11: TEdit;
@@ -291,8 +309,24 @@ type
     Label8: TLabel;
     Label9: TLabel;
     Lbl_Count: TLabel;
+    lcs_pt100_condensador: TListChartSource;
+    lcs_Plataforma_NTC_01: TListChartSource;
+    lcs_vacuometro: TListChartSource;
+    lcs_tensao: TListChartSource;
+    lcs_Plataforma_NTC_02: TListChartSource;
+    lcs_Plataforma_NTC_03: TListChartSource;
+    lcs_Plataforma_NTC_04: TListChartSource;
+    lcs_Plataforma_NTC_05: TListChartSource;
+    lcs_Plataforma_NTC_06: TListChartSource;
+    lcs_Plataforma_NTC_07: TListChartSource;
+    lcs_Plataforma_NTC_08: TListChartSource;
+    lcs_Plataforma_NTC_09: TListChartSource;
+    lcs_Plataforma_NTC_10: TListChartSource;
     MainMenu1: TMainMenu;
-    ManutencaoCalibracao: TTabSheet;
+    Mem_Grafico: TMemo;
+    Panel21: TPanel;
+    GraficoMEMO: TTabSheet;
+    tbs_manutencao: TTabSheet;
     Memo1: TMemo;
     Memo2: TMemo;
     Memo3: TMemo;
@@ -300,7 +334,7 @@ type
     MenuItem1: TMenuItem;
     Menu_Upload: TMenuItem;
     Menu_Format: TMenuItem;
-    PaginaPrincipal: TTabSheet;
+    tbs_pagina_principal: TTabSheet;
     Panel1: TPanel;
     Panel10: TPanel;
     Panel11: TPanel;
@@ -325,11 +359,12 @@ type
     Pn_COM_Check: TPanel;
     rb_24C1025: TRadioButton;
     rb_EEPROM: TRadioButton;
+    tbs_grafico: TTabSheet;
     tmr_vacuo: TTimer;
     tmr_online: TTimer;
     tmr_temperaturas: TTimer;
-    TabSheet1: TTabSheet;
-    TabSheet2: TTabSheet;
+    tbs_receitas: TTabSheet;
+    tbs_parametros: TTabSheet;
     tmr_condensador: TTimer;
     ToggleBox1: TToggleBox;
     ToggleBox10: TToggleBox;
@@ -385,7 +420,7 @@ type
     procedure cbb0Change(Sender: TObject);
     procedure cbb1Change(Sender: TObject);
     procedure cbb2Change(Sender: TObject);
-    procedure ControleDePaginasChange(Sender: TObject);
+    procedure Folha_de_AbasChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure IEE_ReadClick(Sender: TObject);
@@ -449,7 +484,7 @@ implementation
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   CountCOM:=0;
-  ControleDePaginas.PageIndex:=1;
+  Folha_de_Abas.PageIndex:=1;
 
   //ConectarSerial(CONECTAR);
   //Aparelho.FilaFim:=0;
@@ -1199,10 +1234,10 @@ begin
   Aparelho.PROCULUS_Goto_Page(19,TEXTO,Form1.edt_saidapadrao);
 end;
 
-procedure TForm1.ControleDePaginasChange(Sender: TObject);
+procedure TForm1.Folha_de_AbasChange(Sender: TObject);
 begin
-  //Showmessage('Clicou na Aba '+inttostr(ControleDePaginas.PageIndex));
-  if(ControleDePaginas.PageIndex=1) then
+  //Showmessage('Clicou na Aba '+inttostr(Folha_de_Abas.PageIndex));
+  if(Folha_de_Abas.PageIndex=1) then
      begin
      PreencheComboBox();
      Aparelho.PROCULUS_Goto_Page(15,TEXTO,Form1.edt_saidapadrao);

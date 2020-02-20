@@ -1,11 +1,11 @@
 object Form1: TForm1
-  Left = -24
-  Height = 640
-  Top = 129
+  Left = 93
+  Height = 667
+  Top = 121
   Width = 1196
   BorderStyle = bsDialog
   Caption = 'JJ Cientifica Ind. e Com. de Equipamentos Científicos'
-  ClientHeight = 620
+  ClientHeight = 647
   ClientWidth = 1196
   Font.CharSet = ANSI_CHARSET
   Font.Color = clBlack
@@ -27,7 +27,7 @@ object Form1: TForm1
     TabOrder = 0
     Text = 'Edit6'
   end
-  object ControleDePaginas: TPageControl
+  object Folha_de_Abas: TPageControl
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = Owner
     AnchorSideRight.Control = Owner
@@ -35,10 +35,10 @@ object Form1: TForm1
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrCenter
     Left = 0
-    Height = 620
+    Height = 645
     Top = 0
     Width = 1196
-    ActivePage = PaginaPrincipal
+    ActivePage = tbs_manutencao
     Anchors = [akTop, akLeft, akRight, akBottom]
     Font.CharSet = ANSI_CHARSET
     Font.Color = clBlack
@@ -48,14 +48,13 @@ object Form1: TForm1
     Font.Quality = fqDraft
     ParentFont = False
     ParentShowHint = False
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 1
-    OnChange = ControleDePaginasChange
-    object ManutencaoCalibracao: TTabSheet
+    OnChange = Folha_de_AbasChange
+    object tbs_manutencao: TTabSheet
       Caption = 'Manutencao e Calibracao'
-      ClientHeight = 679
+      ClientHeight = 617
       ClientWidth = 1188
-      TabVisible = False
       object Memo1: TMemo
         Left = 560
         Height = 544
@@ -781,9 +780,9 @@ object Form1: TForm1
         end
       end
     end
-    object PaginaPrincipal: TTabSheet
+    object tbs_pagina_principal: TTabSheet
       Caption = 'Página Principal'
-      ClientHeight = 592
+      ClientHeight = 617
       ClientWidth = 1188
       object edt_buffer: TEdit
         Left = 960
@@ -3619,9 +3618,9 @@ object Form1: TForm1
         ParentFont = False
       end
     end
-    object TabSheet1: TTabSheet
+    object tbs_receitas: TTabSheet
       Caption = 'Receitas'
-      ClientHeight = 611
+      ClientHeight = 592
       ClientWidth = 1188
       object Panel16: TPanel
         Left = 312
@@ -4173,9 +4172,9 @@ object Form1: TForm1
         TabOrder = 49
       end
     end
-    object TabSheet2: TTabSheet
+    object tbs_parametros: TTabSheet
       Caption = 'Parâmetros'
-      ClientHeight = 611
+      ClientHeight = 592
       ClientWidth = 1188
       object GroupBox9: TGroupBox
         Left = 24
@@ -4468,6 +4467,190 @@ object Form1: TForm1
         TabOrder = 4
       end
     end
+    object GraficoMEMO: TTabSheet
+      Caption = 'Grafico MEMO'
+      ClientHeight = 617
+      ClientWidth = 1188
+      object Mem_Grafico: TMemo
+        Left = 559
+        Height = 589
+        Top = 19
+        Width = 617
+        ScrollBars = ssVertical
+        TabOrder = 0
+      end
+    end
+    object tbs_grafico: TTabSheet
+      Caption = 'Gráfico'
+      ClientHeight = 617
+      ClientWidth = 1188
+      object Panel21: TPanel
+        Left = -8
+        Height = 664
+        Top = -24
+        Width = 1200
+        BevelColor = clInactiveBorder
+        ClientHeight = 664
+        ClientWidth = 1200
+        Color = 15461355
+        ParentColor = False
+        TabOrder = 2
+        object Chart3: TChart
+          Left = 9
+          Height = 136
+          Top = 24
+          Width = 1177
+          AxisList = <          
+            item
+              Marks.LabelBrush.Style = bsClear
+              Minors = <>
+              Title.LabelFont.Orientation = 900
+              Title.Visible = True
+              Title.Caption = 'Tensão'
+              Title.LabelBrush.Style = bsClear
+            end          
+            item
+              Alignment = calBottom
+              Marks.LabelBrush.Style = bsClear
+              Minors = <>
+              Title.LabelBrush.Style = bsClear
+            end>
+          Foot.Brush.Color = clBtnFace
+          Foot.Font.Color = clBlue
+          Title.Brush.Color = clBtnFace
+          Title.Font.Color = clBlue
+          Title.Text.Strings = (
+            'TAChart'
+          )
+          object cls_tensao: TLineSeries
+            Source = lcs_tensao
+          end
+        end
+        object Chart2: TChart
+          Left = 16
+          Height = 157
+          Top = 477
+          Width = 1176
+          AxisList = <          
+            item
+              Marks.LabelBrush.Style = bsClear
+              Minors = <>
+              Title.LabelFont.Orientation = 900
+              Title.Visible = True
+              Title.Caption = 'Plataformas'
+              Title.LabelBrush.Style = bsClear
+            end          
+            item
+              Alignment = calBottom
+              Marks.LabelBrush.Style = bsClear
+              Minors = <>
+              Title.Visible = True
+              Title.Caption = 'Tempo (seg.)'
+              Title.LabelBrush.Style = bsClear
+            end>
+          Foot.Brush.Color = clBtnFace
+          Foot.Font.Color = clBlue
+          Title.Brush.Color = clBtnFace
+          Title.Font.Color = clBlue
+          Title.Text.Strings = (
+            'TAChart'
+          )
+          object cls_temperatura_NTC_01: TLineSeries
+            Source = lcs_Plataforma_NTC_01
+          end
+          object cls_temperatura_NTC_02: TLineSeries
+            Source = lcs_Plataforma_NTC_02
+          end
+          object cls_temperatura_NTC_03: TLineSeries
+            Source = lcs_Plataforma_NTC_03
+          end
+          object cls_temperatura_NTC_04: TLineSeries
+            Source = lcs_Plataforma_NTC_04
+          end
+          object cls_temperatura_NTC_05: TLineSeries
+            Source = lcs_Plataforma_NTC_05
+          end
+          object cls_temperatura_NTC_06: TLineSeries
+            Source = lcs_Plataforma_NTC_06
+          end
+          object cls_temperatura_NTC_07: TLineSeries
+            Source = lcs_Plataforma_NTC_07
+          end
+          object cls_temperatura_NTC_08: TLineSeries
+            Source = lcs_Plataforma_NTC_08
+          end
+          object cls_temperatura_NTC_09: TLineSeries
+            Source = lcs_Plataforma_NTC_09
+          end
+          object cls_temperatura_NTC_10: TLineSeries
+            Source = lcs_Plataforma_NTC_10
+          end
+        end
+      end
+      object Chart1: TChart
+        Left = 4
+        Height = 144
+        Top = 296
+        Width = 1180
+        AxisList = <        
+          item
+            Marks.LabelBrush.Style = bsClear
+            Minors = <>
+            Title.LabelFont.Orientation = 900
+            Title.Visible = True
+            Title.Caption = 'Condensador'
+            Title.LabelBrush.Style = bsClear
+          end        
+          item
+            Alignment = calBottom
+            Marks.LabelBrush.Style = bsClear
+            Minors = <>
+            Title.LabelBrush.Style = bsClear
+          end>
+        Foot.Brush.Color = clBtnFace
+        Foot.Font.Color = clBlue
+        Title.Brush.Color = clBtnFace
+        Title.Font.Color = clBlue
+        Title.Text.Strings = (
+          'TAChart'
+        )
+        object chl_condensador: TLineSeries
+          Source = lcs_pt100_condensador
+        end
+      end
+      object cht_vacuo: TChart
+        Left = -4
+        Height = 144
+        Top = 144
+        Width = 1184
+        AxisList = <        
+          item
+            Marks.LabelBrush.Style = bsClear
+            Minors = <>
+            Title.LabelFont.Orientation = 900
+            Title.Visible = True
+            Title.Caption = 'Vácuo'
+            Title.LabelBrush.Style = bsClear
+          end        
+          item
+            Alignment = calBottom
+            Marks.LabelBrush.Style = bsClear
+            Minors = <>
+            Title.LabelBrush.Style = bsClear
+          end>
+        Foot.Brush.Color = clBtnFace
+        Foot.Font.Color = clBlue
+        Title.Brush.Color = clBtnFace
+        Title.Font.Color = clBlue
+        Title.Text.Strings = (
+          'TAChart'
+        )
+        object chl_vacuo: TLineSeries
+          AxisIndexX = 0
+          Source = lcs_vacuometro
+        end
+      end
+    end
   end
   object tmr_online: TTimer
     OnTimer = tmr_onlineTimer
@@ -4481,7 +4664,7 @@ object Form1: TForm1
     top = 104
   end
   object MainMenu1: TMainMenu
-    left = 1040
+    left = 1072
     top = 48
     object MenuItem1: TMenuItem
       Caption = 'Tarefas Especiais'
@@ -4506,5 +4689,122 @@ object Form1: TForm1
     OnTimer = tmr_vacuoTimer
     left = 1120
     top = 216
+  end
+  object lcs_pt100_condensador: TListChartSource
+    DataPoints.Strings = (
+      '0|25|?|'
+      '10|15|?|'
+      '20|10|?|'
+      '30|0|?|'
+      '40|-10|?|'
+      '50|-20|?|'
+      '60|-30|?|'
+      '70|-35|?|'
+      '80|-35|?|'
+      '90|-35|?|'
+      '100|-35|?|'
+    )
+    left = 528
+    top = 352
+  end
+  object lcs_Plataforma_NTC_01: TListChartSource
+    DataPoints.Strings = (
+      '0|25|?|'
+      '10|27|?|'
+      '20|31|?|'
+      '30|35|?|'
+      '40|39|?|'
+      '50|41|?|'
+      '60|42|?|'
+      '70|42|?|'
+      '80|42|?|'
+      '90|42|?|'
+      '100|42|?|'
+    )
+    left = 120
+    top = 464
+  end
+  object lcs_vacuometro: TListChartSource
+    DataPoints.Strings = (
+      '0|2000|?|'
+      '10|1930|?|'
+      '20|1680|?|'
+      '30|1250|?|'
+      '40|830|?|'
+      '50|510|?|'
+      '60|390|?|'
+      '70|360|?|'
+      '80|353|?|'
+      '90|348|?|'
+      '100|350|?|'
+    )
+    left = 528
+    top = 208
+  end
+  object lcs_tensao: TListChartSource
+    DataPoints.Strings = (
+      '0|122|?|'
+      '10|127|?|'
+      '20|120|?|'
+      '30|125|?|'
+      '40|123|?|'
+      '50|121|?|'
+      '60|124|?|'
+      '70|127|?|'
+      '80|126|?|'
+      '90|123|?|'
+      '100|127|?|'
+    )
+    left = 528
+    top = 64
+  end
+  object lcs_Plataforma_NTC_02: TListChartSource
+    DataPoints.Strings = (
+      '0|25|?|'
+      '10|25|?|'
+      '20|27|?|'
+      '30|28|?|'
+      '40|40|?|'
+      '50|30|?|'
+      '60|32|?|'
+      '70|33|?|'
+      '80|35|?|'
+      '90|37|?|'
+      '100|38|?|'
+    )
+    left = 248
+    top = 464
+  end
+  object lcs_Plataforma_NTC_03: TListChartSource
+    left = 392
+    top = 464
+  end
+  object lcs_Plataforma_NTC_04: TListChartSource
+    left = 552
+    top = 464
+  end
+  object lcs_Plataforma_NTC_05: TListChartSource
+    left = 688
+    top = 464
+  end
+  object lcs_Plataforma_NTC_06: TListChartSource
+    left = 824
+    top = 464
+  end
+  object lcs_Plataforma_NTC_07: TListChartSource
+    left = 952
+    top = 464
+  end
+  object lcs_Plataforma_NTC_08: TListChartSource
+    left = 1088
+    top = 464
+  end
+  object lcs_Plataforma_NTC_09: TListChartSource
+    left = 392
+    top = 536
+  end
+  object lcs_Plataforma_NTC_10: TListChartSource
+    left = 688
+    top = 534
   end
 end
