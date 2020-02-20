@@ -38,7 +38,7 @@ object Form1: TForm1
     Height = 645
     Top = 0
     Width = 1196
-    ActivePage = tbs_manutencao
+    ActivePage = tbs_pagina_principal
     Anchors = [akTop, akLeft, akRight, akBottom]
     Font.CharSet = ANSI_CHARSET
     Font.Color = clBlack
@@ -48,7 +48,7 @@ object Form1: TForm1
     Font.Quality = fqDraft
     ParentFont = False
     ParentShowHint = False
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 1
     OnChange = Folha_de_AbasChange
     object tbs_manutencao: TTabSheet
@@ -56,24 +56,24 @@ object Form1: TForm1
       ClientHeight = 617
       ClientWidth = 1188
       object Memo1: TMemo
-        Left = 560
+        Left = 584
         Height = 544
-        Top = 32
+        Top = 24
         Width = 200
         TabOrder = 0
       end
       object Memo3: TMemo
-        Left = 776
+        Left = 800
         Height = 147
-        Top = 232
+        Top = 224
         Width = 161
         ScrollBars = ssVertical
         TabOrder = 1
       end
       object Memo4: TMemo
-        Left = 776
+        Left = 800
         Height = 160
-        Top = 416
+        Top = 408
         Width = 161
         TabOrder = 2
       end
@@ -96,9 +96,9 @@ object Form1: TForm1
         TabOrder = 4
       end
       object Memo2: TMemo
-        Left = 776
+        Left = 800
         Height = 172
-        Top = 32
+        Top = 24
         Width = 161
         TabOrder = 5
       end
@@ -1864,7 +1864,7 @@ object Form1: TForm1
       object cbb3: TComboBox
         Left = 593
         Height = 23
-        Top = 216
+        Top = 215
         Width = 96
         ItemHeight = 15
         MaxLength = 3

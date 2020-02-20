@@ -55,7 +55,6 @@ object Form1: TForm1
       Caption = 'Manutencao e Calibracao'
       ClientHeight = 617
       ClientWidth = 1188
-      TabVisible = False
       object Memo1: TMemo
         Left = 560
         Height = 544

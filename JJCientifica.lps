@@ -21,8 +21,8 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Main"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="1176"/>
-        <CursorPos X="3" Y="1179"/>
+        <TopLine Value="543"/>
+        <CursorPos X="35" Y="551"/>
         <UsageCount Value="228"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -220,7 +220,7 @@
       </Position29>
       <Position30>
         <Filename Value="main.pas"/>
-        <Caret Line="1187" Column="3" TopLine="1186"/>
+        <Caret Line="1187" Column="3" TopLine="1184"/>
       </Position30>
     </JumpHistory>
     <RunParams>
@@ -235,7 +235,7 @@
         <WatchScope Value="wpsLocal"/>
         <WatchKind Value="wpkWrite"/>
         <Source Value="main.pas"/>
-        <Line Value="865"/>
+        <Line Value="873"/>
       </Item1>
     </BreakPoints>
   </Debugging>
