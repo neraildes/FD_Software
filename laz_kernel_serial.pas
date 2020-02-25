@@ -71,6 +71,9 @@ const
    COMMAND_SHOW_PROGRAM    = $42;
    COMMAND_FORMAT          = $43;
    COMMAND_UPLOAD_PRG      = $44;
+   COMMAND_EEE_R_32B       = $45;
+   COMMAND_EEE_W_32B       = $46; //não implementado
+
 
    //...
    //----------------------------------
@@ -102,8 +105,20 @@ type
            ObjDestino : TObject;
            end;
 
+  TGrafico = Record
+             processo   : integer;
+             dataInicio : String[10];
+             horaInicio : String[10];
+             dataFim    : String[10];
+             horaFim    : String[10];
+             addInicio  : integer;
+             addFim     : integer;
+             intervalo  : integer;
+             minutos    : integer;
+             end;
 
-type
+
+
 
   TSerial = class(TBlockSerial)
     public
@@ -259,6 +274,16 @@ type
                                    resultType : integer;
                                    ObjDestino : TObject);
 
+      procedure Ler_EEPROM_24C1025_String_Mae(chip: integer;
+                                               add: integer;
+                                       resultType : integer;
+                                       ObjDestino : TObject);
+      //------------------------------------------------------------------------
+      {32 Bits}
+      procedure Ler_EEPROM_32bits_24C1025_Mae(chip : integer;
+                                              add  : longint;
+                                        resultType : integer;
+                                        ObjDestino : TObject);
 
 
       //------------------------------------------------------------------------
@@ -351,6 +376,7 @@ type
 
 var
    buffer : array [0..TXBUFFERSIZE ] of byte;
+   GraficoData : array [0..11] of TGrafico;
 
 implementation
 
@@ -794,6 +820,29 @@ begin
 end;
 
 
+
+procedure TSerial.Ler_EEPROM_32bits_24C1025_Mae(chip : integer;
+                                                add  : longint;
+                                          resultType : integer;
+                                          ObjDestino : TObject);
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  fila[FilaFim].RXpayload:=4;
+  fila[FilaFim].TotalReturn:=9;
+  fila[FilaFim].resTypeData:=resultType;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+
+  buffer[0]:= chip ;
+  buffer[1]:= (add>>24) and $FF;
+  buffer[2]:= (add>>16) and $FF;
+  buffer[3]:= (add>>8 ) and $FF;
+  buffer[4]:= (add>>0 ) and $FF;
+  KernelCommand(COMMAND_EEE_R_32B,0 , 5, buffer);
+end;
+
+
+
 procedure TSerial.Gravar_EEPROM_String_Mae(   add: integer;
                                            value : string;
                                       resultType : integer;
@@ -931,7 +980,26 @@ begin
 end;
 
 
+procedure TSerial.Ler_EEPROM_24C1025_String_Mae(chip: integer;
+                                                 add: integer;
+                                         resultType : integer;
+                                         ObjDestino : TObject);
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  fila[FilaFim].RXpayload:=15;
+  fila[FilaFim].TotalReturn:=20;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
+  //*Aqui
+  buffer[0]:= chip ;
+  buffer[1]:= (add>>24) and $FF;
+  buffer[2]:= (add>>16) and $FF;
+  buffer[3]:= (add>>8 ) and $FF;
+  buffer[4]:= (add>>0 ) and $FF;
 
+  KernelCommand(COMMAND_EEE_R_STR, 0, 5, buffer);
+end;
 
 
 
@@ -1177,7 +1245,7 @@ var
   decimal: integer;
 begin
 
-  //Form1.Memo2.Lines.Add('E: '+comando);   //ENVIADO
+  Form1.Memo2.Lines.Add('E: '+comando);   //ENVIADO
 
   try
       if(length(comando)>2) then
@@ -1204,8 +1272,8 @@ begin
            Fila[0].result:=Copy(strtmp,length(strtmp)-(Fila[0].RXpayload*2)+1,Fila[0].RXpayload*2+1);
 
 
-           //Form1.Memo2.Lines.Add('F: '+strtmp);
-           //Form1.Memo2.Lines.Add('R: '+Fila[0].result);   //RECEBIDO
+           Form1.Memo2.Lines.Add('F: '+strtmp);
+           Form1.Memo2.Lines.Add('R: '+Fila[0].result);   //RECEBIDO
          end;
 
 

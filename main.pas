@@ -24,6 +24,22 @@ type
     Histerese: real;
   end;
 
+  {TEMPO}
+  TTempo = record
+   data  : string[10];
+   hora  : string[10];
+  end;
+
+  {FAT8}
+   TfAT8 = record
+     process_number : integer;
+     inicio : TTempo;
+     fim    : TTempo;
+     amostra: byte;
+     add_start : cardinal;
+     add_end   : cardinal;
+     minutes   : integer;
+   end;
 
 
 
@@ -60,6 +76,16 @@ type
     Button10: TButton;
     btn_Config_Ler: TButton;
     btn_Config_Gravar: TButton;
+    btn_baixar_dados_grafico: TButton;
+    btn_Ler24C32Bits: TButton;
+    cbb_programa: TComboBox;
+    edt_24C_32B_add: TEdit;
+    edt_24c_32bits: TEdit;
+    edt_saida_24STRING: TEdit;
+    edt_EEE_R_STR: TEdit;
+    gpb_24C1025_32Bits: TGroupBox;
+    Ler_EEE_24C: TButton;
+    Gravar_EEE_24C: TButton;
     Button2: TButton;
     btn_vp_string_read: TButton;
     btn_vp_strinng_write: TButton;
@@ -101,6 +127,7 @@ type
     cht_vacuo: TChart;
     chl_vacuo: TLineSeries;
     ckb_time_pc: TCheckBox;
+    edit_saidafat8: TEdit;
     edt_tmp_data: TEdit;
     edt_tmp_hora: TEdit;
     edt_time_process: TEdit;
@@ -121,6 +148,7 @@ type
     GroupBox15: TGroupBox;
     GroupBox16: TGroupBox;
     GroupBox17: TGroupBox;
+    EEE_241025_STRING: TGroupBox;
     GroupBox9: TGroupBox;
     IEE_Read: TButton;
     IEE_Write: TButton;
@@ -326,6 +354,9 @@ type
     Mem_Grafico: TMemo;
     Panel21: TPanel;
     GraficoMEMO: TTabSheet;
+    PopupMenu1: TPopupMenu;
+    pgb_Graphic_Load: TProgressBar;
+    pgb_load_data_graphic: TProgressBar;
     tbs_manutencao: TTabSheet;
     Memo1: TMemo;
     Memo2: TMemo;
@@ -388,6 +419,7 @@ type
     procedure btn_EscreverMemoClick(Sender: TObject);
     procedure btn_fillClick(Sender: TObject);
     procedure btn_gravar_vp_intClick(Sender: TObject);
+    procedure btn_Ler24C32BitsClick(Sender: TObject);
     procedure btn_Ler_RTCClick(Sender: TObject);
     procedure btn_ler_vp_intClick(Sender: TObject);
     procedure btn_page_writeClick(Sender: TObject);
@@ -400,6 +432,9 @@ type
     procedure btn_vp_string_readClick(Sender: TObject);
     procedure btn_vp_strinng_writeClick(Sender: TObject);
     procedure Button10Click(Sender: TObject);
+    procedure btn_baixar_dados_graficoClick(Sender: TObject);
+    procedure cbb_programaChange(Sender: TObject);
+    procedure Ler_EEE_24CClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
@@ -472,6 +507,7 @@ var
   ouvinte :  TThead_USART;
   CountCOM : integer;  //Indica se o sistema está online
   Receita : array [0..8] of TReceita;
+  Fat8 : TFat8;
 
 
 
@@ -814,6 +850,202 @@ begin
     ToggleBox10.Checked:=FALSE;
 end;
 
+procedure TForm1.btn_baixar_dados_graficoClick(Sender: TObject);
+var
+  addeeprom : cardinal;
+  index : integer;
+  linha : string;
+  horafim : string;
+begin
+  tmr_temperaturas.Enabled:=FALSE;
+  Mem_Grafico.Lines.Clear;
+  cbb_programa.Items.Clear;
+
+  Mem_Grafico.Lines.Add('Baixando dados dos Gráficos...');
+  for index:=0 to 11 do
+      begin
+      Mem_Grafico.Lines.Add('Grafico número '+inttostr(index+1));
+      pgb_Graphic_Load.Position:=index+1;
+      addeeprom := (index*54)+$10;
+
+      edit_saidafat8.text:='';
+      Aparelho.Ler_EEPROM_16bits_24C1025_Mae(0,addeeprom,UINTEGER,edit_saidafat8);
+      Aguarda_Atualizacao_do_TEdit(edit_saidafat8);
+      Linha:=formatfloat('0000',strtoint(edit_saidafat8.text));
+      GraficoData[index].processo:=strtoint(edit_saidafat8.text);
+      Mem_Grafico.Lines.Add(' Processo.');
+
+      if(Linha<>'0000') then
+         begin
+
+          edit_saidafat8.text:='';
+          Aparelho.Ler_EEPROM_24C1025_String_Mae(0,addeeprom+12,TEXTO,edit_saidafat8);
+          Aguarda_Atualizacao_do_TEdit(edit_saidafat8);
+          Linha:=Linha+' - '+edit_saidafat8.text;
+          GraficoData[index].dataInicio:=edit_saidafat8.text;
+          Mem_Grafico.Lines.Add(' Data Início.');
+
+          edit_saidafat8.text:='';
+          Aparelho.Ler_EEPROM_24C1025_String_Mae(0,addeeprom+2,TEXTO,edit_saidafat8);
+          Aguarda_Atualizacao_do_TEdit(edit_saidafat8);
+          Linha:=Linha+' - '+edit_saidafat8.text;
+          GraficoData[index].horaInicio:=edit_saidafat8.text;
+          Mem_Grafico.Lines.Add(' Hora Início.');
+
+          edit_saidafat8.text:='';
+          Aparelho.Ler_EEPROM_24C1025_String_Mae(0,addeeprom+32,TEXTO,edit_saidafat8);
+          Aguarda_Atualizacao_do_TEdit(edit_saidafat8);
+          Linha:=Linha+' - '+edit_saidafat8.text;
+          GraficoData[index].dataFim:=edit_saidafat8.text;
+          Mem_Grafico.Lines.Add(' Data Fim.');
+
+          edit_saidafat8.text:='';
+          Aparelho.Ler_EEPROM_24C1025_String_Mae(0,addeeprom+22,TEXTO,edit_saidafat8);
+          Aguarda_Atualizacao_do_TEdit(edit_saidafat8);
+          horafim:=edit_saidafat8.text;
+          GraficoData[index].horaFim:=edit_saidafat8.text;
+          Mem_Grafico.Lines.Add(' Hora Fim.');
+
+          if(horafim<>'') then
+             begin
+              Linha:=Linha+' - '+horafim;
+
+
+              edit_saidafat8.text:='';
+              Aparelho.Ler_EEPROM_8bits_24C1025_Mae(0,addeeprom+42,UINTEGER,edit_saidafat8);
+              Aguarda_Atualizacao_do_TEdit(edit_saidafat8);
+              Linha:=Linha+' - '+formatfloat('000',strtoint(edit_saidafat8.text));
+              GraficoData[index].intervalo:=strtoint(edit_saidafat8.text);
+              Mem_Grafico.Lines.Add(' Intervalo.');
+
+              edit_saidafat8.text:='';
+              Aparelho.Ler_EEPROM_16bits_24C1025_Mae(0,addeeprom+51,UINTEGER,edit_saidafat8);
+              Aguarda_Atualizacao_do_TEdit(edit_saidafat8);
+              Linha:=Linha+' - '+formatfloat('00000',strtoint(edit_saidafat8.text));
+              GraficoData[index].minutos:=strtoint(edit_saidafat8.text);
+              Mem_Grafico.Lines.Add(' Minutos.');
+
+              edit_saidafat8.text:='';
+              Aparelho.Ler_EEPROM_32bits_24C1025_Mae(0,addeeprom+43,UINTEGER,edit_saidafat8);
+              Aguarda_Atualizacao_do_TEdit(edit_saidafat8);
+              Linha:=Linha+' - '+formatfloat('00000',strtoint(edit_saidafat8.text));
+              GraficoData[index].addInicio:=strtoint(edit_saidafat8.text);
+              Mem_Grafico.Lines.Add(' Endereco Inicial.');
+
+              edit_saidafat8.text:='';
+              Aparelho.Ler_EEPROM_32bits_24C1025_Mae(0,addeeprom+47,UINTEGER,edit_saidafat8);
+              Aguarda_Atualizacao_do_TEdit(edit_saidafat8);
+              Linha:=Linha+' - '+formatfloat('00000',strtoint(edit_saidafat8.text));
+              GraficoData[index].addFim:=strtoint(edit_saidafat8.text);
+              Mem_Grafico.Lines.Add(' Endereço Final.');
+
+              cbb_programa.Items.Add(Linha);
+             end;
+         end;
+      end;
+
+  tmr_temperaturas.Enabled:=TRUE;
+end;
+
+procedure TForm1.cbb_programaChange(Sender: TObject);
+var
+  Addeeprom :integer;
+  Linha : string;
+begin
+ showmessage
+ (
+ 'Endereco Inicial = '+inttostr(GraficoData[cbb_programa.ItemIndex].addInicio)+#13+
+ 'Endereco Final   = '+inttostr(GraficoData[cbb_programa.ItemIndex].addFim)
+ );
+ tmr_temperaturas.Enabled:=FALSE;
+ Mem_Grafico.Lines.Clear;
+ Addeeprom:=GraficoData[cbb_programa.ItemIndex].addInicio ;
+
+
+ pgb_load_data_graphic.Min:=GraficoData[cbb_programa.ItemIndex].addInicio;
+ pgb_load_data_graphic.Max:=GraficoData[cbb_programa.ItemIndex].addFim;
+ while(addeeprom<=GraficoData[cbb_programa.ItemIndex].addFim) do
+ begin
+   pgb_load_data_graphic.Position:=addeeprom;
+   edit_saidafat8.text:='';
+   Aparelho.Ler_EEPROM_16bits_24C1025_Filha(1,0,Addeeprom,FLUTUANTE,edit_saidafat8);
+   Aguarda_Atualizacao_do_TEdit(edit_saidafat8);
+   Linha:=edit_saidafat8.text+' ; ';
+
+   edit_saidafat8.text:='';
+   Aparelho.Ler_EEPROM_16bits_24C1025_Filha(1,1,Addeeprom,FLUTUANTE,edit_saidafat8);
+   Aguarda_Atualizacao_do_TEdit(edit_saidafat8);
+   Linha:=Linha+edit_saidafat8.text+' ; ';
+
+   edit_saidafat8.text:='';
+   Aparelho.Ler_EEPROM_16bits_24C1025_Filha(2,0,Addeeprom,FLUTUANTE,edit_saidafat8);
+   Aguarda_Atualizacao_do_TEdit(edit_saidafat8);
+   Linha:=Linha+edit_saidafat8.text+' ; ';
+
+   edit_saidafat8.text:='';
+   Aparelho.Ler_EEPROM_16bits_24C1025_Filha(3,0,Addeeprom,FLUTUANTE,edit_saidafat8);
+   Aguarda_Atualizacao_do_TEdit(edit_saidafat8);
+   Linha:=Linha+edit_saidafat8.text+' ; ';
+
+   edit_saidafat8.text:='';
+   Aparelho.Ler_EEPROM_16bits_24C1025_Filha(3,1,Addeeprom,FLUTUANTE,edit_saidafat8);
+   Aguarda_Atualizacao_do_TEdit(edit_saidafat8);
+   Linha:=Linha+edit_saidafat8.text+' ; ';
+
+   edit_saidafat8.text:='';
+   Aparelho.Ler_EEPROM_16bits_24C1025_Filha(4,0,Addeeprom,FLUTUANTE,edit_saidafat8);
+   Aguarda_Atualizacao_do_TEdit(edit_saidafat8);
+   Linha:=Linha+edit_saidafat8.text+' ; ';
+
+   edit_saidafat8.text:='';
+   Aparelho.Ler_EEPROM_16bits_24C1025_Filha(4,1,Addeeprom,FLUTUANTE,edit_saidafat8);
+   Aguarda_Atualizacao_do_TEdit(edit_saidafat8);
+   Linha:=Linha+edit_saidafat8.text+' ; ';
+
+   edit_saidafat8.text:='';
+   Aparelho.Ler_EEPROM_16bits_24C1025_Filha(5,0,Addeeprom,FLUTUANTE,edit_saidafat8);
+   Aguarda_Atualizacao_do_TEdit(edit_saidafat8);
+   Linha:=Linha+edit_saidafat8.text+' ; ';
+   {
+   edit_saidafat8.text:='';
+   Aparelho.Ler_EEPROM_16bits_24C1025_Filha(5,1,Addeeprom,FLUTUANTE,edit_saidafat8);
+   Aguarda_Atualizacao_do_TEdit(edit_saidafat8);
+   Linha:=Linha+edit_saidafat8.text+' ; ';
+
+   edit_saidafat8.text:='';
+   Aparelho.Ler_EEPROM_16bits_24C1025_Filha(6,0,Addeeprom,FLUTUANTE,edit_saidafat8);
+   Aguarda_Atualizacao_do_TEdit(edit_saidafat8);
+   Linha:=Linha+edit_saidafat8.text+' ; ';
+
+   edit_saidafat8.text:='';
+   Aparelho.Ler_EEPROM_16bits_24C1025_Filha(6,1,Addeeprom,FLUTUANTE,edit_saidafat8);
+   Aguarda_Atualizacao_do_TEdit(edit_saidafat8);
+   Linha:=Linha+edit_saidafat8.text+' ; ';
+
+   edit_saidafat8.text:='';
+   Aparelho.Ler_EEPROM_16bits_24C1025_Filha(7,0,Addeeprom,FLUTUANTE,edit_saidafat8);
+   Aguarda_Atualizacao_do_TEdit(edit_saidafat8);
+   Linha:=Linha+edit_saidafat8.text+' ; ';
+
+   edit_saidafat8.text:='';
+   Aparelho.Ler_EEPROM_16bits_24C1025_Filha(7,1,Addeeprom,FLUTUANTE,edit_saidafat8);
+   Aguarda_Atualizacao_do_TEdit(edit_saidafat8);
+   Linha:=Linha+edit_saidafat8.text+' ; ';
+   }
+   Mem_Grafico.Lines.Add(Linha);
+   inc(addeeprom,2);
+ end;
+  tmr_temperaturas.Enabled:=TRUE;
+end;
+
+procedure TForm1.Ler_EEE_24CClick(Sender: TObject);
+begin
+  edit_saidafat8.text:='';
+  Aparelho.Ler_EEPROM_24C1025_String_Mae(0,strtoint(edt_EEE_R_STR.text),TEXTO,edt_saida_24STRING);
+  Aguarda_Atualizacao_do_TEdit(edt_saida_24STRING);
+  Memo1.Lines.Add(edt_saida_24STRING.text);
+end;
+
 procedure TForm1.Button1Click(Sender: TObject);
 var
   valor:longint;
@@ -1031,6 +1263,7 @@ begin
   edit27.Text:=floattostr(Receita[cbb3.ItemIndex].TempoOFF);
   edit28.Text:=floattostr(Receita[cbb3.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(3,cbb3.ItemIndex);
+  //Aparelho.Upload_Program(TEXTO,edt_saidapadrao);
   if(cbb3.Caption=' ') then
      begin
      ToggleBox4.Checked:=FALSE;
@@ -1051,6 +1284,7 @@ begin
   edit34.Text:=floattostr(Receita[cbb4.ItemIndex].TempoOFF);
   edit35.Text:=floattostr(Receita[cbb4.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(4,cbb4.ItemIndex);
+  //Aparelho.Upload_Program(TEXTO,edt_saidapadrao);
   if(cbb4.Caption=' ') then
      begin
      ToggleBox5.Checked:=FALSE;
@@ -1071,6 +1305,7 @@ begin
   edit41.Text:=floattostr(Receita[cbb5.ItemIndex].TempoOFF);
   edit42.Text:=floattostr(Receita[cbb5.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(5,cbb5.ItemIndex);
+  //Aparelho.Upload_Program(TEXTO,edt_saidapadrao);
   if(cbb5.Caption=' ') then
      begin
      ToggleBox6.Checked:=FALSE;
@@ -1091,6 +1326,7 @@ begin
   edit48.Text:=floattostr(Receita[cbb6.ItemIndex].TempoOFF);
   edit49.Text:=floattostr(Receita[cbb6.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(6,cbb6.ItemIndex);
+  //Aparelho.Upload_Program(TEXTO,edt_saidapadrao);
   if(cbb6.Caption=' ') then
      begin
      ToggleBox7.Checked:=FALSE;
@@ -1111,6 +1347,7 @@ begin
   edit55.Text:=floattostr(Receita[cbb7.ItemIndex].TempoOFF);
   edit56.Text:=floattostr(Receita[cbb7.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(7,cbb7.ItemIndex);
+  //Aparelho.Upload_Program(TEXTO,edt_saidapadrao);
   if(cbb7.Caption=' ') then
      begin
      ToggleBox8.Checked:=FALSE;
@@ -1131,6 +1368,7 @@ begin
   edit62.Text:=floattostr(Receita[cbb8.ItemIndex].TempoOFF);
   edit63.Text:=floattostr(Receita[cbb8.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(8,cbb8.ItemIndex);
+  //Aparelho.Upload_Program(TEXTO,edt_saidapadrao);
   if(cbb8.Caption=' ') then
      begin
      ToggleBox9.Checked:=FALSE;
@@ -1151,6 +1389,7 @@ begin
   edit69.Text:=floattostr(Receita[cbb9.ItemIndex].TempoOFF);
   edit70.Text:=floattostr(Receita[cbb9.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(9,cbb9.ItemIndex);
+  //Aparelho.Upload_Program(TEXTO,edt_saidapadrao);
   if(cbb9.Caption=' ') then
      begin
      ToggleBox10.Checked:=FALSE;
@@ -1181,6 +1420,7 @@ begin
   edit5.Text:=floattostr(Receita[cbb0.ItemIndex].TempoOFF);
   edit7.Text:=floattostr(Receita[cbb0.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(0,cbb0.ItemIndex);
+  //Aparelho.Upload_Program(TEXTO,edt_saidapadrao);
   if(cbb0.Caption=' ') then
      begin
      ToggleBox1.Checked:=FALSE;
@@ -1201,6 +1441,7 @@ begin
   edit13.Text:=floattostr(Receita[cbb1.ItemIndex].TempoOFF);
   edit14.Text:=floattostr(Receita[cbb1.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(1,cbb1.ItemIndex);
+  //Aparelho.Upload_Program(TEXTO,edt_saidapadrao);
   if(cbb1.Caption=' ') then
      begin
      ToggleBox2.Checked:=FALSE;
@@ -1221,6 +1462,7 @@ begin
   edit20.Text:=floattostr(Receita[cbb2.ItemIndex].TempoOFF);
   edit21.Text:=floattostr(Receita[cbb2.ItemIndex].Histerese);
   EnviaReceitaParaPrograma(2,cbb2.ItemIndex);
+  //Aparelho.Upload_Program(TEXTO,edt_saidapadrao);
   if(cbb2.Caption=' ') then
      begin
      ToggleBox3.Checked:=FALSE;
@@ -1255,7 +1497,10 @@ begin
    Aparelho.Gravar_EEPROM_8bits_Interna_Mae(addeeprom+4,trunc(Receita[index].TempoOFF),TEXTO,edt_saidapadrao);
    Aparelho.Gravar_EEPROM_8bits_Interna_Mae(addeeprom+5,trunc(Receita[index].Histerese),TEXTO,edt_saidapadrao);
    Aparelho.Gravar_EEPROM_String_Mae(addeeprom+6,Receita[index].Nome,TEXTO,edt_saidapadrao);
-   //Aparelho.Gravar_EEPROM_16bits_Interna_Mae(addeeprom+16,1,TEXTO,edt_saidapadrao);
+   if(Receita[index].Nome<>' ') then
+      Aparelho.Gravar_EEPROM_16bits_Interna_Mae(addeeprom+16,1,TEXTO,edt_saidapadrao)
+   else
+      Aparelho.Gravar_EEPROM_16bits_Interna_Mae(addeeprom+16,0,TEXTO,edt_saidapadrao);
    Aparelho.Show_Programacao(Mandador,HEXADECIMAL,edt_saidaprg);
 end;
 
@@ -1513,7 +1758,7 @@ end;
 
 procedure TForm1.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-   Gravar_Config();
+
    GravarReceita();
    if(ouvinte<>nil) then
       begin
@@ -1822,6 +2067,14 @@ begin
                                  TEXTO,
                                  Form1.edt_vp_value_int_reply
                                  );
+end;
+
+procedure TForm1.btn_Ler24C32BitsClick(Sender: TObject);
+begin
+  Aparelho.Ler_EEPROM_32bits_24C1025_Mae(0
+                                         ,strtoint(edt_24C_32B_add.text)
+                                         ,HEXADECIMAL
+                                         ,edt_24c_32bits);
 end;
 
 procedure TForm1.btn_Ler_RTCClick(Sender: TObject);
@@ -2191,6 +2444,7 @@ begin
      ConectarSerial(DESCONECTAR);
      cbb_COMPORT.Enabled:=TRUE;
      end;
+  Gravar_Config();
 end;
 
 procedure TForm1.tmr_vacuoTimer(Sender: TObject);
@@ -2292,6 +2546,12 @@ begin
   Receita[7].TempoON  :=StrToFloat(edt_rec7_on.Text);
   Receita[7].TempoOFF :=StrToFloat(edt_rec7_off.Text);
   Receita[7].Histerese:=StrToFloat(edt_rec7_histerese.Text);
+
+  Receita[8].Nome     :=' ';
+  Receita[8].SetPoint :=0;
+  Receita[8].TempoON  :=0;
+  Receita[8].TempoOFF :=0;
+  Receita[8].Histerese:=0;
 
 
 end;
@@ -2512,9 +2772,14 @@ end;
 
 
 procedure TForm1.Aguarda_Atualizacao_do_TEdit(objeto : TObject);
+var
+  maxtime:integer;
 begin
-  while(TEdit(Objeto).text='') do
+  maxtime:=3000;
+  while((TEdit(Objeto).text='')and(maxtime>0)) do
     begin
+     sleep(1);
+     if(maxtime>0)then dec(maxtime);
      TEdit(Objeto).Invalidate;
      TEdit(Objeto).Update;
      TEdit(Objeto).Repaint;
