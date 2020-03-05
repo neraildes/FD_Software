@@ -2299,9 +2299,12 @@ begin
                         case Aparelho.fila[0].resTypeData of
                               FLUTUANTE :
                                   begin
+
                                   numreal:=Aparelho.HexToInt(Aparelho.fila[0].result);
-                                  if(numreal>32768) then numreal:=numreal-65536;
-                                  SaidaString:=floattostr(numreal/10.0);
+                                  if(numreal>32768) then
+                                  numreal:=numreal-65536;
+                                  numreal:=numreal/10.0;
+                                  SaidaString:=formatfloat('#0.0',numreal);
 
                                   if(POS('Edit',TEdit(Aparelho.fila[0].ObjDestino).Name)=0) then
                                       begin
