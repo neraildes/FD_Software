@@ -2302,7 +2302,7 @@ begin
 
                                   numreal:=Aparelho.HexToInt(Aparelho.fila[0].result);
                                   if(numreal>32768) then
-                                  numreal:=numreal-65536;
+                                  numreal:=65536-numreal;
                                   numreal:=numreal/10.0;
                                   SaidaString:=formatfloat('#0.0',numreal);
 
