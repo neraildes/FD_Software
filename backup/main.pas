@@ -2303,9 +2303,6 @@ begin
                                   if(numreal>32768) then numreal:=numeral-65536;
                                   SaidaString:=floattostr(numreal/10.0);
 
-                                  //numreal:= Aparelho.HexToInfo(Aparelho.fila[0].result);
-                                  //SaidaString:=Aparelho.HextoInfo(Aparelho.fila[0].result);
-
                                   if(POS('Edit',TEdit(Aparelho.fila[0].ObjDestino).Name)=0) then
                                       begin
                                       TEdit(Aparelho.fila[0].ObjDestino).Text:=SaidaString+Aparelho.fila[0].resUnidade;
