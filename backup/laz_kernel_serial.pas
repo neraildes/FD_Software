@@ -441,15 +441,18 @@ function TSerial.HexToInfo(value:string) : string;
          begin
          if(Pos(value,'$')=0) then value:='$'+value;
          numeral:=StrtoInt(value);
-         if(numeral>32768) then
-         numeral:=numeral-65536;
-         numeral:=(numeral/10.0);
-         showmessage(floattostr(numeral));
-         if(numeral<-70) then
+         if(numeral>32768) then numeral:=numeral-65536;
+
+         saida:=floattostr(numeral);
+
+         {
+         //numeral:=(numeral/10.0);
+         if(numeral<-700) then
             saida:='Sem Sensor'
-         else if(numeral=-0.1) then
+         else if(numeral=-1) then
                  saida:='Sem Placa'
-         else saida:=formatfloat('#0.0',numeral);
+         else saida:=formatfloat('#0.0',numeral/10.0);
+         }
          result:=saida;
          end;
 

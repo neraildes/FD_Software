@@ -5023,6 +5023,7 @@ object Form1: TForm1
     top = 48
   end
   object tmr_temperaturas: TTimer
+    Enabled = False
     Interval = 10
     OnTimer = tmr_temperaturasTimer
     left = 1120

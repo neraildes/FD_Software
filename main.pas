@@ -2301,10 +2301,8 @@ begin
                                   begin
 
                                   numreal:=Aparelho.HexToInt(Aparelho.fila[0].result);
-                                  if(numreal>32768) then
-                                  numreal:=65536-numreal;
-                                  numreal:=numreal/10.0;
-                                  SaidaString:=formatfloat('#0.0',numreal);
+                                  if(numreal>32768) then numreal:=numreal-65536;
+                                  SaidaString:=formatfloat('#0.0',numreal/10);
 
                                   if(POS('Edit',TEdit(Aparelho.fila[0].ObjDestino).Name)=0) then
                                       begin
