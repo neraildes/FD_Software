@@ -10,8 +10,8 @@ uses
 const
 
    PICEEPROMSIZE = 255;  //Memoria disponível no PIC
-   TXBUFFERSIZE  = 50;
-   RXBUFFERSIZE  = 50;
+   TXBUFFERSIZE  = 255;
+   RXBUFFERSIZE  = 255;
 
    HEADER            = 'AABB';
    ORIGEM            = 'C0';
@@ -89,10 +89,11 @@ const
 //---------------RESULTTYPE----------------
 UINTEGER    = 0;
 SINTEGER    = 1;
-HEXADECIMAL = 2;
-FLUTUANTE   = 3;
-TEXTO       = 4;
-HORA        = 5;
+NUMERAL     = 2;
+HEXADECIMAL = 3;
+FLUTUANTE   = 4;
+TEXTO       = 5;
+HORA        = 6;
 
 type
   TFila = Record
@@ -269,15 +270,56 @@ type
                                    resultType : integer;
                                    ObjDestino : TObject);
 
+      procedure Gravar_24C1025_String_Mae(chip : integer;
+                                           add : integer;
+                                         value : string;
+                                    resultType : integer;
+                                    ObjDestino : TObject);
+
+      procedure Gravar_24C1025_String_Filha(destino : integer;
+                                               chip : integer;
+                                                add : integer;
+                                              value : string;
+                                         resultType : integer;
+                                         ObjDestino : TObject);
+
 
       procedure Ler_EEPROM_String_Mae(     add: integer;
                                    resultType : integer;
                                    ObjDestino : TObject);
 
+
       procedure Ler_EEPROM_24C1025_String_Mae(chip: integer;
                                                add: integer;
                                        resultType : integer;
                                        ObjDestino : TObject);
+
+      procedure Ler_EEPROM_24C1025_String_Filha(destino: integer;
+                                                   chip: integer;
+                                                    add: integer;
+                                            resultType : integer;
+                                            ObjDestino : TObject);
+      //------------------------------------------------------------------------
+      {BUFFER}
+
+
+
+      procedure Ler_EEPROM_24C1025_Buffer_Mae(chip: integer;
+                                               add: integer;
+                                              size: integer;
+                                       resultType : integer;
+                                       ObjDestino : TObject);
+
+
+      procedure Ler_EEPROM_24C1025_Buffer_Filha(destino : integer;
+                                                   chip : integer;
+                                                    add : integer;
+                                                   size : integer;
+                                             resultType : integer;
+                                             ObjDestino : TObject);
+
+
+
       //------------------------------------------------------------------------
       {32 Bits}
       procedure Ler_EEPROM_32bits_24C1025_Mae(chip : integer;
@@ -369,7 +411,8 @@ type
       function kernelSerial(comando : Ansistring) : Ansistring;
       function HexToInt(Hexadecimal : AnsiString) : integer;
       function HexToText(Hexadecimal: AnsiString) : AnsiString;
-
+      function HexToNum(Hexadecimal : AnsiString) : AnsiString;
+      function HexToInfo(value:string) : string;
     private
     protected
   end;
@@ -389,6 +432,28 @@ begin
   inherited Create();
   FilaFim:=0;
 end;
+
+
+function TSerial.HexToInfo(value:string) : string;
+         var
+           numeral:real;
+           saida : string;
+         begin
+         if(Pos(value,'$')=0) then value:='$'+value;
+         numeral:=StrtoInt(value);
+         if(numeral>32768) then
+         numeral:=numeral-65536;
+         //numeral:=(numeral/10.0);
+         if(numeral<-700) then
+            saida:='Sem Sensor'
+         else if(numeral=-1) then
+                 saida:='Sem Placa'
+         else saida:=formatfloat('#0.0',numeral/10.0);
+         result:=saida;
+         end;
+
+
+
 
 
 procedure TSerial.Buzzer(tempo : integer;
@@ -869,6 +934,68 @@ end;
 
 
 
+procedure TSerial.Gravar_24C1025_String_Filha(destino : integer;
+                                                 chip : integer;
+                                                  add : integer;
+                                                value : string;
+                                           resultType : integer;
+                                           ObjDestino : TObject);
+var
+   i : integer;
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  fila[FilaFim].RXpayload:=3;
+  fila[FilaFim].TotalReturn:=20+length(value);
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
+
+  buffer[0]:= chip ;
+  buffer[1]:= (add>>24) and $FF;
+  buffer[2]:= (add>>16) and $FF;
+  buffer[3]:= (add>>8 ) and $FF;
+  buffer[4]:= (add>>0 ) and $FF;
+
+  if(value='')then value:=' ';
+  for i:=0 to length(value) do
+      begin
+        buffer[i+5]:= byte(value[i+1]);
+      end;
+  KernelCommand(COMMAND_EEE_W_STR, destino, length(value)+6, buffer);
+end;
+
+
+
+procedure TSerial.Gravar_24C1025_String_Mae(chip : integer;
+                                             add : integer;
+                                           value : string;
+                                      resultType : integer;
+                                      ObjDestino : TObject);
+var
+   i : integer;
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  fila[FilaFim].RXpayload:=3;
+  fila[FilaFim].TotalReturn:=8;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
+
+  buffer[0]:= chip ;
+  buffer[1]:= (add>>24) and $FF;
+  buffer[2]:= (add>>16) and $FF;
+  buffer[3]:= (add>>8 ) and $FF;
+  buffer[4]:= (add>>0 ) and $FF;
+
+  if(value='')then value:=' ';
+  for i:=0 to length(value) do
+      begin
+        buffer[i+5]:= byte(value[i+1]);
+      end;
+  KernelCommand(COMMAND_EEE_W_STR, 0, length(value)+6, buffer);
+end;
+
+
 
 
 
@@ -987,8 +1114,8 @@ procedure TSerial.Ler_EEPROM_24C1025_String_Mae(chip: integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
-  fila[FilaFim].RXpayload:=15;
-  fila[FilaFim].TotalReturn:=20;
+  fila[FilaFim].RXpayload:=35;
+  fila[FilaFim].TotalReturn:=40;
   fila[FilaFim].ObjDestino:=ObjDestino;
   fila[FilaFim].resTypeData:=resultType;
   //*Aqui
@@ -1000,6 +1127,86 @@ begin
 
   KernelCommand(COMMAND_EEE_R_STR, 0, 5, buffer);
 end;
+
+
+
+procedure TSerial.Ler_EEPROM_24C1025_String_Filha(destino: integer;
+                                                     chip: integer;
+                                                      add: integer;
+                                              resultType : integer;
+                                              ObjDestino : TObject);
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  fila[FilaFim].RXpayload:=34;
+  fila[FilaFim].TotalReturn:=50;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
+  //*Aqui
+  buffer[0]:= chip ;
+  buffer[1]:= (add>>24) and $FF;
+  buffer[2]:= (add>>16) and $FF;
+  buffer[3]:= (add>>8 ) and $FF;
+  buffer[4]:= (add>>0 ) and $FF;
+
+  KernelCommand(COMMAND_EEE_R_STR, destino, 5, buffer);
+end;
+
+
+
+
+
+
+
+procedure TSerial.Ler_EEPROM_24C1025_Buffer_Mae(chip: integer;
+                                                 add: integer;
+                                                size: integer;
+                                         resultType : integer;
+                                         ObjDestino : TObject);
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  fila[FilaFim].RXpayload:=Size;
+  fila[FilaFim].TotalReturn:=5+Size;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
+
+  buffer[0]:= chip ;
+  buffer[1]:= (add>>24) and $FF;
+  buffer[2]:= (add>>16) and $FF;
+  buffer[3]:= (add>>8 ) and $FF;
+  buffer[4]:= (add>>0 ) and $FF;
+  buffer[5]:= size ;
+
+  KernelCommand(COMMAND_EEE_R_BUF, 0, 6, buffer);
+end;
+
+
+procedure TSerial.Ler_EEPROM_24C1025_Buffer_filha(destino : integer;
+                                                     chip : integer;
+                                                      add : integer;
+                                                     size : integer;
+                                               resultType : integer;
+                                               ObjDestino : TObject);
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  fila[FilaFim].RXpayload:= size;//    strtoint(Form1.edt_payload.text);
+  fila[FilaFim].TotalReturn:=  18+size-1;//  strtoint(Form1.edt_total_return.text);
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
+  //*Aqui
+  buffer[0]:= chip ;
+  buffer[1]:= (add>>24) and $FF;
+  buffer[2]:= (add>>16) and $FF;
+  buffer[3]:= (add>>8 ) and $FF;
+  buffer[4]:= (add>>0 ) and $FF;
+  buffer[5]:= size ;
+
+  KernelCommand(COMMAND_EEE_R_BUF, destino, 6, buffer);
+end;
+
+
 
 
 
@@ -1303,10 +1510,12 @@ var
 cnt:integer;
 texto:string;
 tmp :char;
+size:integer;
 begin
   texto:='';
   cnt:=1;
-  while cnt<length(Hexadecimal) do
+  size:=length(Hexadecimal);
+  while cnt<size do
         begin
           tmp:=chr(HextoInt(copy(hexadecimal,cnt,2)));
           texto:=texto+tmp;
@@ -1316,6 +1525,29 @@ begin
 end;
 
 
+
+//------------------------------------------------------------------------------
+function Tserial.HexToNum(Hexadecimal: AnsiString):AnsiString;
+var
+cnt:integer;
+texto:Ansistring;
+tmp : Ansistring;
+size:integer;
+begin
+  texto:='';
+  cnt:=1;
+  size:=length(Hexadecimal);
+  while cnt<size do
+        begin
+          if (strtoint('$'+copy(hexadecimal,cnt,2))>=$0A) then
+              tmp:=char(strtoint('$'+copy(hexadecimal,cnt,2)))
+          else
+              tmp:=char($30+strtoint('$'+copy(hexadecimal,cnt,2)));
+          texto:=texto+tmp;
+          cnt:=cnt+2;
+        end;
+  result := texto;
+end;
 
 
 

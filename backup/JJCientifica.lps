@@ -4,7 +4,7 @@
     <PathDelim Value="\"/>
     <Version Value="11"/>
     <BuildModes Active="Default"/>
-    <Units Count="11">
+    <Units Count="19">
       <Unit0>
         <Filename Value="JJCientifica.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -20,8 +20,8 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Main"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="950"/>
-        <CursorPos X="18" Y="967"/>
+        <TopLine Value="541"/>
+        <CursorPos Y="556"/>
         <UsageCount Value="228"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -39,9 +39,9 @@
       <Unit3>
         <Filename Value="laz_kernel_serial.pas"/>
         <UnitName Value="Laz_kernel_serial"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="66"/>
-        <CursorPos Y="910"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="423"/>
+        <CursorPos X="37" Y="446"/>
         <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit3>
@@ -50,42 +50,43 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="45"/>
         <CursorPos X="134" Y="50"/>
-        <UsageCount Value="91"/>
+        <UsageCount Value="56"/>
       </Unit4>
       <Unit5>
         <Filename Value="C:\lazarus\lcl\include\wincontrol.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="5408"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="5406"/>
         <CursorPos Y="5420"/>
-        <UsageCount Value="42"/>
+        <UsageCount Value="46"/>
+        <Loaded Value="True"/>
       </Unit5>
       <Unit6>
         <Filename Value="Sinapse\source\lib\synaser.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="865"/>
         <CursorPos Y="878"/>
-        <UsageCount Value="41"/>
+        <UsageCount Value="6"/>
       </Unit6>
       <Unit7>
         <Filename Value="C:\lazarus\lcl\interfaces\win32\win32object.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="385"/>
         <CursorPos Y="407"/>
-        <UsageCount Value="65"/>
+        <UsageCount Value="30"/>
       </Unit7>
       <Unit8>
         <Filename Value="C:\lazarus\lcl\include\customform.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="142"/>
         <CursorPos Y="165"/>
-        <UsageCount Value="82"/>
+        <UsageCount Value="47"/>
       </Unit8>
       <Unit9>
         <Filename Value="C:\lazarus\lcl\include\application.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="2257"/>
         <CursorPos Y="2271"/>
-        <UsageCount Value="72"/>
+        <UsageCount Value="37"/>
       </Unit9>
       <Unit10>
         <Filename Value="C:\lazarus\components\lazutils\laztracer.pas"/>
@@ -93,129 +94,195 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="36"/>
         <CursorPos Y="50"/>
-        <UsageCount Value="65"/>
+        <UsageCount Value="30"/>
       </Unit10>
+      <Unit11>
+        <Filename Value="C:\lazarus\lcl\lclmessageglue.pas"/>
+        <UnitName Value="LCLMessageGlue"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="99"/>
+        <CursorPos Y="123"/>
+        <UsageCount Value="60"/>
+        <Loaded Value="True"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="C:\lazarus\lcl\include\control.inc"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="2230"/>
+        <CursorPos Y="2244"/>
+        <UsageCount Value="43"/>
+        <Loaded Value="True"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="C:\lazarus\lcl\include\buttoncontrol.inc"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="7"/>
+        <CursorPos Y="22"/>
+        <UsageCount Value="43"/>
+        <Loaded Value="True"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="C:\lazarus\lcl\include\buttons.inc"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="157"/>
+        <CursorPos Y="170"/>
+        <UsageCount Value="43"/>
+        <Loaded Value="True"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="C:\lazarus\lcl\interfaces\win32\win32callback.inc"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="2656"/>
+        <CursorPos Y="2680"/>
+        <UsageCount Value="43"/>
+        <Loaded Value="True"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="C:\lazarus\lcl\interfaces\win32\win32pagecontrol.inc"/>
+        <EditorIndex Value="10"/>
+        <TopLine Value="94"/>
+        <CursorPos Y="106"/>
+        <UsageCount Value="43"/>
+        <Loaded Value="True"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="C:\lazarus\lcl\interfaces\win32\win32wsstdctrls.pp"/>
+        <UnitName Value="Win32WSStdCtrls"/>
+        <EditorIndex Value="9"/>
+        <TopLine Value="1797"/>
+        <CursorPos Y="1809"/>
+        <UsageCount Value="43"/>
+        <Loaded Value="True"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="C:\lazarus\lcl\include\scrollingwincontrol.inc"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="80"/>
+        <CursorPos Y="95"/>
+        <UsageCount Value="42"/>
+        <Loaded Value="True"/>
+      </Unit18>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="main.pas"/>
-        <Caret Line="965" Column="21" TopLine="948"/>
+        <Filename Value="laz_kernel_serial.pas"/>
+        <Caret Line="415" Column="19" TopLine="428"/>
       </Position1>
       <Position2>
-        <Filename Value="main.pas"/>
-        <Caret Line="958" Column="60" TopLine="945"/>
+        <Filename Value="laz_kernel_serial.pas"/>
+        <Caret Line="439" Column="42" TopLine="424"/>
       </Position2>
       <Position3>
-        <Filename Value="main.pas"/>
-        <Caret Line="959" Column="64" TopLine="946"/>
+        <Filename Value="laz_kernel_serial.pas"/>
+        <Caret Line="440" Column="18" TopLine="425"/>
       </Position3>
       <Position4>
-        <Filename Value="main.pas"/>
-        <Caret Line="510" Column="31" TopLine="507"/>
+        <Filename Value="laz_kernel_serial.pas"/>
+        <Caret Line="438" Column="27" TopLine="425"/>
       </Position4>
       <Position5>
-        <Filename Value="main.pas"/>
-        <Caret Line="987" Column="33" TopLine="971"/>
+        <Filename Value="laz_kernel_serial.pas"/>
+        <Caret Line="444" Column="12" TopLine="431"/>
       </Position5>
       <Position6>
         <Filename Value="main.pas"/>
-        <Caret Line="523" TopLine="509"/>
+        <Caret Line="556" TopLine="547"/>
       </Position6>
       <Position7>
-        <Filename Value="main.pas"/>
-        <Caret Line="998" Column="3"/>
+        <Filename Value="laz_kernel_serial.pas"/>
+        <Caret Line="608"/>
       </Position7>
       <Position8>
-        <Filename Value="main.pas"/>
-        <Caret Line="2125" Column="56" TopLine="2103"/>
+        <Filename Value="laz_kernel_serial.pas"/>
+        <Caret Line="415" Column="25" TopLine="392"/>
       </Position8>
       <Position9>
-        <Filename Value="main.pas"/>
-        <Caret Line="861" Column="3" TopLine="853"/>
+        <Filename Value="laz_kernel_serial.pas"/>
+        <Caret Line="437" Column="27" TopLine="413"/>
       </Position9>
       <Position10>
         <Filename Value="main.pas"/>
-        <Caret Line="983" Column="68" TopLine="967"/>
+        <Caret Line="552" Column="19" TopLine="547"/>
       </Position10>
       <Position11>
         <Filename Value="main.pas"/>
-        <Caret Line="521" TopLine="507"/>
+        <Caret Line="2303" Column="65" TopLine="2279"/>
       </Position11>
       <Position12>
         <Filename Value="main.pas"/>
-        <Caret Line="968" Column="68" TopLine="948"/>
+        <Caret Line="2304" Column="66" TopLine="2280"/>
       </Position12>
       <Position13>
         <Filename Value="main.pas"/>
-        <Caret Line="946" Column="33" TopLine="940"/>
+        <Caret Line="2593" Column="67" TopLine="2569"/>
       </Position13>
       <Position14>
         <Filename Value="main.pas"/>
-        <Caret Line="521" TopLine="507"/>
+        <Caret Line="1088" Column="71" TopLine="1074"/>
       </Position14>
       <Position15>
-        <Filename Value="main.pas"/>
-        <Caret Line="1028" TopLine="1016"/>
+        <Filename Value="laz_kernel_serial.pas"/>
+        <Caret Line="440" Column="25" TopLine="425"/>
       </Position15>
       <Position16>
-        <Filename Value="main.pas"/>
-        <Caret Line="521" TopLine="507"/>
+        <Filename Value="laz_kernel_serial.pas"/>
+        <Caret Line="448" Column="32" TopLine="434"/>
       </Position16>
       <Position17>
-        <Filename Value="main.pas"/>
-        <Caret Line="859" Column="2" TopLine="852"/>
+        <Filename Value="laz_kernel_serial.pas"/>
+        <Caret Line="449" Column="31" TopLine="434"/>
       </Position17>
       <Position18>
-        <Filename Value="main.pas"/>
-        <Caret Line="1032" Column="33" TopLine="1024"/>
+        <Filename Value="laz_kernel_serial.pas"/>
+        <Caret Line="450" Column="24" TopLine="436"/>
       </Position18>
       <Position19>
         <Filename Value="main.pas"/>
-        <Caret Line="512" Column="57" TopLine="507"/>
+        <Caret Line="545" Column="6" TopLine="541"/>
       </Position19>
       <Position20>
         <Filename Value="main.pas"/>
-        <Caret Line="1003" Column="5" TopLine="1001"/>
+        <Caret Line="2333" Column="38" TopLine="2300"/>
       </Position20>
       <Position21>
         <Filename Value="main.pas"/>
-        <Caret Line="521" TopLine="507"/>
+        <Caret Line="556" TopLine="541"/>
       </Position21>
       <Position22>
         <Filename Value="main.pas"/>
-        <Caret Line="522" TopLine="508"/>
+        <Caret Line="1090" TopLine="1076"/>
       </Position22>
       <Position23>
-        <Filename Value="main.pas"/>
-        <Caret Line="969" Column="46" TopLine="950"/>
+        <Filename Value="laz_kernel_serial.pas"/>
+        <Caret Line="451" Column="48" TopLine="436"/>
       </Position23>
       <Position24>
-        <Filename Value="main.pas"/>
-        <Caret Line="515" Column="48" TopLine="508"/>
+        <Filename Value="laz_kernel_serial.pas"/>
+        <Caret Line="447" Column="42" TopLine="436"/>
       </Position24>
       <Position25>
-        <Filename Value="main.pas"/>
-        <Caret Line="966" Column="73" TopLine="950"/>
+        <Filename Value="laz_kernel_serial.pas"/>
+        <Caret Line="449" Column="27" TopLine="436"/>
       </Position25>
       <Position26>
         <Filename Value="main.pas"/>
-        <Caret Line="522" TopLine="508"/>
+        <Caret Line="556" TopLine="532"/>
       </Position26>
       <Position27>
-        <Filename Value="main.pas"/>
-        <Caret Line="966" Column="73" TopLine="950"/>
+        <Filename Value="laz_kernel_serial.pas"/>
+        <Caret Line="1037" TopLine="1022"/>
       </Position27>
       <Position28>
         <Filename Value="main.pas"/>
-        <Caret Line="522" TopLine="508"/>
+        <Caret Line="556" TopLine="532"/>
       </Position28>
       <Position29>
         <Filename Value="main.pas"/>
-        <Caret Line="966" Column="71" TopLine="950"/>
+        <Caret Line="2305" Column="44" TopLine="2288"/>
       </Position29>
       <Position30>
         <Filename Value="main.pas"/>
-        <Caret Line="516" Column="32" TopLine="508"/>
+        <Caret Line="2304" Column="59" TopLine="2290"/>
       </Position30>
     </JumpHistory>
     <RunParams>
@@ -224,14 +291,28 @@
     </RunParams>
   </ProjectSession>
   <Debugging>
-    <BreakPoints Count="1">
+    <BreakPoints Count="3">
       <Item1>
         <Kind Value="bpkSource"/>
         <WatchScope Value="wpsLocal"/>
         <WatchKind Value="wpkWrite"/>
         <Source Value="main.pas"/>
-        <Line Value="132"/>
+        <Line Value="167"/>
       </Item1>
+      <Item2>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="main.pas"/>
+        <Line Value="2342"/>
+      </Item2>
+      <Item3>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="main.pas"/>
+        <Line Value="538"/>
+      </Item3>
     </BreakPoints>
   </Debugging>
 </CONFIG>

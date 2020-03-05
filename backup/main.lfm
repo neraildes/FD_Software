@@ -1,11 +1,11 @@
 object Form1: TForm1
-  Left = 114
-  Height = 667
-  Top = 18
+  Left = 98
+  Height = 641
+  Top = 137
   Width = 1196
   BorderStyle = bsDialog
   Caption = 'JJ Cientifica Ind. e Com. de Equipamentos Científicos'
-  ClientHeight = 647
+  ClientHeight = 621
   ClientWidth = 1196
   Font.CharSet = ANSI_CHARSET
   Font.Color = clBlack
@@ -35,9 +35,9 @@ object Form1: TForm1
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrCenter
     Left = 0
-    Height = 645
+    Height = 619
     Top = 0
-    Width = 1196
+    Width = 1195
     ActivePage = GraficoMEMO
     Anchors = [akTop, akLeft, akRight, akBottom]
     Font.CharSet = ANSI_CHARSET
@@ -53,8 +53,8 @@ object Form1: TForm1
     OnChange = Folha_de_AbasChange
     object tbs_manutencao: TTabSheet
       Caption = 'Manutencao e Calibracao'
-      ClientHeight = 617
-      ClientWidth = 1188
+      ClientHeight = 591
+      ClientWidth = 1187
       object Memo1: TMemo
         Left = 800
         Height = 544
@@ -78,18 +78,18 @@ object Form1: TForm1
         TabOrder = 2
       end
       object btn_suspend: TButton
-        Left = 672
+        Left = 664
         Height = 31
-        Top = 672
+        Top = 521
         Width = 93
         Caption = 'SUSPEND'
         OnClick = btn_suspendClick
         TabOrder = 3
       end
       object btn_resume: TButton
-        Left = 552
+        Left = 536
         Height = 31
-        Top = 672
+        Top = 521
         Width = 93
         Caption = 'RESUME'
         OnClick = btn_resumeClick
@@ -103,9 +103,9 @@ object Form1: TForm1
         TabOrder = 5
       end
       object Lbl_Count: TLabel
-        Left = 632
+        Left = 424
         Height = 75
-        Top = 592
+        Top = 488
         Width = 38
         Caption = '0'
         Font.CharSet = ANSI_CHARSET
@@ -118,46 +118,46 @@ object Form1: TForm1
         ParentFont = False
       end
       object GroupBox2: TGroupBox
-        Left = 4
-        Height = 56
-        Top = 40
-        Width = 553
+        Left = 579
+        Height = 92
+        Top = 8
+        Width = 204
         Caption = 'Sinal Sonoro'
-        ClientHeight = 36
-        ClientWidth = 549
+        ClientHeight = 72
+        ClientWidth = 200
         TabOrder = 6
         object Edt_ss_time: TEdit
-          Left = 208
+          Left = 101
           Height = 23
-          Top = 8
-          Width = 120
+          Top = 19
+          Width = 33
           TabOrder = 0
           Text = '100'
         end
         object Btn_Buzzer: TButton
-          Left = 16
+          Left = 13
           Height = 25
-          Top = 8
-          Width = 160
+          Top = 19
+          Width = 79
           Caption = 'Buzzer_Direto'
           OnClick = Btn_BuzzerClick
           TabOrder = 1
         end
         object Edt_buz_return: TEdit
-          Left = 392
+          Left = 144
           Height = 23
-          Top = 8
-          Width = 137
+          Top = 19
+          Width = 47
           TabOrder = 2
         end
       end
       object GroupBox1: TGroupBox
-        Left = 8
-        Height = 96
-        Top = 96
+        Left = 16
+        Height = 92
+        Top = 8
         Width = 552
-        Caption = 'Manipulação de Byte'
-        ClientHeight = 76
+        Caption = 'MANIPULAÇÃO DE BYTES'
+        ClientHeight = 72
         ClientWidth = 548
         TabOrder = 7
         object btn_LerMemo: TButton
@@ -224,7 +224,7 @@ object Form1: TForm1
           Left = 480
           Height = 23
           Top = 20
-          Width = 48
+          Width = 64
           TabOrder = 7
         end
         object Label1: TLabel
@@ -269,7 +269,7 @@ object Form1: TForm1
           TabOrder = 8
         end
         object edt_eeprom_chip: TEdit
-          Left = 272
+          Left = 264
           Height = 23
           Top = 20
           Width = 39
@@ -277,7 +277,7 @@ object Form1: TForm1
           Text = '$00'
         end
         object Label5: TLabel
-          Left = 277
+          Left = 269
           Height = 15
           Top = 0
           Width = 25
@@ -302,11 +302,19 @@ object Form1: TForm1
           OnClick = Button2Click
           TabOrder = 11
         end
+        object chk_EEPROM_32Bits: TCheckBox
+          Left = 480
+          Height = 19
+          Top = 48
+          Width = 51
+          Caption = '32Bits'
+          TabOrder = 12
+        end
       end
       object gpb_proculus: TGroupBox
-        Left = 8
+        Left = 16
         Height = 66
-        Top = 256
+        Top = 242
         Width = 345
         Caption = 'PROCULUS VP INTEGER'
         ClientHeight = 46
@@ -356,11 +364,35 @@ object Form1: TForm1
           Alignment = taCenter
           TabOrder = 4
         end
+        object Label45: TLabel
+          Left = 160
+          Height = 15
+          Top = 0
+          Width = 22
+          Caption = 'Add'
+          ParentColor = False
+        end
+        object Label46: TLabel
+          Left = 224
+          Height = 15
+          Top = 0
+          Width = 28
+          Caption = 'value'
+          ParentColor = False
+        end
+        object Label47: TLabel
+          Left = 288
+          Height = 15
+          Top = 0
+          Width = 26
+          Caption = 'reply'
+          ParentColor = False
+        end
       end
       object GroupBox5: TGroupBox
-        Left = 312
+        Left = 325
         Height = 56
-        Top = 392
+        Top = 384
         Width = 234
         Caption = 'PROCULUS POP-UP'
         ClientHeight = 36
@@ -392,9 +424,9 @@ object Form1: TForm1
         end
       end
       object GroupBox4: TGroupBox
-        Left = 359
+        Left = 579
         Height = 66
-        Top = 192
+        Top = 384
         Width = 198
         Caption = 'PROCULUS GOTO PAGE'
         ClientHeight = 46
@@ -441,112 +473,19 @@ object Form1: TForm1
           ParentColor = False
         end
       end
-      object GroupBox3: TGroupBox
-        Left = 8
-        Height = 98
-        Top = 520
-        Width = 550
-        Caption = 'Comandos Avulsos'
-        ClientHeight = 78
-        ClientWidth = 546
-        DoubleBuffered = False
-        Enabled = False
-        ParentDoubleBuffered = False
-        TabOrder = 11
-        object btn_fill: TButton
-          Left = 14
-          Height = 27
-          Top = 48
-          Width = 74
-          Caption = 'Fill 24C1025'
-          OnClick = btn_fillClick
-          TabOrder = 0
-        end
-        object edt_fill: TEdit
-          Left = 80
-          Height = 23
-          Top = 18
-          Width = 40
-          TabOrder = 1
-          Text = '$FFFF'
-        end
-        object edt_fill_reply: TEdit
-          Left = 128
-          Height = 23
-          Top = 18
-          Width = 40
-          TabOrder = 2
-        end
-        object edt_fill_chip: TEdit
-          Left = 48
-          Height = 23
-          Top = 18
-          Width = 25
-          TabOrder = 3
-          Text = '$00'
-        end
-        object Label6: TLabel
-          Left = 48
-          Height = 15
-          Top = -1
-          Width = 25
-          Caption = 'Chip'
-          ParentColor = False
-        end
-        object Label7: TLabel
-          Left = 86
-          Height = 15
-          Top = -1
-          Width = 28
-          Caption = 'value'
-          ParentColor = False
-        end
-        object Label8: TLabel
-          Left = 136
-          Height = 15
-          Top = -1
-          Width = 26
-          Caption = 'reply'
-          ParentColor = False
-        end
-        object edt_fill_destino: TEdit
-          Left = 15
-          Height = 23
-          Top = 18
-          Width = 27
-          TabOrder = 4
-          Text = '$00'
-        end
-        object Label9: TLabel
-          Left = 14
-          Height = 15
-          Top = -1
-          Width = 28
-          Caption = 'Placa'
-          ParentColor = False
-        end
-        object btn_fill_confere: TButton
-          Left = 94
-          Height = 25
-          Top = 48
-          Width = 75
-          Caption = 'Confere'
-          TabOrder = 5
-        end
-      end
       object GroupBox6: TGroupBox
-        Left = 9
+        Left = 368
         Height = 64
-        Top = 320
+        Top = 242
         Width = 299
         Caption = 'PROCULUS VP STRING'
         ClientHeight = 44
         ClientWidth = 295
-        TabOrder = 12
+        TabOrder = 11
         object btn_vp_string_read: TButton
           Left = 11
           Height = 23
-          Top = 7
+          Top = 14
           Width = 40
           Caption = 'Ler'
           OnClick = btn_vp_string_readClick
@@ -555,7 +494,7 @@ object Form1: TForm1
         object btn_vp_strinng_write: TButton
           Left = 56
           Height = 23
-          Top = 7
+          Top = 14
           Width = 40
           Caption = 'Gravar'
           OnClick = btn_vp_strinng_writeClick
@@ -564,28 +503,44 @@ object Form1: TForm1
         object edt_vp_string_value: TEdit
           Left = 166
           Height = 23
-          Top = 7
+          Top = 14
           Width = 123
           TabOrder = 2
         end
         object edt_vp_string: TEdit
           Left = 104
           Height = 23
-          Top = 7
+          Top = 14
           Width = 50
           TabOrder = 3
           Text = '1970'
         end
+        object Label48: TLabel
+          Left = 112
+          Height = 15
+          Top = 0
+          Width = 22
+          Caption = 'Add'
+          ParentColor = False
+        end
+        object Label49: TLabel
+          Left = 208
+          Height = 15
+          Top = -2
+          Width = 28
+          Caption = 'value'
+          ParentColor = False
+        end
       end
       object GroupBox7: TGroupBox
-        Left = 9
+        Left = 16
         Height = 64
-        Top = 448
+        Top = 384
         Width = 297
         Caption = 'READ ANALOGIC CHANNEL'
         ClientHeight = 44
         ClientWidth = 293
-        TabOrder = 13
+        TabOrder = 12
         object Button3: TButton
           Left = 8
           Height = 25
@@ -644,66 +599,67 @@ object Form1: TForm1
         end
       end
       object Button4: TButton
-        Left = 392
+        Left = 208
         Height = 25
-        Top = 616
+        Top = 521
         Width = 75
         Caption = 'Button4'
         OnClick = Button4Click
-        TabOrder = 14
+        TabOrder = 13
       end
       object edt_nump: TEdit
-        Left = 480
+        Left = 336
         Height = 23
-        Top = 618
+        Top = 528
         Width = 72
-        TabOrder = 15
+        TabOrder = 14
         Text = '123'
       end
       object GroupBox8: TGroupBox
-        Left = 9
+        Left = 17
         Height = 66
-        Top = 192
-        Width = 343
-        Caption = 'INTERNAL EEPROM STRING'
+        Top = 104
+        Width = 768
+        Caption = 'EEPROM STRING'
         ClientHeight = 46
-        ClientWidth = 339
-        TabOrder = 16
-        object IEE_Read: TButton
+        ClientWidth = 764
+        TabOrder = 15
+        object btn_EE_Read_String: TButton
           Left = 6
           Height = 23
           Top = 14
           Width = 50
           Caption = 'Ler'
-          OnClick = IEE_ReadClick
+          OnClick = btn_EE_Read_StringClick
           TabOrder = 0
         end
-        object IEE_Write: TButton
+        object btn_Write_String: TButton
           Left = 64
-          Height = 24
-          Top = 12
+          Height = 23
+          Top = 14
           Width = 52
           Caption = 'Gravar'
-          OnClick = IEE_WriteClick
+          OnClick = btn_Write_StringClick
           TabOrder = 1
         end
-        object IEE_String_add: TEdit
-          Left = 136
+        object edt_ADD_String: TEdit
+          Left = 465
           Height = 23
-          Top = 15
-          Width = 42
+          Top = 14
+          Width = 65
           TabOrder = 2
           Text = '$0000'
         end
-        object IEE_String: TEdit
-          Left = 200
+        object edt_IO_String: TEdit
+          Left = 544
           Height = 23
-          Top = 15
-          Width = 134
+          Top = 14
+          Width = 209
+          OnChange = edt_IO_StringChange
           TabOrder = 3
         end
         object Label31: TLabel
-          Left = 136
+          Left = 473
           Height = 15
           Top = -4
           Width = 49
@@ -711,48 +667,73 @@ object Form1: TForm1
           ParentColor = False
         end
         object Label32: TLabel
-          Left = 248
+          Left = 625
           Height = 15
           Top = -4
           Width = 31
           Caption = 'String'
           ParentColor = False
         end
+        object edt_placa_String: TEdit
+          Left = 349
+          Height = 23
+          Top = 14
+          Width = 41
+          TabOrder = 4
+          Text = '$01'
+        end
+        object edt_Chip_String: TEdit
+          Left = 408
+          Height = 23
+          Top = 14
+          Width = 37
+          TabOrder = 5
+          Text = '$00'
+        end
+        object Label43: TLabel
+          Left = 353
+          Height = 15
+          Top = -4
+          Width = 28
+          Caption = 'Placa'
+          ParentColor = False
+        end
+        object Label44: TLabel
+          Left = 409
+          Height = 15
+          Top = -4
+          Width = 25
+          Caption = 'Chip'
+          ParentColor = False
+        end
+        object rdb_String_EEPROM: TRadioButton
+          Left = 135
+          Height = 19
+          Top = 16
+          Width = 66
+          Caption = 'EEPROM'
+          Checked = True
+          TabOrder = 7
+          TabStop = True
+        end
+        object rdb_String_24C1025: TRadioButton
+          Left = 248
+          Height = 19
+          Top = 16
+          Width = 64
+          Caption = '24C1025'
+          TabOrder = 6
+        end
       end
-      object Button6: TButton
-        Left = 624
-        Height = 26
-        Top = 88
-        Width = 110
-        Caption = 'Show Program'
-        OnClick = Button6Click
-        TabOrder = 17
-      end
-      object edt_saidaprg: TEdit
-        Left = 624
-        Height = 23
-        Top = 64
-        Width = 111
-        TabOrder = 18
-      end
-      object Button7: TButton
-        Left = 624
-        Height = 25
-        Top = 120
-        Width = 107
-        Caption = 'Format Dba'
-        OnClick = Button7Click
-        TabOrder = 19
-      end
-      object GroupBox16: TGroupBox
-        Left = 9
+      object gpb_relogio: TGroupBox
+        Left = 16
         Height = 64
-        Top = 384
+        Top = 310
         Width = 299
-        Caption = 'GroupBox16'
+        Caption = 'RELÓGIO RTC'
         ClientHeight = 44
         ClientWidth = 295
-        TabOrder = 20
+        TabOrder = 16
         object btn_time_process_read: TButton
           Left = 20
           Height = 27
@@ -779,57 +760,15 @@ object Form1: TForm1
           TabOrder = 2
         end
       end
-      object EEE_241025_STRING: TGroupBox
-        Left = 359
-        Height = 65
-        Top = 255
-        Width = 303
-        Caption = 'EEE_241025_STRING'
-        ClientHeight = 45
-        ClientWidth = 299
-        TabOrder = 21
-        object Ler_EEE_24C: TButton
-          Left = 6
-          Height = 22
-          Top = 16
-          Width = 42
-          Caption = 'Ler'
-          OnClick = Ler_EEE_24CClick
-          TabOrder = 0
-        end
-        object Gravar_EEE_24C: TButton
-          Left = 56
-          Height = 21
-          Top = 16
-          Width = 47
-          Caption = 'Gravar'
-          TabOrder = 1
-        end
-        object edt_EEE_R_STR: TEdit
-          Left = 118
-          Height = 23
-          Top = 14
-          Width = 45
-          TabOrder = 2
-          Text = '$00'
-        end
-        object edt_saida_24STRING: TEdit
-          Left = 176
-          Height = 23
-          Top = 14
-          Width = 119
-          TabOrder = 3
-        end
-      end
       object gpb_24C1025_32Bits: TGroupBox
-        Left = 312
+        Left = 325
         Height = 62
-        Top = 320
+        Top = 312
         Width = 350
         Caption = '24C1025_32Bits'
         ClientHeight = 42
         ClientWidth = 346
-        TabOrder = 22
+        TabOrder = 17
         object btn_Ler24C32Bits: TButton
           Left = 8
           Height = 26
@@ -855,11 +794,136 @@ object Form1: TForm1
           Text = '$00000000'
         end
       end
+      object gpb_eeprom_buffer: TGroupBox
+        Left = 16
+        Height = 73
+        Top = 168
+        Width = 767
+        Caption = 'EEPROM BUFFER'
+        ClientHeight = 53
+        ClientWidth = 763
+        TabOrder = 18
+        object btn_EE_Read_Buffer: TButton
+          Left = 10
+          Height = 23
+          Top = 19
+          Width = 53
+          Caption = 'Ler'
+          OnClick = btn_EE_Read_BufferClick
+          TabOrder = 0
+        end
+        object edt_IO_Buffer: TEdit
+          Left = 595
+          Height = 23
+          Top = 19
+          Width = 159
+          TabOrder = 1
+        end
+        object btn_Write_Buffer: TButton
+          Left = 70
+          Height = 23
+          Top = 19
+          Width = 46
+          Caption = 'Gravar'
+          OnClick = btn_Write_BufferClick
+          TabOrder = 2
+        end
+        object edt_placa_Buffer: TEdit
+          Left = 350
+          Height = 23
+          Top = 19
+          Width = 44
+          TabOrder = 3
+          Text = '$01'
+        end
+        object edt_Chip_Buffer: TEdit
+          Left = 410
+          Height = 23
+          Top = 19
+          Width = 38
+          TabOrder = 4
+          Text = '$00'
+        end
+        object edt_ADD_Buffer: TEdit
+          Left = 466
+          Height = 23
+          Top = 19
+          Width = 69
+          TabOrder = 5
+          Text = '$00000000'
+        end
+        object Label18: TLabel
+          Left = 354
+          Height = 15
+          Top = -1
+          Width = 28
+          Caption = 'Placa'
+          ParentColor = False
+        end
+        object Label19: TLabel
+          Left = 410
+          Height = 15
+          Top = -1
+          Width = 25
+          Caption = 'Chip'
+          ParentColor = False
+        end
+        object Label41: TLabel
+          Left = 485
+          Height = 15
+          Top = -1
+          Width = 22
+          Caption = 'Add'
+          ParentColor = False
+        end
+        object Label42: TLabel
+          Left = 626
+          Height = 15
+          Top = -1
+          Width = 28
+          Caption = 'value'
+          ParentColor = False
+        end
+        object edt_ADD_EEE_Buffer_Size: TEdit
+          Left = 543
+          Height = 23
+          Top = 20
+          Width = 41
+          TabOrder = 6
+          Text = '$08'
+        end
+        object Label50: TLabel
+          Left = 554
+          Height = 15
+          Top = -1
+          Width = 20
+          Caption = 'Size'
+          ParentColor = False
+        end
+        object rdb_Buffer_EEPROM: TRadioButton
+          Left = 136
+          Height = 19
+          Top = 19
+          Width = 66
+          Caption = 'EEPROM'
+          Checked = True
+          TabOrder = 8
+          TabStop = True
+        end
+        object rdb_Buffer_24C1025: TRadioButton
+          Left = 249
+          Height = 19
+          Top = 19
+          Width = 64
+          Caption = '24C1025'
+          TabOrder = 7
+        end
+      end
     end
     object tbs_pagina_principal: TTabSheet
       Caption = 'Página Principal'
-      ClientHeight = 617
-      ClientWidth = 1188
+      ClientHeight = 591
+      ClientWidth = 1187
       object edt_buffer: TEdit
         Left = 960
         Height = 23
@@ -3696,8 +3760,8 @@ object Form1: TForm1
     end
     object tbs_receitas: TTabSheet
       Caption = 'Receitas'
-      ClientHeight = 617
-      ClientWidth = 1188
+      ClientHeight = 591
+      ClientWidth = 1187
       object Panel16: TPanel
         Left = 312
         Height = 49
@@ -4250,8 +4314,8 @@ object Form1: TForm1
     end
     object tbs_parametros: TTabSheet
       Caption = 'Parâmetros'
-      ClientHeight = 617
-      ClientWidth = 1188
+      ClientHeight = 591
+      ClientWidth = 1187
       object GroupBox9: TGroupBox
         Left = 24
         Height = 527
@@ -4545,8 +4609,16 @@ object Form1: TForm1
     end
     object GraficoMEMO: TTabSheet
       Caption = 'Grafico MEMO'
-      ClientHeight = 617
-      ClientWidth = 1188
+      ClientHeight = 591
+      ClientWidth = 1187
+      object edt_saida32bytes: TEdit
+        Left = 24
+        Height = 23
+        Top = 72
+        Width = 520
+        TabOrder = 6
+        Text = 'edt_saida32bytes'
+      end
       object Mem_Grafico: TMemo
         Left = 559
         Height = 565
@@ -4565,10 +4637,10 @@ object Form1: TForm1
         TabOrder = 1
       end
       object edit_saidafat8: TEdit
-        Left = 220
+        Left = 24
         Height = 23
-        Top = 166
-        Width = 106
+        Top = 112
+        Width = 520
         TabOrder = 2
         Text = 'edit_saidafat8'
       end
@@ -4598,11 +4670,20 @@ object Form1: TForm1
         Smooth = True
         TabOrder = 5
       end
+      object Button11: TButton
+        Left = 224
+        Height = 24
+        Top = 152
+        Width = 82
+        Caption = 'Button11'
+        OnClick = Button11Click
+        TabOrder = 7
+      end
     end
     object tbs_grafico: TTabSheet
       Caption = 'Gráfico'
-      ClientHeight = 617
-      ClientWidth = 1188
+      ClientHeight = 591
+      ClientWidth = 1187
       object Panel21: TPanel
         Left = -8
         Height = 664
@@ -4770,6 +4851,171 @@ object Form1: TForm1
         end
       end
     end
+    object TabSheet1: TTabSheet
+      Caption = 'OUTROS CONTROLES'
+      ClientHeight = 617
+      ClientWidth = 1188
+      object edt_saidaprg: TEdit
+        Left = 32
+        Height = 23
+        Top = 32
+        Width = 111
+        TabOrder = 0
+      end
+      object Button6: TButton
+        Left = 32
+        Height = 26
+        Top = 64
+        Width = 110
+        Caption = 'Show Program'
+        OnClick = Button6Click
+        TabOrder = 1
+      end
+      object Button7: TButton
+        Left = 32
+        Height = 25
+        Top = 96
+        Width = 107
+        Caption = 'Format Dba'
+        OnClick = Button7Click
+        TabOrder = 2
+      end
+      object GroupBox3: TGroupBox
+        Left = 192
+        Height = 98
+        Top = 32
+        Width = 550
+        Caption = 'Comandos Avulsos'
+        ClientHeight = 78
+        ClientWidth = 546
+        DoubleBuffered = False
+        Enabled = False
+        ParentDoubleBuffered = False
+        TabOrder = 3
+        object btn_fill: TButton
+          Left = 14
+          Height = 27
+          Top = 48
+          Width = 74
+          Caption = 'Fill 24C1025'
+          OnClick = btn_fillClick
+          TabOrder = 0
+        end
+        object edt_fill: TEdit
+          Left = 80
+          Height = 23
+          Top = 18
+          Width = 40
+          TabOrder = 1
+          Text = '$FFFF'
+        end
+        object edt_fill_reply: TEdit
+          Left = 128
+          Height = 23
+          Top = 18
+          Width = 40
+          TabOrder = 2
+        end
+        object edt_fill_chip: TEdit
+          Left = 48
+          Height = 23
+          Top = 18
+          Width = 25
+          TabOrder = 3
+          Text = '$00'
+        end
+        object Label6: TLabel
+          Left = 48
+          Height = 15
+          Top = -1
+          Width = 25
+          Caption = 'Chip'
+          ParentColor = False
+        end
+        object Label7: TLabel
+          Left = 86
+          Height = 15
+          Top = -1
+          Width = 28
+          Caption = 'value'
+          ParentColor = False
+        end
+        object Label8: TLabel
+          Left = 136
+          Height = 15
+          Top = -1
+          Width = 26
+          Caption = 'reply'
+          ParentColor = False
+        end
+        object edt_fill_destino: TEdit
+          Left = 15
+          Height = 23
+          Top = 18
+          Width = 27
+          TabOrder = 4
+          Text = '$00'
+        end
+        object Label9: TLabel
+          Left = 14
+          Height = 15
+          Top = -1
+          Width = 28
+          Caption = 'Placa'
+          ParentColor = False
+        end
+        object btn_fill_confere: TButton
+          Left = 94
+          Height = 25
+          Top = 48
+          Width = 75
+          Caption = 'Confere'
+          TabOrder = 5
+        end
+      end
+      object EEE_241025_STRING: TGroupBox
+        Left = 32
+        Height = 65
+        Top = 160
+        Width = 303
+        Caption = 'EEE_241025_STRING'
+        ClientHeight = 45
+        ClientWidth = 299
+        TabOrder = 4
+        object Ler_EEE_24C: TButton
+          Left = 6
+          Height = 22
+          Top = 15
+          Width = 42
+          Caption = 'Ler'
+          OnClick = Ler_EEE_24CClick
+          TabOrder = 0
+        end
+        object Gravar_EEE_24C: TButton
+          Left = 56
+          Height = 21
+          Top = 16
+          Width = 47
+          Caption = 'Gravar'
+          TabOrder = 1
+        end
+        object edt_EEE_R_STR: TEdit
+          Left = 119
+          Height = 23
+          Top = 14
+          Width = 45
+          TabOrder = 2
+          Text = '$00'
+        end
+        object edt_saida_24STRING: TEdit
+          Left = 176
+          Height = 23
+          Top = 14
+          Width = 119
+          TabOrder = 3
+        end
+      end
+    end
   end
   object tmr_online: TTimer
     OnTimer = tmr_onlineTimer
@@ -4823,7 +5069,7 @@ object Form1: TForm1
       '90|-35|?|'
       '100|-35|?|'
     )
-    left = 720
+    left = 869
     top = 352
   end
   object lcs_Plataforma_NTC_01: TListChartSource
@@ -4857,8 +5103,8 @@ object Form1: TForm1
       '90|348|?|'
       '100|350|?|'
     )
-    left = 528
-    top = 208
+    left = 869
+    top = 192
   end
   object lcs_tensao: TListChartSource
     DataPoints.Strings = (
@@ -4874,8 +5120,8 @@ object Form1: TForm1
       '90|123|?|'
       '100|127|?|'
     )
-    left = 528
-    top = 56
+    left = 869
+    top = 40
   end
   object lcs_Plataforma_NTC_02: TListChartSource
     DataPoints.Strings = (
@@ -4927,7 +5173,7 @@ object Form1: TForm1
     top = 534
   end
   object PopupMenu1: TPopupMenu
-    left = 869
-    top = 218
+    left = 984
+    top = 40
   end
 end
