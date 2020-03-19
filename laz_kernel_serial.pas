@@ -57,6 +57,7 @@ const
    COMMAND_PROCULUS_Buzzer = $24;
    COMMAND_LDC_PAGE        = $25;
    COMMAND_CONTROL_ACTIVE  = $26;
+   COMMAND_READ_TOTALBOARD = $27;
    //...
    COMMAND_PROC_CLOCK_R    = $2D;
    COMMAND_CLK_RTC_R       = $2E;
@@ -371,6 +372,9 @@ type
                                  resultType : integer;
                                  ObjDestino : TObject);
 
+      procedure Read_TotalBoard(resultType : integer;
+                                ObjDestino : TObject);
+
       procedure Format_Program(resultType : integer;
                                ObjDestino : TObject);
 
@@ -409,7 +413,7 @@ type
                                      : Ansistring;
 
       function kernelSerial(comando : Ansistring) : Ansistring;
-      function HexToInt(Hexadecimal : AnsiString) : integer;
+      //function HexToInt(Hexadecimal : AnsiString) : integer;
       function HexToText(Hexadecimal: AnsiString) : AnsiString;
       function HexToNum(Hexadecimal : AnsiString) : AnsiString;
       function HexToInfo(value:string) : string;
@@ -420,6 +424,7 @@ type
 var
    buffer : array [0..TXBUFFERSIZE ] of byte;
    GraficoData : array [0..11] of TGrafico;
+
 
 implementation
 
@@ -439,20 +444,15 @@ function TSerial.HexToInfo(value:string) : string;
            numeral:real;
            saida : string;
          begin
-         if(Pos(value,'$')=0) then value:='$'+value;
-         numeral:=StrtoInt(value);
+         numeral:=StrToInt('$'+value);
          if(numeral>32768) then numeral:=numeral-65536;
+         numeral:=(numeral/10.0);
 
-         saida:=floattostr(numeral/10);
+         if((numeral=-0.1)or (numeral<-65))then
+            saida:='NOP'
+         else
+            saida:=formatfloat('#0.0',numeral);
 
-         {
-         //numeral:=(numeral/10.0);
-         if(numeral<-700) then
-            saida:='Sem Sensor'
-         else if(numeral=-1) then
-                 saida:='Sem Placa'
-         else saida:=formatfloat('#0.0',numeral/10.0);
-         }
          result:=saida;
          end;
 
@@ -1293,6 +1293,23 @@ begin
 end;
 
 
+procedure TSerial.Read_TotalBoard(resultType : integer;
+                                 ObjDestino : TObject);
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  fila[FilaFim].RXpayload:=1;
+  fila[FilaFim].TotalReturn:=6;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
+  buffer[0]:=0;
+  KernelCommand(COMMAND_READ_TOTALBOARD, 0, 1, buffer);
+end;
+
+
+
+
+
 procedure TSerial.Format_Program(resultType : integer;
                                  ObjDestino : TObject);
 begin
@@ -1496,14 +1513,14 @@ begin
 end;
 
 
-
+{
 //------------------------------------------------------------------------------
 function Tserial.HexToInt(Hexadecimal : AnsiString) : integer;
 begin
   //showmessage(Hexadecimal);
   Result := StrToInt('$' + Hexadecimal);
 end;
-
+}
 
 
 
@@ -1521,7 +1538,7 @@ begin
   size:=length(Hexadecimal);
   while cnt<size do
         begin
-          tmp:=chr(HextoInt(copy(hexadecimal,cnt,2)));
+          tmp:=chr(StrToInt('$'+copy(hexadecimal,cnt,2)));
           texto:=texto+tmp;
           cnt:=cnt+2;
         end;

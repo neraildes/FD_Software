@@ -1,11 +1,11 @@
 object Form1: TForm1
-  Left = 98
-  Height = 641
-  Top = 137
+  Left = 124
+  Height = 661
+  Top = 82
   Width = 1196
   BorderStyle = bsDialog
   Caption = 'JJ Cientifica Ind. e Com. de Equipamentos Científicos'
-  ClientHeight = 621
+  ClientHeight = 641
   ClientWidth = 1196
   Font.CharSet = ANSI_CHARSET
   Font.Color = clBlack
@@ -16,6 +16,7 @@ object Form1: TForm1
   Menu = MainMenu1
   OnClose = FormClose
   OnCreate = FormCreate
+  OnShow = FormShow
   Position = poDesktopCenter
   LCLVersion = '2.0.4.0'
   Scaled = False
@@ -35,9 +36,9 @@ object Form1: TForm1
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrCenter
     Left = 0
-    Height = 619
+    Height = 640
     Top = 0
-    Width = 1195
+    Width = 1196
     ActivePage = GraficoMEMO
     Anchors = [akTop, akLeft, akRight, akBottom]
     Font.CharSet = ANSI_CHARSET
@@ -53,7 +54,7 @@ object Form1: TForm1
     OnChange = Folha_de_AbasChange
     object tbs_manutencao: TTabSheet
       Caption = 'Manutencao e Calibracao'
-      ClientHeight = 591
+      ClientHeight = 612
       ClientWidth = 1187
       object Memo1: TMemo
         Left = 800
@@ -919,10 +920,36 @@ object Form1: TForm1
           TabOrder = 7
         end
       end
+      object GroupBox16: TGroupBox
+        Left = 16
+        Height = 65
+        Top = 464
+        Width = 203
+        Caption = 'TOTALBOARD'
+        ClientHeight = 45
+        ClientWidth = 199
+        TabOrder = 19
+        object btn_totalboard: TButton
+          Left = 16
+          Height = 22
+          Top = 11
+          Width = 75
+          Caption = 'Ler'
+          OnClick = btn_totalboardClick
+          TabOrder = 0
+        end
+        object edt_totalboard: TEdit
+          Left = 104
+          Height = 23
+          Top = 11
+          Width = 69
+          TabOrder = 1
+        end
+      end
     end
     object tbs_pagina_principal: TTabSheet
       Caption = 'Página Principal'
-      ClientHeight = 591
+      ClientHeight = 612
       ClientWidth = 1187
       object edt_buffer: TEdit
         Left = 960
@@ -3760,7 +3787,7 @@ object Form1: TForm1
     end
     object tbs_receitas: TTabSheet
       Caption = 'Receitas'
-      ClientHeight = 591
+      ClientHeight = 612
       ClientWidth = 1187
       object Panel16: TPanel
         Left = 312
@@ -4609,38 +4636,38 @@ object Form1: TForm1
     end
     object GraficoMEMO: TTabSheet
       Caption = 'Grafico MEMO'
-      ClientHeight = 591
-      ClientWidth = 1187
+      ClientHeight = 612
+      ClientWidth = 1188
       object edt_saida32bytes: TEdit
-        Left = 24
+        Left = 32
         Height = 23
-        Top = 72
-        Width = 520
+        Top = 24
+        Width = 88
         TabOrder = 6
         Text = 'edt_saida32bytes'
       end
       object Mem_Grafico: TMemo
-        Left = 559
+        Left = 616
         Height = 565
         Top = 19
-        Width = 617
+        Width = 561
         ScrollBars = ssVertical
         TabOrder = 0
       end
       object btn_baixar_dados_grafico: TButton
-        Left = 448
+        Left = 512
         Height = 23
-        Top = 24
+        Top = 47
         Width = 96
         Caption = 'Baixar Dados'
         OnClick = btn_baixar_dados_graficoClick
         TabOrder = 1
       end
       object edit_saidafat8: TEdit
-        Left = 24
+        Left = 128
         Height = 23
-        Top = 112
-        Width = 520
+        Top = 24
+        Width = 80
         TabOrder = 2
         Text = 'edit_saidafat8'
       end
@@ -4648,25 +4675,25 @@ object Form1: TForm1
         Left = 24
         Height = 23
         Top = 24
-        Width = 424
+        Width = 584
         ItemHeight = 15
         OnChange = cbb_programaChange
         TabOrder = 3
       end
       object pgb_Graphic_Load: TProgressBar
         Left = 24
-        Height = 14
+        Height = 22
         Top = 48
-        Width = 520
+        Width = 488
         Max = 12
         Smooth = True
         TabOrder = 4
       end
       object pgb_load_data_graphic: TProgressBar
-        Left = 560
+        Left = 616
         Height = 20
         Top = 592
-        Width = 616
+        Width = 560
         Smooth = True
         TabOrder = 5
       end
@@ -4678,6 +4705,40 @@ object Form1: TForm1
         Caption = 'Button11'
         OnClick = Button11Click
         TabOrder = 7
+      end
+      object Button14: TButton
+        Left = 104
+        Height = 25
+        Top = 256
+        Width = 75
+        Caption = 'Button14'
+        OnClick = Button14Click
+        TabOrder = 8
+      end
+      object Label51: TLabel
+        Left = 108
+        Height = 15
+        Top = 217
+        Width = 40
+        Caption = 'Label51'
+        ParentColor = False
+      end
+      object Label52: TLabel
+        Left = 108
+        Height = 15
+        Top = 236
+        Width = 40
+        Caption = 'Label52'
+        ParentColor = False
+      end
+      object Button15: TButton
+        Left = 22
+        Height = 25
+        Top = 256
+        Width = 74
+        Caption = 'Button15'
+        OnClick = Button15Click
+        TabOrder = 9
       end
     end
     object tbs_grafico: TTabSheet
@@ -4853,8 +4914,8 @@ object Form1: TForm1
     end
     object TabSheet1: TTabSheet
       Caption = 'OUTROS CONTROLES'
-      ClientHeight = 617
-      ClientWidth = 1188
+      ClientHeight = 612
+      ClientWidth = 1187
       object edt_saidaprg: TEdit
         Left = 32
         Height = 23
@@ -5014,6 +5075,56 @@ object Form1: TForm1
           Width = 119
           TabOrder = 3
         end
+      end
+      object Button12: TButton
+        Left = 96
+        Height = 28
+        Top = 336
+        Width = 83
+        Caption = 'Button12'
+        OnClick = Button12Click
+        TabOrder = 5
+      end
+      object edt_time: TEdit
+        Left = 96
+        Height = 23
+        Top = 280
+        Width = 83
+        TabOrder = 6
+        Text = 'edt_time'
+      end
+      object edt_date: TEdit
+        Left = 97
+        Height = 23
+        Top = 307
+        Width = 83
+        TabOrder = 7
+        Text = 'edt_date'
+      end
+      object Button13: TButton
+        Left = 480
+        Height = 25
+        Top = 344
+        Width = 75
+        Caption = 'Button13'
+        OnClick = Button13Click
+        TabOrder = 8
+      end
+      object nera00: TLabel
+        Left = 485
+        Height = 15
+        Top = 304
+        Width = 35
+        Caption = 'nera00'
+        ParentColor = False
+      end
+      object nera01: TLabel
+        Left = 485
+        Height = 15
+        Top = 320
+        Width = 35
+        Caption = 'nera01'
+        ParentColor = False
       end
     end
   end

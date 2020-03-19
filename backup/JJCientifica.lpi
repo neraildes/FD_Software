@@ -40,7 +40,7 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="5">
       <Unit0>
         <Filename Value="JJCientifica.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -57,6 +57,16 @@
         <Filename Value="Sinapse\source\lib\laz_synapse.lpk"/>
         <IsPartOfProject Value="True"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="laz_kernel_serial.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Laz_kernel_serial"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="tabelaalocacao8.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="TabelaAlocacao8"/>
+      </Unit4>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
