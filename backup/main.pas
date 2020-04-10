@@ -1195,7 +1195,7 @@ begin
                                    a:=addeeprom;
                                    i:=0;
 
-                                   while(i<SomaFim)do
+                                   while(i<=SomaFim)do
                                       begin
                                         Linha[i]:=Linha[i]+' ; '+Aparelho.HextoInfo(Copy(LinhaPura,(i*4)+1,4));
                                         if Linha[i]='S/P' then  break;
