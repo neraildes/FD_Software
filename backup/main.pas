@@ -1,4 +1,4 @@
-unit Main;
+                                                unit Main;
 
 {$mode objfpc}{$H+}
 
@@ -11,6 +11,7 @@ uses
   TabelaAlocacao8;
 
 const
+  MAXREAD     = 256;
   DESCONECTAR = 0;
   CONECTAR    = 1;
 
@@ -81,11 +82,11 @@ type
     Button12: TButton;
     Button13: TButton;
     Button14: TButton;
-    Button15: TButton;
     Button6: TButton;
     Button7: TButton;
     cbb_programa: TComboBox;
     chk_EEPROM_32Bits: TCheckBox;
+    Edit8: TEdit;
     edt_date: TEdit;
     edt_time: TEdit;
     edt_saida32bytes: TEdit;
@@ -124,8 +125,7 @@ type
     Label48: TLabel;
     Label49: TLabel;
     Label50: TLabel;
-    Label51: TLabel;
-    Label52: TLabel;
+    Memo5: TMemo;
     nera00: TLabel;
     nera01: TLabel;
     Label6: TLabel;
@@ -153,8 +153,8 @@ type
     cbb1: TComboBox;
     cbb2: TComboBox;
     cbb_COMPORT: TComboBox;
-    Chart1: TChart;
-    Chart2: TChart;
+    cht_condensador: TChart;
+    cht_plataforma: TChart;
     cls_temperatura_NTC_03: TLineSeries;
     cls_temperatura_NTC_04: TLineSeries;
     cls_temperatura_NTC_05: TLineSeries;
@@ -164,7 +164,7 @@ type
     cls_temperatura_NTC_09: TLineSeries;
     cls_temperatura_NTC_10: TLineSeries;
     cls_temperatura_NTC_02: TLineSeries;
-    Chart3: TChart;
+    cht_tensao: TChart;
     cls_tensao: TLineSeries;
     cls_temperatura_NTC_01: TLineSeries;
     chl_condensador: TLineSeries;
@@ -479,7 +479,6 @@ type
     procedure Button12Click(Sender: TObject);
     procedure Button13Click(Sender: TObject);
     procedure Button14Click(Sender: TObject);
-    procedure Button15Click(Sender: TObject);
     procedure cbb_programaChange(Sender: TObject);
     procedure edt_IO_StringChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -1065,21 +1064,154 @@ begin
  end;
 
 procedure TForm1.Button11Click(Sender: TObject);
+var
+  i:integer;
+  indice:integer;
+  nnn:double;
+  Linha:string;
+  posicao:integer;
+  valor:string;
 begin
-  edit_saidafat8.text:=Aparelho.HexToNum(edt_saida32bytes.text);
+     showmessage('cht_tensao.Series.count      ='+inttostr(cht_tensao.Series.count)+#13+
+               'cht_vacuo.Series.count       ='+inttostr(cht_vacuo.Series.count)+#13+
+               'cht_condensador.series.count ='+inttostr(cht_condensador.series.count)+#13+
+               'cht_plataforma.series.count  ='+inttostr(cht_plataforma.series.count)
+               );
+   //cht_tensao.Series.Clear;
+   //cht_vacuo.series.Clear;
+   //cht_condensador.series.Clear;
+   //cht_plataforma.series.clear;
+
+   lcs_tensao.Clear;
+   lcs_vacuometro.Clear;
+   lcs_pt100_condensador.clear;
+   lcs_Plataforma_NTC_01.clear;
+   lcs_Plataforma_NTC_02.clear;
+   lcs_Plataforma_NTC_03.clear;
+   lcs_Plataforma_NTC_04.clear;
+   lcs_Plataforma_NTC_05.clear;
+   lcs_Plataforma_NTC_06.clear;
+   lcs_Plataforma_NTC_07.clear;
+   lcs_Plataforma_NTC_08.clear;
+   lcs_Plataforma_NTC_09.clear;
+   lcs_Plataforma_NTC_10.clear;
+
+   nnn:=0;
+   for i:=0 to Mem_Grafico.Lines.Count-1 do
+       begin
+         Linha:=Mem_Grafico.Lines.Strings[i];
+         indice:=0;
+         repeat
+           posicao:=POS(';',Linha);
+           valor:=copy(Linha,1,posicao-1);
+           Linha:=copy(Linha,Posicao+2,length(linha));
+           case indice of
+
+              2:begin //Tensão
+                  try
+                  lcs_tensao.Add(nnn,strtofloat(valor),'');
+                  except
+                  end;
+                end;
+
+              3:begin //Vacuometro
+                  try
+                  lcs_vacuometro.Add(nnn,strtofloat(valor),'');
+                  except
+                  end;
+                end;
+
+              4:begin //Condensador
+                  try
+                  lcs_pt100_condensador.Add(nnn,strtofloat(valor),'');
+                  except
+                  end;
+                end;
+
+              5:begin //PLATAFORMA 01
+                  try
+                  lcs_Plataforma_NTC_01.Add(nnn,strtofloat(valor),'');
+                  except
+                  end;
+                end;
+
+              6:begin //PLATAFORMA 02
+                  try
+                  lcs_Plataforma_NTC_02.Add(nnn,strtofloat(valor),'');
+                  except
+                  end;
+                end;
+
+              7:begin //PLATAFORMA 03
+                  try
+                  lcs_Plataforma_NTC_03.Add(nnn,strtofloat(valor),'');
+                  Except
+                  end;
+                end;
+
+              8:begin //PLATAFORMA 04
+                  try
+                  lcs_Plataforma_NTC_04.Add(nnn,strtofloat(valor),'');
+                  except
+                  end;
+                end;
+
+              9:begin //PLATAFORMA 05
+                  try
+                  lcs_Plataforma_NTC_05.Add(nnn,strtofloat(valor),'');
+                  except
+                  end;
+                end;
+
+             10:begin //PLATAFORMA 06
+                  try
+                  lcs_Plataforma_NTC_06.Add(nnn,strtofloat(valor),'');
+                  except
+                  end;
+                end;
+
+             11:begin //PLATAFORMA 07
+                  try
+                  lcs_Plataforma_NTC_07.Add(nnn,strtofloat(valor),'');
+                  except
+                  end;
+                end;
+
+             12:begin //PLATAFORMA 08
+                  try
+                  lcs_Plataforma_NTC_08.Add(nnn,strtofloat(valor),'');
+                  except
+                  end;
+                end;
+
+             13:begin //PLATAFORMA 09
+                  try
+                  lcs_Plataforma_NTC_09.Add(nnn,strtofloat(valor),'');
+                  except
+                  end;
+                end;
+
+             14:begin //PLATAFORMA 10
+                  try
+                  lcs_Plataforma_NTC_10.Add(nnn,strtofloat(valor),'');
+                  except
+                  end;
+                end;
+
+           end;
+           inc(indice);
+           Memo5.Lines.Add(valor);
+         until POS(';',Linha)=0;
+         nnn:=nnn+1;
+       end;
+   // 416 ; 20/03/2020 ; 09:38:46 ; 169,0 ; 2000,0 ; -10,2 ; NOP ; 25,4 ; 26,2 ; 25,8 ; 25,8 ; NOP
 end;
-
-
-
-
-
-
 
 procedure TForm1.cbb_programaChange(Sender: TObject);
 var
   Addeeprom, Addeepromfim, addeepromtime :integer;
-  Linha : array [0..16] of string;
-  LinhaPura : string;
+  Linha : array [0..MAXREAD] of string;
+  LinhaPura, LinhaTeste : string;
   i: integer;
   placa, canal, a :integer;
   jjj:integer;
@@ -1090,7 +1222,7 @@ begin
 
   fat8.minutes:=GraficoData[cbb_programa.ItemIndex].minutos;
   fat8.add_start:=GraficoData[cbb_programa.ItemIndex].addInicio;
-  fat8.add_end:=GraficoData[cbb_programa.ItemIndex].addFim;
+  fat8.add_end:=GraficoData[cbb_programa.ItemIndex].addFim-2;
   fat8.amostra:=GraficoData[cbb_programa.ItemIndex].intervalo;
   fat8.process_number:=GraficoData[cbb_programa.ItemIndex].processo;
   fat8.inicio.data:=StrToDate(GraficoData[cbb_programa.ItemIndex].dataInicio);
@@ -1102,9 +1234,9 @@ begin
   Mem_Grafico.Lines.Clear;
 
 
-  Mem_Grafico.Lines.Add('Endereco Inicial = '+inttostr(fat8.add_start));
-  Mem_Grafico.Lines.Add('Endereco Final   = '+inttostr(fat8.add_end));
-  {
+  //Mem_Grafico.Lines.Add('Endereco Inicial = '+inttostr(fat8.add_start));
+  //Mem_Grafico.Lines.Add('Endereco Final   = '+inttostr(fat8.add_end));
+
   showmessage
   (
   'Endereco Inicial = '+inttostr(fat8.add_start)+#13+
@@ -1122,60 +1254,53 @@ begin
                                    )/2*0.645/60
                                    )+' minutos.'
   );
- exit;
- }
 
 
 
+  pgb_load_data_graphic.Min:=Fat8.add_start;
+  pgb_load_data_graphic.Max:=Fat8.add_end;
+  pgb_load_data_graphic.Position:=Fat8.add_start;
+  {
+  pgb_load_data_graphic.Invalidate;
+  pgb_load_data_graphic.Update;
+  pgb_load_data_graphic.Repaint;
+  Application.ProcessMessages;
+  }
 
-
-
- pgb_load_data_graphic.Min:=Fat8.add_start;
- pgb_load_data_graphic.Max:=Fat8.add_end;
- //while(addeeprom<=Fat8.add_end) do
- //begin
-
-
-  //showmessage(linhapura);
   Addeeprom:=Fat8.add_start;
   Addeepromfim:=Fat8.add_end;
 
 
-  //edit_saidafat8.text:='';
+  //---------------------------TOTALBOARD---------------------------------------
+  try
   Aparelho.Read_TotalBoard(HEXADECIMAL,Form1.edit_saidafat8);
   Aguarda_Atualizacao_do_TEdit(edit_saidafat8);
   totalboard:=strtoint('$'+edit_saidafat8.text);
+  except
+    showmessage('Erro fazendo download de TOTALBOARD');
+  end;
+  //----------------------------------------------------------------------------
 
-  //showmessage('TotalBoard ='+inttostr(totalboard));
 
-  {
-  LioDate:=StrToDate(GraficoData[cbb_programa.ItemIndex].dataInicio);
-  LioTime:=StrToTime(GraficoData[cbb_programa.ItemIndex].horaInicio);
-  LioTimeInc:=GraficoData[cbb_programa.ItemIndex].intervalo;
-
-  showmessage(DateToStr(LioDate)+#13+TimeToStr(LioTime));
-
-  exit;
-  }
 
   while((addeeprom)<addeepromfim) do
                  begin
+                   pgb_load_data_graphic.Min:=Fat8.add_start;
+                   pgb_load_data_graphic.Max:=Fat8.add_end;
                    addeepromtime:=addeeprom;
-                   Mem_Grafico.Lines.Add('-----------------------------------');
-                   for i:=0 to 16 do
+                   //Mem_Grafico.Lines.Add('--------------------------------------------------------');
+                   for i:=0 to MAXREAD do Linha[i]:='';
+                   for i:=0 to MAXREAD do
                        begin
-                         Linha[i]:=InttoStr(addeepromtime)+' ; '+
+                         Linha[i]:={InttoStr(addeepromtime)+' ; '+}
                                    DatetoStr(fat8.inicio.data)+' ; '+
                                    TimetoStr(fat8.inicio.hora);
                          fat8.SomaSegundos(fat8.amostra);
                          inc(addeepromtime,2);
-                         if(addeepromtime>addeepromfim)then
-                            begin
-                              //Linha[i]:='xxxxxxxxxxxx ACABOU xxxxxxxxxxxxxx';
-                              break
-                            end;
+                         if(addeepromtime>addeepromfim)then break;
                        end;
                        SomaFim:=i;
+
 
 
                    for placa:=1 to totalboard do
@@ -1184,42 +1309,45 @@ begin
                              begin
                                if((placa=2) and (Canal=1)) then continue; //salta PT100 canal 1 (sem sensor)
 
-                                   edt_saida32bytes.text:='';
-                                   Aparelho.Ler_EEPROM_24C1025_Buffer_Filha(placa,canal,addeeprom,32,HEXADECIMAL,edt_saida32bytes);
-                                   Aguarda_Atualizacao_do_TEdit(edt_saida32bytes);
-                                   Linhapura:=edt_saida32bytes.text;
-                                   //if(copy(LinhaPura,1,4))='FFFF' then continue;
-                                   //Mem_Grafico.Lines.Add(Linhapura);
+                                   edit_saidafat8.text:='';
+                                   Aparelho.Ler_EEPROM_24C1025_Buffer_Filha(placa,canal,addeeprom,200,HEXADECIMAL,edit_saidafat8);
+                                   Aguarda_Atualizacao_do_TEdit(edit_saidafat8);
+                                   Linhapura:=edit_saidafat8.text;
 
 
-                                   a:=addeeprom;
                                    i:=0;
 
                                    while(i<=SomaFim)do
                                       begin
+                                        try
                                         Linha[i]:=Linha[i]+' ; '+Aparelho.HextoInfo(Copy(LinhaPura,(i*4)+1,4));
+                                        Memo1.Lines.Add(Linha[i]);
+                                        except
+                                          LinhaTeste:=Copy(LinhaPura,(i*4)+1,4);
+                                          showmessage('Erro no HextoInfo');
+                                        end;
                                         if Linha[i]='S/P' then  break;
                                         inc(i);
-                                        if i+addeeprom>GraficoData[cbb_programa.ItemIndex].addFim then break;
+                                        if (i+addeeprom)>Fat8.add_end then break;
                                       end;
-
+                             if (i+addeeprom)>Fat8.add_end then break;
                              end;
+                       if (i+addeeprom)>Fat8.add_end then break;
                        end;
 
-                       for jjj:=0 to 15 do
+                       for jjj:=0 to Somafim do
                            begin
-                             Mem_Grafico.Lines.Add(Linha[jjj]);
+                             Mem_Grafico.Lines.Add(Linha[jjj]+' ; ');
                            end;
 
-                    inc(addeeprom,Somafim);
-                    pgb_load_data_graphic.Position:=addeeprom;
-                    if(Somafim<16) then break;
-                 end;
+                    exit; ///\/\/\/\/\/\/ APAGAR \/\/\/\/\/\/\/\/\/\/\
 
-   //Mem_Grafico.Lines.Add(Linha);
-   //inc(addeeprom,2);
- //end;
-  tmr_temperaturas.Enabled:=TRUE;
+                    inc(addeeprom,(Somafim*2)+2);
+                    //pgb_load_data_graphic.Min:=Fat8.add_start;
+                    pgb_load_data_graphic.Position:=addeeprom;
+                    if(Somafim<8) then break;
+                 end;
+   tmr_temperaturas.Enabled:=TRUE;
 end;
 
 procedure TForm1.edt_IO_StringChange(Sender: TObject);
@@ -2997,7 +3125,7 @@ procedure TForm1.Aguarda_Atualizacao_do_TEdit(objeto : TObject);
 var
   maxtime:integer;
 begin
-  maxtime:=15000;
+  maxtime:=100000;
   TEdit(Objeto).text:='';
   while((TEdit(Objeto).text='')and(maxtime>0)) do
     begin
@@ -3060,20 +3188,24 @@ begin
 end;
 
 procedure TForm1.Button14Click(Sender: TObject);
+var
+  eepromadd:integer;
 begin
-  Fat8.SomaSegundos(10);
-  label51.caption:=TimeToStr(Fat8.Inicio.hora);
-  label52.caption:=DateToStr(Fat8.Inicio.data);
+  eepromadd:=$C7;
+  while(true) do
+     begin
+     button14.Caption:=inttostr(eepromadd);
+     Aparelho.Gravar_EEPROM_8bits_24C1025_Filha(1,
+                                                0,
+                                                eepromadd,
+                                                eepromadd,
+                                                TEXTO,
+                                                Form1.edit8
+                                                );
+     inc(eepromadd);
+     if(eepromadd>=256) then break;
+  end;
 end;
-
-procedure TForm1.Button15Click(Sender: TObject);
-begin
-  Fat8.Inicio.data:=StrToDate('15/03/20');
-  Fat8.Inicio.hora:=StrToTime('23:58:50');
-  label51.caption:=TimeToStr(Fat8.Inicio.hora);
-  label52.caption:=DateToStr(Fat8.Inicio.data);
-end;
-
 
 end.
 

@@ -81,7 +81,7 @@ const
 
 
 //-------------------------------------
-   BUFFER_PC               =  100;
+   BUFFER_PC               =  600;
 
 //-----------OUTRAS CONSTANTES-------------
    READ  = 0;
@@ -448,7 +448,7 @@ function TSerial.HexToInfo(value:string) : string;
          if(numeral>32768) then numeral:=numeral-65536;
          numeral:=(numeral/10.0);
 
-         if((numeral=-0.1)or (numeral<-070))then
+         if((numeral=-0.1)or (numeral<-65))then
             saida:='NOP'
          else
             saida:=formatfloat('#0.0',numeral);

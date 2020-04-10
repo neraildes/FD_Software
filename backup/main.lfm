@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 124
+  Left = 98
   Height = 661
-  Top = 82
+  Top = 111
   Width = 1196
   BorderStyle = bsDialog
   Caption = 'JJ Cientifica Ind. e Com. de Equipamentos Científicos'
@@ -55,7 +55,7 @@ object Form1: TForm1
     object tbs_manutencao: TTabSheet
       Caption = 'Manutencao e Calibracao'
       ClientHeight = 612
-      ClientWidth = 1187
+      ClientWidth = 1188
       object Memo1: TMemo
         Left = 800
         Height = 544
@@ -950,7 +950,7 @@ object Form1: TForm1
     object tbs_pagina_principal: TTabSheet
       Caption = 'Página Principal'
       ClientHeight = 612
-      ClientWidth = 1187
+      ClientWidth = 1188
       object edt_buffer: TEdit
         Left = 960
         Height = 23
@@ -4341,8 +4341,8 @@ object Form1: TForm1
     end
     object tbs_parametros: TTabSheet
       Caption = 'Parâmetros'
-      ClientHeight = 591
-      ClientWidth = 1187
+      ClientHeight = 612
+      ClientWidth = 1188
       object GroupBox9: TGroupBox
         Left = 24
         Height = 527
@@ -4697,54 +4697,22 @@ object Form1: TForm1
         Smooth = True
         TabOrder = 5
       end
-      object Button11: TButton
-        Left = 224
-        Height = 24
-        Top = 152
-        Width = 82
-        Caption = 'Button11'
-        OnClick = Button11Click
+      object Memo5: TMemo
+        Left = 16
+        Height = 336
+        Top = 248
+        Width = 585
+        Lines.Strings = (
+          'Memo5'
+        )
+        ScrollBars = ssVertical
         TabOrder = 7
-      end
-      object Button14: TButton
-        Left = 104
-        Height = 25
-        Top = 256
-        Width = 75
-        Caption = 'Button14'
-        OnClick = Button14Click
-        TabOrder = 8
-      end
-      object Label51: TLabel
-        Left = 108
-        Height = 15
-        Top = 217
-        Width = 40
-        Caption = 'Label51'
-        ParentColor = False
-      end
-      object Label52: TLabel
-        Left = 108
-        Height = 15
-        Top = 236
-        Width = 40
-        Caption = 'Label52'
-        ParentColor = False
-      end
-      object Button15: TButton
-        Left = 22
-        Height = 25
-        Top = 256
-        Width = 74
-        Caption = 'Button15'
-        OnClick = Button15Click
-        TabOrder = 9
       end
     end
     object tbs_grafico: TTabSheet
       Caption = 'Gráfico'
-      ClientHeight = 591
-      ClientWidth = 1187
+      ClientHeight = 612
+      ClientWidth = 1188
       object Panel21: TPanel
         Left = -8
         Height = 664
@@ -4756,8 +4724,8 @@ object Form1: TForm1
         Color = 15461355
         ParentColor = False
         TabOrder = 2
-        object Chart3: TChart
-          Left = 9
+        object cht_tensao: TChart
+          Left = 8
           Height = 136
           Top = 24
           Width = 1177
@@ -4776,6 +4744,7 @@ object Form1: TForm1
               Minors = <>
               Title.LabelBrush.Style = bsClear
             end>
+          BackColor = clWhite
           Foot.Brush.Color = clBtnFace
           Foot.Font.Color = clBlue
           Title.Brush.Color = clBtnFace
@@ -4787,10 +4756,10 @@ object Form1: TForm1
             Source = lcs_tensao
           end
         end
-        object Chart2: TChart
+        object cht_plataforma: TChart
           Left = 16
-          Height = 157
-          Top = 477
+          Height = 170
+          Top = 464
           Width = 1176
           AxisList = <          
             item
@@ -4809,6 +4778,7 @@ object Form1: TForm1
               Title.Caption = 'Tempo (seg.)'
               Title.LabelBrush.Style = bsClear
             end>
+          BackColor = clWhite
           Foot.Brush.Color = clBtnFace
           Foot.Font.Color = clBlue
           Title.Brush.Color = clBtnFace
@@ -4817,38 +4787,48 @@ object Form1: TForm1
             'TAChart'
           )
           object cls_temperatura_NTC_01: TLineSeries
+            LinePen.Color = clMaroon
             Source = lcs_Plataforma_NTC_01
           end
           object cls_temperatura_NTC_02: TLineSeries
+            LinePen.Color = 9276871
             Source = lcs_Plataforma_NTC_02
           end
           object cls_temperatura_NTC_03: TLineSeries
+            LinePen.Color = clRed
             Source = lcs_Plataforma_NTC_03
           end
           object cls_temperatura_NTC_04: TLineSeries
+            LinePen.Color = 4227327
             Source = lcs_Plataforma_NTC_04
           end
           object cls_temperatura_NTC_05: TLineSeries
+            LinePen.Color = 16744703
             Source = lcs_Plataforma_NTC_05
           end
           object cls_temperatura_NTC_06: TLineSeries
+            LinePen.Color = 64507
             Source = lcs_Plataforma_NTC_06
           end
           object cls_temperatura_NTC_07: TLineSeries
+            LinePen.Color = 3327488
             Source = lcs_Plataforma_NTC_07
           end
           object cls_temperatura_NTC_08: TLineSeries
+            LinePen.Color = clLime
             Source = lcs_Plataforma_NTC_08
           end
           object cls_temperatura_NTC_09: TLineSeries
+            LinePen.Color = clBlue
             Source = lcs_Plataforma_NTC_09
           end
           object cls_temperatura_NTC_10: TLineSeries
+            LinePen.Color = clPurple
             Source = lcs_Plataforma_NTC_10
           end
         end
       end
-      object Chart1: TChart
+      object cht_condensador: TChart
         Left = 4
         Height = 144
         Top = 296
@@ -4868,6 +4848,7 @@ object Form1: TForm1
             Minors = <>
             Title.LabelBrush.Style = bsClear
           end>
+        BackColor = clWhite
         Foot.Brush.Color = clBtnFace
         Foot.Font.Color = clBlue
         Title.Brush.Color = clBtnFace
@@ -4876,6 +4857,7 @@ object Form1: TForm1
           'TAChart'
         )
         object chl_condensador: TLineSeries
+          LinePen.Color = clSilver
           Source = lcs_pt100_condensador
         end
       end
@@ -4899,6 +4881,7 @@ object Form1: TForm1
             Minors = <>
             Title.LabelBrush.Style = bsClear
           end>
+        BackColor = clWhite
         Foot.Brush.Color = clBtnFace
         Foot.Font.Color = clBlue
         Title.Brush.Color = clBtnFace
@@ -4908,6 +4891,7 @@ object Form1: TForm1
         )
         object chl_vacuo: TLineSeries
           AxisIndexX = 0
+          LinePen.Color = clGray
           Source = lcs_vacuometro
         end
       end
@@ -4915,7 +4899,7 @@ object Form1: TForm1
     object TabSheet1: TTabSheet
       Caption = 'OUTROS CONTROLES'
       ClientHeight = 612
-      ClientWidth = 1187
+      ClientWidth = 1188
       object edt_saidaprg: TEdit
         Left = 32
         Height = 23
@@ -5126,7 +5110,33 @@ object Form1: TForm1
         Caption = 'nera01'
         ParentColor = False
       end
+      object Button14: TButton
+        Left = 288
+        Height = 25
+        Top = 292
+        Width = 75
+        Caption = 'Button14'
+        OnClick = Button14Click
+        TabOrder = 9
+      end
+      object Edit8: TEdit
+        Left = 291
+        Height = 23
+        Top = 325
+        Width = 71
+        TabOrder = 10
+        Text = 'Edit8'
+      end
     end
+  end
+  object Button11: TButton
+    Left = 56
+    Height = 25
+    Top = 264
+    Width = 75
+    Caption = 'Button11'
+    OnClick = Button11Click
+    TabOrder = 2
   end
   object tmr_online: TTimer
     OnTimer = tmr_onlineTimer
@@ -5134,6 +5144,7 @@ object Form1: TForm1
     top = 48
   end
   object tmr_temperaturas: TTimer
+    Enabled = False
     Interval = 10
     OnTimer = tmr_temperaturasTimer
     left = 1120
