@@ -20,8 +20,8 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Main"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="1156"/>
-        <CursorPos X="33" Y="1174"/>
+        <TopLine Value="1177"/>
+        <CursorPos X="45" Y="1198"/>
         <UsageCount Value="228"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -154,7 +154,7 @@
         <UnitName Value="TabelaAlocacao8"/>
         <EditorIndex Value="3"/>
         <CursorPos Y="42"/>
-        <UsageCount Value="87"/>
+        <UsageCount Value="88"/>
         <Loaded Value="True"/>
       </Unit18>
       <Unit19>
