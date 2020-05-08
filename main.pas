@@ -11,7 +11,7 @@ uses
   TabelaAlocacao8;
 
 const
-  MAXREAD     = 256;
+  MAXREAD     = 255;
   DESCONECTAR = 0;
   CONECTAR    = 1;
 
@@ -82,10 +82,19 @@ type
     Button12: TButton;
     Button13: TButton;
     Button14: TButton;
+    btn_Save_Tmem_Grafico: TButton;
+    btn_open_file: TButton;
+    Button15: TButton;
     Button6: TButton;
     Button7: TButton;
     cbb_programa: TComboBox;
     chk_EEPROM_32Bits: TCheckBox;
+    Edit15: TEdit;
+    edt_intervalo: TEdit;
+    edt_processo: TEdit;
+    edt_inicio: TEdit;
+    edt_tempo: TEdit;
+    edt_responsavel: TEdit;
     Edit8: TEdit;
     edt_date: TEdit;
     edt_time: TEdit;
@@ -125,6 +134,10 @@ type
     Label48: TLabel;
     Label49: TLabel;
     Label50: TLabel;
+    lbl_inicio: TLabel;
+    lbl_tempo: TLabel;
+    lbl_responsavel: TLabel;
+    lbl_processo: TLabel;
     Memo5: TMemo;
     nera00: TLabel;
     nera01: TLabel;
@@ -386,6 +399,7 @@ type
     Ler_EEE_24C: TButton;
     MainMenu1: TMainMenu;
     Mem_Grafico: TMemo;
+    OpenDialog1: TOpenDialog;
     Panel21: TPanel;
     GraficoMEMO: TTabSheet;
     PopupMenu1: TPopupMenu;
@@ -395,6 +409,7 @@ type
     rdb_String_24C1025: TRadioButton;
     rdb_Buffer_EEPROM: TRadioButton;
     rdb_String_EEPROM: TRadioButton;
+    SaveDialog1: TSaveDialog;
     TabSheet1: TTabSheet;
     tbs_manutencao: TTabSheet;
     Memo1: TMemo;
@@ -430,6 +445,7 @@ type
     rb_24C1025: TRadioButton;
     rb_EEPROM: TRadioButton;
     tbs_grafico: TTabSheet;
+    tmr_captura_grafico: TTimer;
     tmr_vacuo: TTimer;
     tmr_online: TTimer;
     tmr_temperaturas: TTimer;
@@ -461,11 +477,13 @@ type
     procedure btn_Ler24C32BitsClick(Sender: TObject);
     procedure btn_Ler_RTCClick(Sender: TObject);
     procedure btn_ler_vp_intClick(Sender: TObject);
+    procedure btn_open_fileClick(Sender: TObject);
     procedure btn_page_writeClick(Sender: TObject);
     procedure btn_pagina1Click(Sender: TObject);
     procedure btn_pagina2Click(Sender: TObject);
     procedure btn_EE_Read_BufferClick(Sender: TObject);
     procedure btn_resumeClick(Sender: TObject);
+    procedure btn_Save_Tmem_GraficoClick(Sender: TObject);
     procedure btn_suspendClick(Sender: TObject);
     procedure btn_LerMemoClick(Sender: TObject);
     procedure btn_time_process_readClick(Sender: TObject);
@@ -479,6 +497,7 @@ type
     procedure Button12Click(Sender: TObject);
     procedure Button13Click(Sender: TObject);
     procedure Button14Click(Sender: TObject);
+    procedure Button15Click(Sender: TObject);
     procedure cbb_programaChange(Sender: TObject);
     procedure edt_IO_StringChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -508,6 +527,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure btn_EE_Read_StringClick(Sender: TObject);
     procedure btn_Write_StringClick(Sender: TObject);
+    procedure tmr_captura_graficoTimer(Sender: TObject);
     procedure tmr_condensadorTimer(Sender: TObject);
     procedure tmr_temperaturasTimer(Sender: TObject);
     procedure ListaAdd(cmd:string);
@@ -543,6 +563,7 @@ type
     procedure GravarReceita();
     procedure Gravar_Config();
     procedure AtualizaBotoes();
+    procedure LimparGraficos();
   private
 
   public
@@ -558,6 +579,9 @@ var
   Fat8 : TFat8;
   settings:TFormatSettings;
 
+  Intervalo:integer;
+  cnt_intervalo:integer;
+
   ApagarDate : TDateTime;
   ApagarTime : TDateTime;
 
@@ -567,7 +591,7 @@ var
 
 implementation
 
-{$R *.lfm}
+{$R *.lfm} {$H+}
 
 { TForm1 }
 
@@ -662,6 +686,108 @@ begin
      begin
        showmessage('Não Implementado');
      end;
+end;
+
+procedure TForm1.tmr_captura_graficoTimer(Sender: TObject);
+var
+  valor : string;
+  Linha : string;
+begin
+  //ShowMessage(inttostr(tmr_captura_grafico.Interval));
+  Linha:=FormatDateTime('dd/mm/yyyy ; hh:MM:ss', Now);
+
+  try
+  valor:=copy(edt_tensao.text,1,pos('V',edt_tensao.text)-1);
+  Linha:=Linha+' ; '+valor;
+  lcs_tensao.Add(cnt_intervalo,strtofloat(valor),'');
+  except
+  end;
+
+  try
+  valor:=copy(edt_vacuometro.text,1,pos('mmHg',edt_vacuometro.text)-1);
+  Linha:=Linha+' ; '+valor;
+  lcs_vacuometro.Add(cnt_intervalo,strtofloat(valor),'');
+  except
+  end;
+
+  try
+  valor:=copy(edt_condensador.text,1,pos('°C',edt_condensador.text)-1);
+  Linha:=Linha+' ; '+valor;
+  lcs_pt100_condensador.Add(cnt_intervalo,strtofloat(valor),'');
+  except
+  end;
+
+  try
+  valor:=copy(edit2.text,1,pos('°C',edit2.text)-1);
+  Linha:=Linha+' ; '+valor;
+  lcs_Plataforma_NTC_01.Add(cnt_intervalo,strtofloat(copy(edit2.text,1,pos('°C',edit2.text)-1)),'');
+  except
+  end;
+
+  try
+  valor:=copy(edit10.text,1,pos('°C',edit10.text)-1);
+  Linha:=Linha+' ; '+valor;
+  lcs_Plataforma_NTC_02.Add(cnt_intervalo,strtofloat(copy(edit10.text,1,pos('°C',edit10.text)-1)),'');
+  except
+  end;
+
+  try
+  valor:=copy(edit17.text,1,pos('°C',edit17.text)-1);
+  Linha:=Linha+' ; '+valor;
+  lcs_Plataforma_NTC_03.Add(cnt_intervalo,strtofloat(copy(edit17.text,1,pos('°C',edit17.text)-1)),'');
+  except
+  end;
+
+  try
+  valor:=copy(edit24.text,1,pos('°C',edit24.text)-1);
+  Linha:=Linha+' ; '+valor;
+  lcs_Plataforma_NTC_04.Add(cnt_intervalo,strtofloat(copy(edit24.text,1,pos('°C',edit24.text)-1)),'');
+  except
+  end;
+
+  try
+  valor:=copy(edit31.text,1,pos('°C',edit31.text)-1);
+  Linha:=Linha+' ; '+valor;
+  lcs_Plataforma_NTC_05.Add(cnt_intervalo,strtofloat(copy(edit31.text,1,pos('°C',edit31.text)-1)),'');
+  except
+  end;
+
+  try
+  valor:=copy(edit38.text,1,pos('°C',edit38.text)-1);
+  Linha:=Linha+' ; '+valor;
+  lcs_Plataforma_NTC_06.Add(cnt_intervalo,strtofloat(copy(edit38.text,1,pos('°C',edit38.text)-1)),'');
+  except
+  end;
+
+  try
+  valor:=copy(edit45.text,1,pos('°C',edit45.text)-1);
+  Linha:=Linha+' ; '+valor;
+  lcs_Plataforma_NTC_07.Add(cnt_intervalo,strtofloat(copy(edit45.text,1,pos('°C',edit45.text)-1)),'');
+  except
+  end;
+
+  try
+  valor:=copy(edit52.text,1,pos('°C',edit52.text)-1);
+  Linha:=Linha+' ; '+valor;
+  lcs_Plataforma_NTC_08.Add(cnt_intervalo,strtofloat(copy(edit52.text,1,pos('°C',edit52.text)-1)),'');
+  except
+  end;
+
+  try
+  valor:=copy(edit59.text,1,pos('°C',edit59.text)-1);
+  Linha:=Linha+' ; '+valor;
+  lcs_Plataforma_NTC_09.Add(cnt_intervalo,strtofloat(copy(edit59.text,1,pos('°C',edit59.text)-1)),'');
+  except
+  end;
+
+  try
+  valor:=copy(edit66.text,1,pos('°C',edit66.text)-1);
+  Linha:=Linha+' ; '+valor;
+  lcs_Plataforma_NTC_10.Add(cnt_intervalo,strtofloat(copy(edit66.text,1,pos('°C',edit66.text)-1)),'');
+  except
+  end;
+  Mem_Grafico.Lines.add(Linha);
+  cnt_intervalo:=cnt_intervalo+intervalo;
 end;
 
 procedure TForm1.tmr_condensadorTimer(Sender: TObject);
@@ -1044,7 +1170,7 @@ begin
                    fat8.getFimDate()+' ('+
                    fat8.getFimTime()+') - Tempo '+
                    formatfloat('###0',fat8.minutes)+' min.   '+
-                   formatfloat('##0.00',fat8.minutes/60)+' horas';
+                   formatfloat('##0.000',fat8.minutes/60)+' horas';
            cbb_programa.Items.Add(Linha);
 
            GraficoData[index].processo:=fat8.process_number;
@@ -1063,6 +1189,8 @@ begin
      tmr_temperaturas.Enabled:=TRUE;
  end;
 
+
+
 procedure TForm1.Button11Click(Sender: TObject);
 var
   i:integer;
@@ -1077,24 +1205,10 @@ begin
                'cht_condensador.series.count ='+inttostr(cht_condensador.series.count)+#13+
                'cht_plataforma.series.count  ='+inttostr(cht_plataforma.series.count)
                );
-   //cht_tensao.Series.Clear;
-   //cht_vacuo.series.Clear;
-   //cht_condensador.series.Clear;
-   //cht_plataforma.series.clear;
 
-   lcs_tensao.Clear;
-   lcs_vacuometro.Clear;
-   lcs_pt100_condensador.clear;
-   lcs_Plataforma_NTC_01.clear;
-   lcs_Plataforma_NTC_02.clear;
-   lcs_Plataforma_NTC_03.clear;
-   lcs_Plataforma_NTC_04.clear;
-   lcs_Plataforma_NTC_05.clear;
-   lcs_Plataforma_NTC_06.clear;
-   lcs_Plataforma_NTC_07.clear;
-   lcs_Plataforma_NTC_08.clear;
-   lcs_Plataforma_NTC_09.clear;
-   lcs_Plataforma_NTC_10.clear;
+   limparGraficos();
+
+
 
    nnn:=0;
    for i:=0 to Mem_Grafico.Lines.Count-1 do
@@ -1200,7 +1314,7 @@ begin
 
            end;
            inc(indice);
-           Memo5.Lines.Add(valor);
+           //Memo5.Lines.Add(valor);
          until POS(';',Linha)=0;
          nnn:=nnn+1;
        end;
@@ -1229,6 +1343,14 @@ begin
   fat8.inicio.hora:=StrToTime(GraficoData[cbb_programa.ItemIndex].horaInicio);
   fat8.fim.data:=StrToDate(GraficoData[cbb_programa.ItemIndex].dataFim);
   fat8.fim.hora:=StrToTime(GraficoData[cbb_programa.ItemIndex].horaFim);
+
+  //-------------------------Gerador de Nomes a salvar--------------------------
+  edt_processo.text:=formatfloat('0000',fat8.process_number);
+  edt_inicio.text:=copy(DateToStr(fat8.inicio.data),1,2)+'-'+
+                   copy(DateToStr(fat8.inicio.data),4,2)+'-'+
+                   copy(DateToStr(fat8.inicio.data),7,4);
+  edt_tempo.text:=formatfloat('##0.000',fat8.minutes/60.0)+' horas';
+
 
   tmr_temperaturas.Enabled:=FALSE;  //Desliga a aquisicao automatica
   Mem_Grafico.Lines.Clear;
@@ -1309,18 +1431,30 @@ begin
                              begin
                                if((placa=2) and (Canal=1)) then continue; //salta PT100 canal 1 (sem sensor)
 
+                                   //edit_saidafat8.MaxLength:=1000;
                                    edit_saidafat8.text:='';
-                                   Aparelho.Ler_EEPROM_24C1025_Buffer_Filha(placa,canal,addeeprom,(MAXREAD+1)*2,HEXADECIMAL,edit_saidafat8);
+                                   Aparelho.Ler_EEPROM_24C1025_Buffer_Filha(placa,canal,addeeprom,MAXREAD,HEXADECIMAL,edit_saidafat8);
                                    Aguarda_Atualizacao_do_TEdit(edit_saidafat8);
                                    Linhapura:=edit_saidafat8.text;
 
 
+                                   {
+                                   Memo5.Lines.Add(LinhaPura);
+
+                                   for i:=0 to (Somafim div 2)-1 do
+                                       begin
+                                         memo5.lines.add(Copy(LinhaPura,(i*4)+1,4));
+                                       end;
+                                   exit;
+                                   }
+
                                    i:=0;
 
-                                   while(i<=SomaFim)do
+                                   while(i<(SomaFim div 2))do
                                       begin
                                         try
                                         Linha[i]:=Linha[i]+' ; '+Aparelho.HextoInfo(Copy(LinhaPura,(i*4)+1,4));
+                                        Memo1.Lines.Add(Linha[i]);
                                         Memo1.Lines.Add(Linha[i]);
                                         except
                                           LinhaTeste:=Copy(LinhaPura,(i*4)+1,4);
@@ -1335,12 +1469,12 @@ begin
                        if (i+addeeprom)>Fat8.add_end then break;
                        end;
 
-                       for jjj:=0 to Somafim do
+                       for jjj:=0 to (Somafim div 2)-1 do
                            begin
                              Mem_Grafico.Lines.Add(Linha[jjj]+' ; ');
                            end;
 
-                    exit; ///\/\/\/\/\/\/ APAGAR \/\/\/\/\/\/\/\/\/\/\
+                    //exit; ///\/\/\/\/\/\/ APAGAR \/\/\/\/\/\/\/\/\/\/\
 
                     inc(addeeprom,(Somafim*2)+2);
                     //pgb_load_data_graphic.Min:=Fat8.add_start;
@@ -1811,6 +1945,12 @@ begin
      PreencheComboBox();
      Aparelho.PROCULUS_Goto_Page(15,TEXTO,Form1.edt_saidapadrao);
      end;
+  if(Folha_de_Abas.PageIndex=5) then
+     begin
+
+     end;
+
+
 end;
 
 procedure TForm1.EnviaReceitaParaPrograma(Mandador:Integer;index:integer);
@@ -2089,19 +2229,40 @@ begin
    GravarReceita();
    if(ouvinte<>nil) then
       begin
-      //ouvinte.WaitFor;
       ouvinte.Terminate;
+      ouvinte.WaitFor;
       end;
+
+
    if(Aparelho<>nil) then
       begin
+       tmr_temperaturas.Enabled:=FALSE;
+       tmr_temperaturas.free;
+       Application.ProcessMessages;
        Aparelho.Free;
        Aparelho:=nil;
       end;
+
 end;
 
 procedure TForm1.btn_resumeClick(Sender: TObject);
 begin
   ouvinte.Resume;
+end;
+
+procedure TForm1.btn_Save_Tmem_GraficoClick(Sender: TObject);
+begin
+  if(edt_responsavel.text='') then
+     begin
+       showmessage('Digite o nome do responsável!');
+       exit;
+     end;
+  SaveDialog1.FileName:=edt_processo.text+' - '+
+                        edt_inicio.text+' - '+
+                        edt_tempo.text+' - '+
+                        edt_responsavel.text+'.txt';
+  if SaveDialog1.execute then
+     Mem_Grafico.Lines.SaveToFile(SaveDialog1.FileName);
 end;
 
 
@@ -2119,17 +2280,29 @@ end;
 procedure TForm1.bib_DataLogClick(Sender: TObject);
 begin
    Aparelho.PROCULUS_Goto_Page(29,TEXTO,Form1.edt_saidapadrao);
+
+
+
+   Aparelho.Read_Interval(UINTEGER,Form1.edt_intervalo);
+   Aguarda_Atualizacao_do_TEdit(Form1.edt_intervalo);
+   tmr_captura_grafico.Interval:=StrToInt(edt_intervalo.text)*1000;
+   intervalo:=StrToInt(edt_intervalo.text);
+
    if(bib_DataLog.ShowHint=FALSE) then
       begin
       Aparelho.PROCULUS_Write_VP_Int(2,1,TEXTO,edt_saidapadrao); //LIGA BOTAO DATALOG
       bib_DataLog.Glyph.LoadFromFile(ExtractFilePath(ParamSTR(0))+'imagens\DataLog_ON.bmp');
-      bib_DataLog.ShowHint:=TRUE
+      bib_DataLog.ShowHint:=TRUE;
+      limparGraficos();
+      tmr_captura_grafico.Enabled:=TRUE;
+      cnt_intervalo:=0;
       end
    else
       begin
       Aparelho.PROCULUS_Write_VP_Int(2,0,TEXTO,edt_saidapadrao); //DESLIGA BOTAO DATALOG
       bib_DataLog.Glyph.LoadFromFile(ExtractFilePath(ParamSTR(0))+'imagens\DataLog_OFF.bmp');
       bib_DataLog.ShowHint:=FALSE;
+      tmr_captura_grafico.Enabled:=FALSE;
       end;
 end;
 
@@ -2414,6 +2587,12 @@ begin
   Aparelho.PROCULUS_Read_VP_Int(strtoint(edt_vp_add_int.Text),FLUTUANTE,Form1.edt_vp_value_int_reply);
 end;
 
+procedure TForm1.btn_open_fileClick(Sender: TObject);
+begin
+    if OpenDialog1.execute then
+     Mem_Grafico.Lines.LoadFromFile(OpenDialog1.FileName);
+end;
+
 procedure TForm1.btn_page_writeClick(Sender: TObject);
 begin
   Aparelho.PROCULUS_Goto_Page(strtoint(edt_page.Text),TEXTO,Form1.edt_page_reply);
@@ -2480,7 +2659,7 @@ begin
   sleep(10);
   while(TRUE) do
         begin
-        //synchronize(@showstatus);
+        if(Terminated=TRUE) then exit;
         Form1.lbl_count.Caption:=inttostr(Aparelho.FilaFim);
         pnt:=Buffer_IO;
         try
@@ -3205,6 +3384,29 @@ begin
      inc(eepromadd);
      if(eepromadd>=256) then break;
   end;
+end;
+
+procedure TForm1.Button15Click(Sender: TObject);
+begin
+  Aparelho.Read_Interval(UINTEGER,edit15);
+end;
+
+
+procedure TForm1.LimparGraficos();
+begin
+  lcs_tensao.Clear;
+  lcs_vacuometro.Clear;
+  lcs_pt100_condensador.clear;
+  lcs_Plataforma_NTC_01.clear;
+  lcs_Plataforma_NTC_02.clear;
+  lcs_Plataforma_NTC_03.clear;
+  lcs_Plataforma_NTC_04.clear;
+  lcs_Plataforma_NTC_05.clear;
+  lcs_Plataforma_NTC_06.clear;
+  lcs_Plataforma_NTC_07.clear;
+  lcs_Plataforma_NTC_08.clear;
+  lcs_Plataforma_NTC_09.clear;
+  lcs_Plataforma_NTC_10.clear;
 end;
 
 end.

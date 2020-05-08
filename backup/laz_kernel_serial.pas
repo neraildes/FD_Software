@@ -58,6 +58,7 @@ const
    COMMAND_LDC_PAGE        = $25;
    COMMAND_CONTROL_ACTIVE  = $26;
    COMMAND_READ_TOTALBOARD = $27;
+   COMMAND_READ_INTERVAL   = $28;
    //...
    COMMAND_PROC_CLOCK_R    = $2D;
    COMMAND_CLK_RTC_R       = $2E;
@@ -81,7 +82,7 @@ const
 
 
 //-------------------------------------
-   BUFFER_PC               =  600;
+   BUFFER_PC               =  300;
 
 //-----------OUTRAS CONSTANTES-------------
    READ  = 0;
@@ -101,9 +102,9 @@ type
            comando    : Ansistring;
            TotalReturn: LongInt;
            RXpayload  : integer;
-           result     : string;
+           result     : Ansistring;
            resTypeData: integer;
-           resUnidade : string;
+           resUnidade : Ansistring;
            ObjDestino : TObject;
            end;
 
@@ -402,6 +403,9 @@ type
       procedure PROCULUS_Control_Active(Software_Control_Code: byte;
                                                   resultType : integer;
                                                   ObjDestino : TObject);
+
+      procedure Read_Interval(resultType : integer;
+                              ObjDestino : TObject);
 
 
 
@@ -1038,6 +1042,7 @@ procedure TSerial.PROCULUS_Read_VP_Int(vp: integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=2;
   fila[FilaFim].TotalReturn:=14;
   fila[FilaFim].ObjDestino:=ObjDestino;
@@ -1258,6 +1263,22 @@ end;
 {------------------------------------------------------------------------------
                         C O M A N D O S   A V U L S O S
 -------------------------------------------------------------------------------}
+
+procedure TSerial.Read_Interval(resultType : integer;
+                                ObjDestino : TObject);
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  fila[FilaFim].RXpayload:=2;
+  fila[FilaFim].TotalReturn:=7;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
+  buffer[0]:=0;
+  KernelCommand(COMMAND_READ_INTERVAL, 0, 1, buffer);
+end;
+
+
+
 procedure TSerial.Read_Analogic_Channel(destino : integer;
                                         channel : integer;
                                      resultType : integer;
@@ -1460,15 +1481,15 @@ end;
 //------------------------------------------------------------------------------
 function TSerial.kernelSerial(comando : Ansistring):Ansistring;
 var
-  Buffer_In  : array[0..TXBUFFERSIZE] of byte;
+  Buffer_In  : array[0..600] of byte;
   Buffer_Out : array[0..TXBUFFERSIZE] of byte;
   pnt : ^byte;
 
-  i:byte;
+  i:LongInt;
   SizeBufferSend:byte;
   recebido : AnsiString;
   NumRcv : LongInt;
-  strtmp : string;
+  strtmp : Ansistring;
   retorno: AnsiString;
   decimal: integer;
 begin

@@ -58,6 +58,7 @@ const
    COMMAND_LDC_PAGE        = $25;
    COMMAND_CONTROL_ACTIVE  = $26;
    COMMAND_READ_TOTALBOARD = $27;
+   COMMAND_READ_INTERVAL   = $28;
    //...
    COMMAND_PROC_CLOCK_R    = $2D;
    COMMAND_CLK_RTC_R       = $2E;
@@ -81,7 +82,7 @@ const
 
 
 //-------------------------------------
-   BUFFER_PC               =  255;
+   BUFFER_PC               =  300;
 
 //-----------OUTRAS CONSTANTES-------------
    READ  = 0;
@@ -101,9 +102,9 @@ type
            comando    : Ansistring;
            TotalReturn: LongInt;
            RXpayload  : integer;
-           result     : string;
+           result     : Ansistring;
            resTypeData: integer;
-           resUnidade : string;
+           resUnidade : Ansistring;
            ObjDestino : TObject;
            end;
 
@@ -403,6 +404,9 @@ type
                                                   resultType : integer;
                                                   ObjDestino : TObject);
 
+      procedure Read_Interval(resultType : integer;
+                              ObjDestino : TObject);
+
 
 
 
@@ -467,6 +471,7 @@ begin
 //fila[FilaFim].comando:=carga;
 //fila[FilaFim].result:='';
   //showmessage(inttostr(filafim));
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=14;
   //fila[FilaFim].ObjOrigem:=Sender;
@@ -503,6 +508,7 @@ procedure TSerial.Gravar_EEPROM_8bits_Interna_Mae(add    : integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=8;
   fila[FilaFim].resTypeData:=TEXTO;
@@ -522,6 +528,7 @@ procedure TSerial.Gravar_EEPROM_16bits_Interna_Mae(add  : integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=8;
   fila[FilaFim].resTypeData:=resultType;
@@ -544,6 +551,7 @@ procedure TSerial.Gravar_EEPROM_8bits_Interna_Filha(destino : integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+    if(Form1.tmr_temperaturas=nil) then exit;
     fila[FilaFim].RXpayload:=3;
     fila[FilaFim].TotalReturn:=16;
     fila[FilaFim].resTypeData:=resultType;
@@ -564,6 +572,7 @@ procedure TSerial.Gravar_EEPROM_16bits_Interna_Filha(destino : integer;
 begin
     //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
     //fila[FilaFim].result:='';       Zerado no KernelCommand
+      if(Form1.tmr_temperaturas=nil) then exit;
       fila[FilaFim].RXpayload:=3;
       fila[FilaFim].TotalReturn:=19;
       fila[FilaFim].resTypeData:=resultType;
@@ -598,6 +607,7 @@ begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   //fila[FilaFim].ObjOrigem:=Sender;
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=1;
   fila[FilaFim].TotalReturn:=6;
   fila[FilaFim].resTypeData:=resultType;
@@ -616,6 +626,7 @@ procedure TSerial.Ler_EEPROM_16bits_Interna_Mae(add    : integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=2;
   fila[FilaFim].TotalReturn:=7;
   fila[FilaFim].resTypeData:=resultType;
@@ -638,6 +649,7 @@ procedure TSerial.Ler_EEPROM_8bits_Interna_Filha(destino : integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=1;
   fila[FilaFim].TotalReturn:=13;
   fila[FilaFim].resTypeData:=resultType;
@@ -655,6 +667,7 @@ procedure TSerial.Ler_EEPROM_16bits_Interna_Filha(destino : integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=2;
   fila[FilaFim].TotalReturn:=14;
   fila[FilaFim].resTypeData:=resultType;
@@ -687,6 +700,7 @@ procedure TSerial.Gravar_EEPROM_8bits_24C1025_Mae(chip : integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=8;
   fila[FilaFim].resTypeData:=resultType;
@@ -712,6 +726,7 @@ procedure TSerial.Gravar_EEPROM_16bits_24C1025_Mae(chip : integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=8;
   fila[FilaFim].resTypeData:=resultType;
@@ -742,6 +757,7 @@ procedure TSerial.Gravar_EEPROM_8bits_24C1025_Filha(destino : integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=20;
   fila[FilaFim].resTypeData:=resultType;
@@ -769,6 +785,7 @@ procedure TSerial.Gravar_EEPROM_16bits_24C1025_Filha(destino : integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=21;
   fila[FilaFim].resTypeData:=resultType;
@@ -804,6 +821,7 @@ procedure TSerial.Ler_EEPROM_8bits_24C1025_Mae(chip : integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=1;
   fila[FilaFim].TotalReturn:=6;
   fila[FilaFim].resTypeData:=resultType;
@@ -827,6 +845,7 @@ procedure TSerial.Ler_EEPROM_16bits_24C1025_Mae(chip : integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=2;
   fila[FilaFim].TotalReturn:=7;
   fila[FilaFim].resTypeData:=resultType;
@@ -851,6 +870,7 @@ procedure TSerial.Ler_EEPROM_8bits_24C1025_Filha(destino : integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=1;
   fila[FilaFim].TotalReturn:=17;
   fila[FilaFim].resTypeData:=resultType;
@@ -875,6 +895,7 @@ procedure TSerial.Ler_EEPROM_16bits_24C1025_Filha(destino : integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=2;
   fila[FilaFim].TotalReturn:=18;
   fila[FilaFim].resTypeData:=resultType;
@@ -897,6 +918,7 @@ procedure TSerial.Ler_EEPROM_32bits_24C1025_Mae(chip : integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=4;
   fila[FilaFim].TotalReturn:=9;
   fila[FilaFim].resTypeData:=resultType;
@@ -921,6 +943,7 @@ var
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=8;
   fila[FilaFim].ObjDestino:=ObjDestino;
@@ -949,6 +972,7 @@ var
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=20+length(value);
   fila[FilaFim].ObjDestino:=ObjDestino;
@@ -980,6 +1004,7 @@ var
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=8;
   fila[FilaFim].ObjDestino:=ObjDestino;
@@ -1018,6 +1043,7 @@ procedure TSerial.PROCULUS_Write_VP_Int(vp: integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=17;
   fila[FilaFim].ObjDestino:=ObjDestino;
@@ -1038,6 +1064,7 @@ procedure TSerial.PROCULUS_Read_VP_Int(vp: integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=2;
   fila[FilaFim].TotalReturn:=14;
   fila[FilaFim].ObjDestino:=ObjDestino;
@@ -1059,6 +1086,7 @@ var
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=24;
   fila[FilaFim].ObjDestino:=ObjDestino;
@@ -1083,6 +1111,7 @@ procedure TSerial.PROCULUS_Read_VP_String(vp : integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=28;
   fila[FilaFim].TotalReturn:=40;
   fila[FilaFim].ObjDestino:=ObjDestino;
@@ -1100,6 +1129,7 @@ procedure TSerial.Ler_EEPROM_String_Mae( add: integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=15;
   fila[FilaFim].TotalReturn:=20;
   fila[FilaFim].ObjDestino:=ObjDestino;
@@ -1118,6 +1148,7 @@ procedure TSerial.Ler_EEPROM_24C1025_String_Mae(chip: integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=35;
   fila[FilaFim].TotalReturn:=40;
   fila[FilaFim].ObjDestino:=ObjDestino;
@@ -1142,6 +1173,7 @@ procedure TSerial.Ler_EEPROM_24C1025_String_Filha(destino: integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=34;
   fila[FilaFim].TotalReturn:=50;
   fila[FilaFim].ObjDestino:=ObjDestino;
@@ -1170,6 +1202,7 @@ procedure TSerial.Ler_EEPROM_24C1025_Buffer_Mae(chip: integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=Size;
   fila[FilaFim].TotalReturn:=5+Size;
   fila[FilaFim].ObjDestino:=ObjDestino;
@@ -1195,6 +1228,7 @@ procedure TSerial.Ler_EEPROM_24C1025_Buffer_filha(destino : integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:= size;//    strtoint(Form1.edt_payload.text);
   fila[FilaFim].TotalReturn:=  18+size-1;//  strtoint(Form1.edt_total_return.text);
   fila[FilaFim].ObjDestino:=ObjDestino;
@@ -1223,6 +1257,7 @@ procedure TSerial.PROCULUS_Goto_Page(page : integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=15;
   fila[FilaFim].ObjDestino:=ObjDestino;
@@ -1241,6 +1276,7 @@ procedure TSerial.PROCULUS_Control_Active(Software_Control_Code: byte;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=14;
   fila[FilaFim].ObjDestino:=ObjDestino;
@@ -1258,6 +1294,23 @@ end;
 {------------------------------------------------------------------------------
                         C O M A N D O S   A V U L S O S
 -------------------------------------------------------------------------------}
+
+procedure TSerial.Read_Interval(resultType : integer;
+                                ObjDestino : TObject);
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
+  fila[FilaFim].RXpayload:=2;
+  fila[FilaFim].TotalReturn:=7;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
+  buffer[0]:=0;
+  KernelCommand(COMMAND_READ_INTERVAL, 0, 1, buffer);
+end;
+
+
+
 procedure TSerial.Read_Analogic_Channel(destino : integer;
                                         channel : integer;
                                      resultType : integer;
@@ -1266,6 +1319,7 @@ procedure TSerial.Read_Analogic_Channel(destino : integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=2;
   fila[FilaFim].TotalReturn:=14;
   fila[FilaFim].ObjDestino:=ObjDestino;
@@ -1284,6 +1338,7 @@ procedure TSerial.Show_Programacao(index      : integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=17;
   fila[FilaFim].ObjDestino:=ObjDestino;
@@ -1298,6 +1353,7 @@ procedure TSerial.Read_TotalBoard(resultType : integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=1;
   fila[FilaFim].TotalReturn:=6;
   fila[FilaFim].ObjDestino:=ObjDestino;
@@ -1315,6 +1371,7 @@ procedure TSerial.Format_Program(resultType : integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=17;
   fila[FilaFim].ObjDestino:=ObjDestino;
@@ -1330,6 +1387,7 @@ procedure TSerial.Upload_Program(resultType : integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=17;
   fila[FilaFim].ObjDestino:=ObjDestino;
@@ -1344,6 +1402,7 @@ procedure TSerial.Time_Process_Read(resultType : integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=2;
   fila[FilaFim].TotalReturn:=7;
   fila[FilaFim].ObjDestino:=ObjDestino;
@@ -1358,6 +1417,7 @@ procedure TSerial.Time_RTC_Read(    value  : integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=9;
   fila[FilaFim].TotalReturn:=20;
   fila[FilaFim].ObjDestino:=ObjDestino;
@@ -1376,6 +1436,7 @@ var
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=9;
   fila[FilaFim].TotalReturn:=20;
   fila[FilaFim].ObjDestino:=ObjDestino;
@@ -1398,6 +1459,7 @@ procedure TSerial.EEPROM_24C1025_Fill_All(resultType : integer;
 begin
   //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
   //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:=3;
   fila[FilaFim].TotalReturn:=8;
   //fila[FilaFim].ObjOrigem:=Sender;
@@ -1460,15 +1522,15 @@ end;
 //------------------------------------------------------------------------------
 function TSerial.kernelSerial(comando : Ansistring):Ansistring;
 var
-  Buffer_In  : array[0..TXBUFFERSIZE] of byte;
+  Buffer_In  : array[0..600] of byte;
   Buffer_Out : array[0..TXBUFFERSIZE] of byte;
   pnt : ^byte;
 
-  i:byte;
+  i:LongInt;
   SizeBufferSend:byte;
   recebido : AnsiString;
   NumRcv : LongInt;
-  strtmp : string;
+  strtmp : Ansistring;
   retorno: AnsiString;
   decimal: integer;
 begin
