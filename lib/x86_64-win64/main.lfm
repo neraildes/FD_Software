@@ -1,20 +1,20 @@
 object Form1: TForm1
-  Left = 101
-  Height = 661
-  Top = 113
-  Width = 1197
-  BorderStyle = bsDialog
+  Left = 65
+  Height = 662
+  Top = 115
+  Width = 1196
+  BorderStyle = bsSingle
   Caption = 'JJ Cientifica Ind. e Com. de Equipamentos Científicos'
-  ClientHeight = 641
-  ClientWidth = 1197
+  ClientHeight = 662
+  ClientWidth = 1196
   Font.CharSet = ANSI_CHARSET
   Font.Color = clBlack
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Pitch = fpVariable
   Font.Quality = fqDraft
-  Menu = MainMenu1
   OnClose = FormClose
+  OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poDesktopCenter
@@ -36,10 +36,10 @@ object Form1: TForm1
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrCenter
     Left = 0
-    Height = 640
+    Height = 661
     Top = 0
     Width = 1196
-    ActivePage = GraficoMEMO
+    ActivePage = tbs_pagina_principal
     Anchors = [akTop, akLeft, akRight, akBottom]
     Font.CharSet = ANSI_CHARSET
     Font.Color = clBlack
@@ -49,13 +49,14 @@ object Form1: TForm1
     Font.Quality = fqDraft
     ParentFont = False
     ParentShowHint = False
-    TabIndex = 4
+    TabIndex = 1
     TabOrder = 1
     OnChange = Folha_de_AbasChange
     object tbs_manutencao: TTabSheet
       Caption = 'Manutencao e Calibracao'
-      ClientHeight = 612
+      ClientHeight = 613
       ClientWidth = 1188
+      TabVisible = False
       object Memo1: TMemo
         Left = 800
         Height = 544
@@ -821,9 +822,9 @@ object Form1: TForm1
           TabOrder = 1
         end
         object btn_Write_Buffer: TButton
-          Left = 70
+          Left = 71
           Height = 23
-          Top = 19
+          Top = 20
           Width = 46
           Caption = 'Gravar'
           OnClick = btn_Write_BufferClick
@@ -965,13 +966,29 @@ object Form1: TForm1
       end
     end
     object tbs_pagina_principal: TTabSheet
-      Caption = 'Página Principal'
-      ClientHeight = 612
+      Caption = 'Principal'
+      ClientHeight = 633
       ClientWidth = 1188
-      object edt_intervalo: TEdit
-        Left = 89
+      object edt_datalog_process: TEdit
+        Left = 88
         Height = 23
-        Top = 528
+        Top = 544
+        Width = 80
+        TabOrder = 106
+        Text = 'edt_datalog_process'
+      end
+      object edt_main: TEdit
+        Left = 296
+        Height = 23
+        Top = 536
+        Width = 55
+        TabOrder = 107
+        Text = 'edt_main'
+      end
+      object edt_intervalo: TEdit
+        Left = 88
+        Height = 23
+        Top = 520
         Width = 95
         TabOrder = 105
         Text = 'edt_intervalo'
@@ -979,7 +996,7 @@ object Form1: TForm1
       object bib_DataLog: TBitBtn
         Left = 56
         Height = 74
-        Top = 504
+        Top = 503
         Width = 168
         Caption = 'DataLog'
         Glyph.Data = {
@@ -1393,10 +1410,10 @@ object Form1: TForm1
         Left = 56
         Height = 34
         Top = 56
-        Width = 734
+        Width = 736
         BevelColor = clBlack
         ClientHeight = 34
-        ClientWidth = 734
+        ClientWidth = 736
         TabOrder = 80
         object Label17: TLabel
           Left = 664
@@ -2584,9 +2601,9 @@ object Form1: TForm1
         TabOrder = 99
       end
       object bib_Condensador: TBitBtn
-        Left = 264
+        Left = 256
         Height = 72
-        Top = 504
+        Top = 505
         Width = 152
         Caption = 'Condensador'
         Glyph.Data = {
@@ -2983,7 +3000,7 @@ object Form1: TForm1
       object bib_Vacuo: TBitBtn
         Left = 448
         Height = 72
-        Top = 504
+        Top = 505
         Width = 160
         Caption = 'Vácuo'
         Glyph.Data = {
@@ -3378,9 +3395,9 @@ object Form1: TForm1
         TabOrder = 102
       end
       object bib_Aquecimento: TBitBtn
-        Left = 648
-        Height = 70
-        Top = 504
+        Left = 645
+        Height = 72
+        Top = 505
         Width = 179
         Caption = 'Aquecimento'
         Glyph.Data = {
@@ -3776,9 +3793,9 @@ object Form1: TForm1
         TabOrder = 103
       end
       object edt_time_process: TEdit
-        Left = 896
+        Left = 944
         Height = 49
-        Top = 525
+        Top = 528
         Width = 158
         Alignment = taCenter
         Font.CharSet = ANSI_CHARSET
@@ -3809,11 +3826,29 @@ object Form1: TForm1
         ParentColor = False
         ParentFont = False
       end
+      object Label51: TLabel
+        Left = 968
+        Height = 15
+        Top = 509
+        Width = 102
+        Caption = 'Tempo de Processo'
+        ParentColor = False
+      end
+      object btn_principal: TButton
+        Left = 792
+        Height = 34
+        Top = 55
+        Width = 32
+        Caption = 'P'
+        OnClick = btn_principalClick
+        TabOrder = 108
+      end
     end
     object tbs_receitas: TTabSheet
       Caption = 'Receitas'
-      ClientHeight = 612
+      ClientHeight = 613
       ClientWidth = 1188
+      TabVisible = False
       object Panel16: TPanel
         Left = 312
         Height = 49
@@ -4366,8 +4401,9 @@ object Form1: TForm1
     end
     object tbs_parametros: TTabSheet
       Caption = 'Parâmetros'
-      ClientHeight = 612
+      ClientHeight = 613
       ClientWidth = 1188
+      TabVisible = False
       object GroupBox9: TGroupBox
         Left = 24
         Height = 527
@@ -4659,10 +4695,11 @@ object Form1: TForm1
         TabOrder = 4
       end
     end
-    object GraficoMEMO: TTabSheet
+    object tbs_grafico_memo: TTabSheet
       Caption = 'Grafico MEMO'
-      ClientHeight = 612
+      ClientHeight = 613
       ClientWidth = 1188
+      TabVisible = False
       object edt_saida32bytes: TEdit
         Left = 32
         Height = 23
@@ -4829,8 +4866,9 @@ object Form1: TForm1
     end
     object tbs_grafico: TTabSheet
       Caption = 'Gráfico'
-      ClientHeight = 612
+      ClientHeight = 633
       ClientWidth = 1188
+      TabVisible = False
       object Panel21: TPanel
         Left = -8
         Height = 664
@@ -4843,10 +4881,10 @@ object Form1: TForm1
         ParentColor = False
         TabOrder = 2
         object cht_tensao: TChart
-          Left = 8
+          Left = 15
           Height = 136
           Top = 24
-          Width = 1184
+          Width = 1177
           AxisList = <          
             item
               Marks.LabelBrush.Style = bsClear
@@ -4875,10 +4913,10 @@ object Form1: TForm1
           end
         end
         object cht_plataforma: TChart
-          Left = 16
+          Left = 19
           Height = 170
           Top = 464
-          Width = 1176
+          Width = 1173
           AxisList = <          
             item
               Marks.LabelBrush.Style = bsClear
@@ -4893,7 +4931,7 @@ object Form1: TForm1
               Marks.LabelBrush.Style = bsClear
               Minors = <>
               Title.Visible = True
-              Title.Caption = 'Tempo (seg.)'
+              Title.Caption = 'Tempo (minuto)'
               Title.LabelBrush.Style = bsClear
             end>
           BackColor = clWhite
@@ -4947,7 +4985,7 @@ object Form1: TForm1
         end
       end
       object cht_condensador: TChart
-        Left = 4
+        Left = 8
         Height = 144
         Top = 296
         Width = 1176
@@ -4979,7 +5017,7 @@ object Form1: TForm1
         end
       end
       object cht_vacuo: TChart
-        Left = -4
+        Left = 0
         Height = 144
         Top = 144
         Width = 1184
@@ -5012,10 +5050,11 @@ object Form1: TForm1
         end
       end
     end
-    object TabSheet1: TTabSheet
+    object tbs_outos_controles: TTabSheet
       Caption = 'OUTROS CONTROLES'
-      ClientHeight = 612
+      ClientHeight = 613
       ClientWidth = 1188
+      TabVisible = False
       object edt_saidaprg: TEdit
         Left = 32
         Height = 23
@@ -5243,6 +5282,41 @@ object Form1: TForm1
         TabOrder = 10
         Text = 'Edit8'
       end
+      object btn_change_flag: TButton
+        Left = 376
+        Height = 28
+        Top = 317
+        Width = 96
+        Caption = 'btn_change_flag'
+        OnClick = btn_change_flagClick
+        TabOrder = 11
+      end
+      object edt_change_flag: TEdit
+        Left = 424
+        Height = 23
+        Top = 285
+        Width = 42
+        Alignment = taCenter
+        TabOrder = 12
+      end
+      object edt_change_flag_estado: TEdit
+        Left = 376
+        Height = 23
+        Top = 285
+        Width = 35
+        Alignment = taCenter
+        TabOrder = 13
+        Text = '1'
+      end
+      object btn_serial_number_HD: TButton
+        Left = 491
+        Height = 23
+        Top = 185
+        Width = 118
+        Caption = 'HD Number'
+        OnClick = btn_serial_number_HDClick
+        TabOrder = 14
+      end
     end
   end
   object tmr_online: TTimer
@@ -5256,19 +5330,6 @@ object Form1: TForm1
     left = 1120
     top = 104
   end
-  object MainMenu1: TMainMenu
-    left = 1072
-    top = 48
-    object MenuItem1: TMenuItem
-      Caption = 'Tarefas Especiais'
-      object Menu_Upload: TMenuItem
-        Caption = 'UpLoad - Transferencia para Executar'
-      end
-      object Menu_Format: TMenuItem
-        Caption = 'Format - Excluir todos os parametros'
-      end
-    end
-  end
   object tmr_condensador: TTimer
     Enabled = False
     Interval = 30000
@@ -5278,7 +5339,7 @@ object Form1: TForm1
   end
   object tmr_vacuo: TTimer
     Enabled = False
-    Interval = 4500
+    Interval = 20000
     OnTimer = tmr_vacuoTimer
     left = 1120
     top = 216
@@ -5400,22 +5461,22 @@ object Form1: TForm1
     left = 688
     top = 534
   end
-  object PopupMenu1: TPopupMenu
-    left = 984
-    top = 40
-  end
   object SaveDialog1: TSaveDialog
-    left = 72
-    top = 205
+    left = 224
+    top = 216
   end
   object OpenDialog1: TOpenDialog
-    left = 152
-    top = 205
+    left = 232
+    top = 152
   end
   object tmr_captura_grafico: TTimer
     Enabled = False
     OnTimer = tmr_captura_graficoTimer
     left = 1120
     top = 264
+  end
+  object PopupMenu1: TPopupMenu
+    left = 984
+    top = 40
   end
 end

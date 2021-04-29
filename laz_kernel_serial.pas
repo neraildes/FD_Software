@@ -74,7 +74,12 @@ const
    COMMAND_FORMAT          = $43;
    COMMAND_UPLOAD_PRG      = $44;
    COMMAND_EEE_R_32B       = $45;
-   COMMAND_EEE_W_32B       = $46; //não implementado
+   COMMAND_EEE_W_32B       = $46;  //não implementado
+
+   COMMAND_EEE_R_BUF_DIR   = $47;  //Ler    Buffer Direto
+   COMMAND_EEE_W_BUF_DIR   = $48;  //Gravar Buffer Direto
+   COMMAND_READ_PROCESS    = $49;  //Lê o numero do processo e incrementa 1
+   COMMAND_CHANGE_FLAG     = $4A;
 
 
    //...
@@ -96,6 +101,12 @@ HEXADECIMAL = 3;
 FLUTUANTE   = 4;
 TEXTO       = 5;
 HORA        = 6;
+
+//-------------FLAGS de BOTOES------------
+DATALOG     = 2;
+CONDENSADOR = 3;
+VACCUM      = 4;
+AQUECIMENTO = 5;
 
 type
   TFila = Record
@@ -320,6 +331,13 @@ type
                                              resultType : integer;
                                              ObjDestino : TObject);
 
+      procedure Gravar_EEPROM_24C1025_Buffer_Mae(chip: integer;
+                                                  add: integer;
+                                                 size: integer;
+                                                 data: string;
+                                          resultType : integer;
+                                          ObjDestino : TObject);
+
 
 
       //------------------------------------------------------------------------
@@ -406,6 +424,15 @@ type
 
       procedure Read_Interval(resultType : integer;
                               ObjDestino : TObject);
+
+
+      procedure Read_Process_Number(resultType : integer;
+                                    ObjDestino : TObject);
+
+      procedure Change_Flag(flag       : integer;
+                            estado     : integer;
+                            resultType : integer;
+                            ObjDestino : TObject);
 
 
 
@@ -639,9 +666,6 @@ begin
 end;
 
 
-
-
-
 procedure TSerial.Ler_EEPROM_8bits_Interna_Filha(destino : integer;
                                                   add    : integer;
                                               resultType : integer;
@@ -678,6 +702,66 @@ begin
 end;
 
 
+procedure TSerial.Gravar_EEPROM_24C1025_Buffer_Mae(chip: integer;
+                                                    add: integer;
+                                                   size: integer;
+                                                   data: string;
+                                            resultType : integer;
+                                            ObjDestino : TObject);
+var
+  i:integer;
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  //fila[FilaFim].ObjOrigem:=Sender;
+  if(Form1.tmr_temperaturas=nil) then exit;
+  fila[FilaFim].RXpayload:=1;
+  fila[FilaFim].TotalReturn:=6;
+  fila[FilaFim].resTypeData:=resultType;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+
+
+  buffer[0]:= chip ;
+  buffer[1]:= (add>>24) and $FF;
+  buffer[2]:= (add>>16) and $FF;//______Endereco (0x1FFFF)
+  buffer[3]:= (add>>8 ) and $FF;
+  buffer[4]:= (add>>0 ) and $FF;
+  buffer[5]:= size ;
+
+  showmessage(data);
+
+  if(length(data)>=2)then
+     begin
+       i:=0;
+       while(copy(data,i+1,2)='') do
+         begin
+           buffer[i+6]:= strtoint('$'+copy(data,i+1,2));
+           showmessage('$'+copy(data,i+1,2));
+           inc(i,2);
+         end;
+     end;
+
+
+
+  {
+  if(length(comando)>2) then
+     begin
+       SizeBufferSend:=(length(comando) div 2);
+       for i:=0 to  SizeBufferSend-1 do
+           begin
+             decimal := Hex2Dec('$'+copy(comando,(i*2)+1,2));
+             Buffer_Out[i] := decimal;
+           end;
+       pnt:=@Buffer_Out;
+  for i:=0 to size do
+      begin
+        buffer[i+6]:= byte(data[i+1]);
+      end;
+     end;
+  }
+
+  KernelCommand(COMMAND_EEE_W_BUF, 0, size+6, buffer);
+end;
 
 
 
@@ -1230,7 +1314,7 @@ begin
   //fila[FilaFim].result:='';       Zerado no KernelCommand
   if(Form1.tmr_temperaturas=nil) then exit;
   fila[FilaFim].RXpayload:= size;//    strtoint(Form1.edt_payload.text);
-  fila[FilaFim].TotalReturn:=  18+size-1;//  strtoint(Form1.edt_total_return.text);
+  fila[FilaFim].TotalReturn:= 18+size-1;//  strtoint(Form1.edt_total_return.text);
   fila[FilaFim].ObjDestino:=ObjDestino;
   fila[FilaFim].resTypeData:=resultType;
   //*Aqui
@@ -1472,8 +1556,36 @@ begin
 end;
 
 
+procedure TSerial.Read_Process_Number(resultType : integer;
+                                      ObjDestino : TObject);
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
+  fila[FilaFim].RXpayload:=2;
+  fila[FilaFim].TotalReturn:=7;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
+  buffer[0]:=0;
+  KernelCommand(COMMAND_READ_PROCESS, 0, 1, buffer);
+end;
 
-
+procedure TSerial.Change_Flag(flag       : integer;
+                              estado     : integer;
+                              resultType : integer;
+                              ObjDestino : TObject);
+begin
+  //fila[FilaFim].comando:=carga;   Carregado no KernelCommand
+  //fila[FilaFim].result:='';       Zerado no KernelCommand
+  if(Form1.tmr_temperaturas=nil) then exit;
+  fila[FilaFim].RXpayload:=2;
+  fila[FilaFim].TotalReturn:=7;
+  fila[FilaFim].ObjDestino:=ObjDestino;
+  fila[FilaFim].resTypeData:=resultType;
+  buffer[0]:=flag;
+  buffer[1]:=estado;
+  KernelCommand(COMMAND_CHANGE_FLAG, 0, 2, buffer);
+end;
 
 
 
@@ -1534,8 +1646,8 @@ var
   retorno: AnsiString;
   decimal: integer;
 begin
-
-  Form1.Memo2.Lines.Add('E: '+comando);   //ENVIADO
+  sleep(25);
+  //Form1.Memo2.Lines.Add('E: '+comando);   //ENVIADO
 
   try
       if(length(comando)>2) then
@@ -1547,7 +1659,6 @@ begin
                  Buffer_Out[i] := decimal;
                end;
            pnt:=@Buffer_Out;
-
 
            Purge;
 
@@ -1561,9 +1672,11 @@ begin
                strtmp:=strtmp+IntToHex(Word(Buffer_In[i]),2);
            Fila[0].result:=Copy(strtmp,length(strtmp)-(Fila[0].RXpayload*2)+1,Fila[0].RXpayload*2+1);
 
+           //Form1.Memo2.Lines.Add('F: '+strtmp);
+           //Form1.Memo2.Lines.Add('R: '+Fila[0].result);   //RECEBIDO
 
-           Form1.Memo2.Lines.Add('F: '+strtmp);
-           Form1.Memo2.Lines.Add('R: '+Fila[0].result);   //RECEBIDO
+           //if(length(Fila[0].result)>500) then showmessage(  inttostr(length(Fila[0].result) )  );
+
          end;
 
 

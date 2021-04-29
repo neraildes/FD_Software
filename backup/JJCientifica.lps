@@ -4,12 +4,12 @@
     <PathDelim Value="\"/>
     <Version Value="11"/>
     <BuildModes Active="Default"/>
-    <Units Count="9">
+    <Units Count="15">
       <Unit0>
         <Filename Value="JJCientifica.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="3"/>
-        <CursorPos Y="21"/>
+        <EditorIndex Value="11"/>
+        <CursorPos X="61" Y="3"/>
         <UsageCount Value="228"/>
         <Loaded Value="True"/>
       </Unit0>
@@ -21,8 +21,8 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Main"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="704"/>
-        <CursorPos X="72" Y="714"/>
+        <TopLine Value="628"/>
+        <CursorPos X="3" Y="630"/>
         <UsageCount Value="228"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -41,9 +41,9 @@
         <Filename Value="laz_kernel_serial.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Laz_kernel_serial"/>
-        <EditorIndex Value="4"/>
-        <TopLine Value="1489"/>
-        <CursorPos X="44" Y="1519"/>
+        <EditorIndex Value="12"/>
+        <TopLine Value="1590"/>
+        <CursorPos X="38" Y="1593"/>
         <UsageCount Value="202"/>
         <Loaded Value="True"/>
       </Unit3>
@@ -51,165 +51,215 @@
         <Filename Value="tabelaalocacao8.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="TabelaAlocacao8"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="13"/>
         <TopLine Value="8"/>
-        <CursorPos X="7" Y="23"/>
+        <CursorPos X="21" Y="10"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit4>
       <Unit5>
         <Filename Value="C:\lazarus\lcl\interfaces\win32\win32memostrings.inc"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="10"/>
         <TopLine Value="103"/>
         <CursorPos Y="120"/>
         <UsageCount Value="111"/>
         <Loaded Value="True"/>
       </Unit5>
       <Unit6>
-        <Filename Value="C:\lazarus\lcl\include\wincontrol.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="4423"/>
-        <CursorPos Y="4440"/>
-        <UsageCount Value="16"/>
-      </Unit6>
-      <Unit7>
-        <Filename Value="C:\lazarus\lcl\lclmessageglue.pas"/>
-        <UnitName Value="LCLMessageGlue"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="134"/>
-        <CursorPos Y="105"/>
-        <UsageCount Value="72"/>
-      </Unit7>
-      <Unit8>
         <Filename Value="C:\lazarus\components\lazutils\lazutf8classes.pas"/>
         <UnitName Value="LazUTF8Classes"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="9"/>
         <TopLine Value="136"/>
         <CursorPos Y="151"/>
-        <UsageCount Value="82"/>
+        <UsageCount Value="177"/>
+        <Loaded Value="True"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="C:\lazarus\lcl\include\control.inc"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="2234"/>
+        <CursorPos Y="2242"/>
+        <UsageCount Value="16"/>
+        <Loaded Value="True"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="C:\lazarus\lcl\include\buttoncontrol.inc"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="14"/>
+        <CursorPos Y="22"/>
+        <UsageCount Value="16"/>
         <Loaded Value="True"/>
       </Unit8>
+      <Unit9>
+        <Filename Value="C:\lazarus\lcl\include\buttons.inc"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="163"/>
+        <CursorPos Y="170"/>
+        <UsageCount Value="16"/>
+        <Loaded Value="True"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="C:\lazarus\lcl\include\bitbtn.inc"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="61"/>
+        <CursorPos Y="68"/>
+        <UsageCount Value="16"/>
+        <Loaded Value="True"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="C:\lazarus\lcl\include\wincontrol.inc"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="5405"/>
+        <CursorPos Y="5412"/>
+        <UsageCount Value="16"/>
+        <Loaded Value="True"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="C:\lazarus\lcl\lclmessageglue.pas"/>
+        <UnitName Value="LCLMessageGlue"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="115"/>
+        <CursorPos Y="123"/>
+        <UsageCount Value="16"/>
+        <Loaded Value="True"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="C:\lazarus\lcl\interfaces\win32\win32callback.inc"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="2672"/>
+        <CursorPos Y="2680"/>
+        <UsageCount Value="16"/>
+        <Loaded Value="True"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="C:\lazarus\lcl\interfaces\win32\win32pagecontrol.inc"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="99"/>
+        <CursorPos X="19" Y="101"/>
+        <UsageCount Value="16"/>
+        <Loaded Value="True"/>
+      </Unit14>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="main.pas"/>
-        <Caret Line="600" TopLine="585"/>
+        <Caret Line="3537" Column="17" TopLine="3523"/>
       </Position1>
       <Position2>
         <Filename Value="main.pas"/>
-        <Caret Line="2218" Column="18" TopLine="2200"/>
+        <Caret Line="3569" Column="23" TopLine="3627"/>
       </Position2>
       <Position3>
         <Filename Value="main.pas"/>
-        <Caret Line="600" Column="29" TopLine="585"/>
+        <Caret Line="1439" Column="3" TopLine="1458"/>
       </Position3>
       <Position4>
         <Filename Value="main.pas"/>
-        <Caret Line="2216" Column="19" TopLine="2206"/>
+        <Caret Line="1455" Column="58" TopLine="1448"/>
       </Position4>
       <Position5>
         <Filename Value="main.pas"/>
-        <Caret Line="597" TopLine="584"/>
+        <Caret Line="1456" Column="56" TopLine="1448"/>
       </Position5>
       <Position6>
         <Filename Value="main.pas"/>
-        <Caret Line="2218" Column="5" TopLine="2205"/>
+        <Caret Line="1472" Column="116" TopLine="1467"/>
       </Position6>
       <Position7>
         <Filename Value="main.pas"/>
-        <Caret Line="600" TopLine="584"/>
+        <Caret Line="1310" Column="81" TopLine="1302"/>
       </Position7>
       <Position8>
         <Filename Value="main.pas"/>
-        <Caret Line="693" Column="5" TopLine="691"/>
+        <Caret Line="1312" Column="4" TopLine="1294"/>
       </Position8>
       <Position9>
         <Filename Value="main.pas"/>
-        <Caret Line="597" Column="17" TopLine="585"/>
+        <Caret Line="1469" Column="96" TopLine="1462"/>
       </Position9>
       <Position10>
         <Filename Value="main.pas"/>
-        <Caret Line="700" Column="61" TopLine="691"/>
+        <Caret Line="2399" Column="78" TopLine="2394"/>
       </Position10>
       <Position11>
         <Filename Value="main.pas"/>
-        <Caret Line="600" TopLine="585"/>
+        <Caret Line="2414" Column="3" TopLine="2411"/>
       </Position11>
       <Position12>
         <Filename Value="main.pas"/>
-        <Caret Line="765" Column="33" TopLine="749"/>
+        <Caret Line="1300" Column="115" TopLine="1294"/>
       </Position12>
       <Position13>
         <Filename Value="main.pas"/>
-        <Caret Line="600" TopLine="584"/>
+        <Caret Line="1474" Column="25" TopLine="1462"/>
       </Position13>
       <Position14>
         <Filename Value="main.pas"/>
-        <Caret Line="707" Column="72" TopLine="694"/>
+        <Caret Line="1475" Column="25" TopLine="1462"/>
       </Position14>
       <Position15>
         <Filename Value="main.pas"/>
-        <Caret Line="2" Column="20"/>
+        <Caret Line="1478" Column="27" TopLine="1465"/>
       </Position15>
       <Position16>
         <Filename Value="main.pas"/>
-        <Caret Line="661" Column="19" TopLine="636"/>
+        <Caret Line="1479" Column="27" TopLine="1466"/>
       </Position16>
       <Position17>
         <Filename Value="main.pas"/>
-        <Caret Line="687" Column="19" TopLine="662"/>
+        <Caret Line="1533" Column="44" TopLine="1529"/>
       </Position17>
       <Position18>
         <Filename Value="main.pas"/>
-        <Caret Line="696" Column="16" TopLine="671"/>
+        <Caret Line="1585" Column="52" TopLine="1572"/>
       </Position18>
       <Position19>
         <Filename Value="main.pas"/>
-        <Caret Line="815" Column="19" TopLine="791"/>
+        <Caret Line="2494" Column="63" TopLine="2487"/>
       </Position19>
       <Position20>
         <Filename Value="main.pas"/>
-        <Caret Line="979" Column="15" TopLine="954"/>
+        <Caret Line="868" Column="53" TopLine="862"/>
       </Position20>
       <Position21>
         <Filename Value="main.pas"/>
-        <Caret Line="1133" Column="22" TopLine="1109"/>
+        <Caret Line="1469" Column="42" TopLine="1462"/>
       </Position21>
       <Position22>
         <Filename Value="main.pas"/>
-        <Caret Line="1181" Column="17" TopLine="1156"/>
+        <Caret Line="2492" Column="126" TopLine="2479"/>
       </Position22>
       <Position23>
-        <Filename Value="main.pas"/>
-        <Caret Line="1340" Column="14" TopLine="1316"/>
+        <Filename Value="JJCientifica.lpr"/>
+        <Caret Line="13" Column="27" TopLine="6"/>
       </Position23>
       <Position24>
         <Filename Value="main.pas"/>
-        <Caret Line="1367" Column="3" TopLine="1343"/>
+        <Caret Line="2492" Column="126" TopLine="2479"/>
       </Position24>
       <Position25>
         <Filename Value="main.pas"/>
-        <Caret Line="2219" Column="37" TopLine="2198"/>
+        <Caret Line="630" Column="3" TopLine="627"/>
       </Position25>
       <Position26>
         <Filename Value="main.pas"/>
-        <Caret Line="2223" Column="4" TopLine="2209"/>
+        <Caret Line="731" Column="3"/>
       </Position26>
       <Position27>
         <Filename Value="main.pas"/>
-        <Caret Line="600" TopLine="584"/>
+        <Caret Line="2459" Column="62" TopLine="2451"/>
       </Position27>
       <Position28>
-        <Filename Value="laz_kernel_serial.pas"/>
-        <Caret Line="1045" Column="3" TopLine="1030"/>
+        <Filename Value="main.pas"/>
+        <Caret Line="2530" Column="61" TopLine="2522"/>
       </Position28>
       <Position29>
-        <Filename Value="laz_kernel_serial.pas"/>
-        <Caret Line="1519" Column="44" TopLine="1489"/>
+        <Filename Value="main.pas"/>
+        <Caret Line="2552" Column="68" TopLine="2544"/>
       </Position29>
       <Position30>
         <Filename Value="main.pas"/>
-        <Caret Line="600" Column="57" TopLine="615"/>
+        <Caret Line="2579" Column="68" TopLine="2571"/>
       </Position30>
     </JumpHistory>
     <RunParams>
@@ -217,22 +267,4 @@
       <Modes Count="0" ActiveMode=""/>
     </RunParams>
   </ProjectSession>
-  <Debugging>
-    <BreakPoints Count="2">
-      <Item1>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="main.pas"/>
-        <Line Value="1"/>
-      </Item1>
-      <Item2>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="main.pas"/>
-        <Line Value="2260"/>
-      </Item2>
-    </BreakPoints>
-  </Debugging>
 </CONFIG>
