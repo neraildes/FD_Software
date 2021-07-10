@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <Compiler Value="C:\lazarus\fpc\3.2.0\bin\i386-win32\fpc.exe" Date="1381338394"/>
-  <Params Value=" -MObjFPC -Scghi -O1 -g -gl -l -vewnhibq -FuC:\lazarus\packager\units\i386-win32 &quot;-FuC:\Indka Ind. e Com. Ltda (externo)\JJCientifica\Liofilizador\Software\FD_Software\Sinapse\source\lib\&quot; &quot;-FUC:\Indka Ind. e Com. Ltda (externo)\JJCientifica\Liofilizador\Software\FD_Software\Sinapse\source\lib\lib\i386-win32\&quot; laz_synapse.pas"/>
+  <Params Value=" -MObjFPC -Scghi -O1 -g -gl -l -vewnhibq -FuC:\lazarus\packager\units\i386-win32 -FuC:\Indka(R)\JJCientifica\Liofilizador\Software\FD_Software\Sinapse\source\lib\ -FUC:\Indka(R)\JJCientifica\Liofilizador\Software\FD_Software\Sinapse\source\lib\lib\i386-win32\ laz_synapse.pas"/>
 </CONFIG>

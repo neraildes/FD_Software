@@ -39,7 +39,7 @@ object Form1: TForm1
     Height = 662
     Top = 0
     Width = 1196
-    ActivePage = tbs_grafico_memo
+    ActivePage = tbs_manutencao
     Anchors = [akTop, akLeft, akRight, akBottom]
     Font.CharSet = ANSI_CHARSET
     Font.Color = clBlack
@@ -49,14 +49,13 @@ object Form1: TForm1
     Font.Quality = fqDraft
     ParentFont = False
     ParentShowHint = False
-    TabIndex = 4
+    TabIndex = 0
     TabOrder = 1
     OnChange = Folha_de_AbasChange
     object tbs_manutencao: TTabSheet
       Caption = 'Manutencao e Calibracao'
       ClientHeight = 634
       ClientWidth = 1188
-      TabVisible = False
       object Memo1: TMemo
         Left = 800
         Height = 544

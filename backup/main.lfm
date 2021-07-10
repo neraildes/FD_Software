@@ -4,7 +4,7 @@ object Form1: TForm1
   Top = 125
   Width = 1196
   BorderStyle = bsSingle
-  Caption = 'JJ Cientifica Ind. e Com. de Equipamentos Científicos (Rev. 1.0.0)'
+  Caption = 'JJ Cientifica Ind. e Com. de Equipamentos Científicos (Rev. 1.0.11)'
   ClientHeight = 662
   ClientWidth = 1196
   Font.CharSet = ANSI_CHARSET
